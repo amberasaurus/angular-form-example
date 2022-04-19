@@ -1,0 +1,12 @@
+<form [formGroup]="form" (submit)="onSubmit()">
+  First Name:
+  <input formControlName="firstName" />
+  <br />
+  Last Name:
+  <input formControlName="lastName" />
+  <br />
+  Email:
+  <input formControlName="email" />
+  <br />
+  <button type="submit">Submit</button>
+</form>
