@@ -10,10 +10,7 @@ import { AppState, selectUser, User } from '../../state/reducers';
 export class SmartViewComponent implements OnInit {
   user$ = this.store.select(selectUser);
 
-  constructor(private store: Store<AppState>) {}
-
-  // read from the store
-  // passes data down
+  constructor(private store: Store) {}
 
   ngOnInit() {}
 

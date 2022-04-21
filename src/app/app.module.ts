@@ -7,15 +7,9 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { userReducer } from './state/reducers';
 import { SmartViewComponent } from './components/smart-view-component/smart-view.component';
 import { DumbComponent } from './components/dumb-component/dumb.component';
-import { SingleViewComponent } from './components/single-view-component/single-view.component';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    SmartViewComponent,
-    DumbComponent,
-    SingleViewComponent,
-  ],
+  declarations: [AppComponent, SmartViewComponent, DumbComponent],
   imports: [
     BrowserModule,
     StoreModule.forRoot({ user: userReducer }),
