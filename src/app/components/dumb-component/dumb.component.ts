@@ -28,6 +28,7 @@ export class DumbComponent implements OnInit {
 
   onSubmit() {
     console.log('submitted');
+    console.log('hello!');
     this.formChanged.emit(this.form.value);
   }
 }

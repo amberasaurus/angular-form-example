@@ -1,4 +1,4 @@
-import { createReducer, on } from '@ngrx/store';
+import { createFeatureSelector, createReducer, on } from '@ngrx/store';
 import { updateUser } from './actions';
 
 export interface User {
@@ -25,4 +25,4 @@ export const userReducer = createReducer(
   })
 );
 
-export const selectUser = (state: AppState) => state.user;
+export const selectUser = createFeatureSelector<User>('user');
