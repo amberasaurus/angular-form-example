@@ -1,20 +1,30 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  OnDestroy,
+} from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { Subject, takeUntil } from 'rxjs';
 import { User } from 'src/app/state/reducers';
 
 @Component({
   selector: 'dumb-component',
   templateUrl: 'dumb.component.html',
 })
-export class DumbComponent implements OnInit {
+export class DumbComponent implements OnInit, OnDestroy {
   @Input()
   set data(value: User | undefined) {
     if (value) {
-      this.form.patchValue(value);
+      this.form.patchValue(value, { emitEvent: false });
     }
   }
 
   @Output() formChanged = new EventEmitter<User>();
+
+  private destroy$ = new Subject<void>();
 
   form: FormGroup = this.fb.group({
     firstName: [],
@@ -22,12 +32,17 @@ export class DumbComponent implements OnInit {
     email: [],
   });
 
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder) {
+    this.form.valueChanges.pipe(takeUntil(this.destroy$)).subscribe((value) => {
+      console.log('valueChanges fired');
+      this.formChanged.emit(value);
+    });
+  }
 
   ngOnInit() {}
 
-  onSubmit() {
-    console.log('submitted');
-    this.formChanged.emit(this.form.value);
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

@@ -3,7 +3,8 @@ I'm smart
   [data]="(user$ | async) ?? undefined"
   (formChanged)="onFormChanged($event)"
 ></dumb-component>
-<dumb-component
-  [data]="(user$ | async) ?? undefined"
-  (formChanged)="onFormChanged($event)"
-></dumb-component>
+
+<dynamic-form-array
+  [data]="(user$ | async)?.addresses ?? undefined"
+  (addAddress)="onAddAddress()"
+></dynamic-form-array>
