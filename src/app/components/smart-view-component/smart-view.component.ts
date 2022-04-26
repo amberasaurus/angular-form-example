@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { updateUser } from '../../state/actions';
+import { addAddress, updateUser } from '../../state/actions';
 import { AppState, selectUser, User } from '../../state/reducers';
 
 @Component({
@@ -17,5 +17,9 @@ export class SmartViewComponent implements OnInit {
   onFormChanged(data: User) {
     console.log(data);
     this.store.dispatch(updateUser({ user: data }));
+  }
+
+  onAddAddress() {
+    this.store.dispatch(addAddress());
   }
 }
