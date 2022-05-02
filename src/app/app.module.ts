@@ -8,6 +8,8 @@ import { userReducer } from './state/reducers';
 import { SmartViewComponent } from './components/smart-view-component/smart-view.component';
 import { DumbComponent } from './components/dumb-component/dumb.component';
 import { DynamicFormArrayComponent } from './components/form-array-component/form-array.component';
+import { RoleComponent } from './components/role-component/role.component';
+import { TeamMembersComponent } from './components/team-members-component/team-members.component';
 
 @NgModule({
   declarations: [
@@ -15,6 +17,8 @@ import { DynamicFormArrayComponent } from './components/form-array-component/for
     SmartViewComponent,
     DumbComponent,
     DynamicFormArrayComponent,
+    RoleComponent,
+    TeamMembersComponent,
   ],
   imports: [
     BrowserModule,

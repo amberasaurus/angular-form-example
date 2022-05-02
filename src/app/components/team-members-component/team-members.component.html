@@ -1,0 +1,4 @@
+<ng-container *ngFor="let control of teamMembers.controls">
+  <input [formControl]="getControl(control)" />
+</ng-container>
+<button (click)="addTeamMember()">Add Team Member</button>

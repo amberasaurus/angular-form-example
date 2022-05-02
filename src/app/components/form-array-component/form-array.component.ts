@@ -9,9 +9,7 @@ import { Address } from 'src/app/state/reducers';
 export class DynamicFormArrayComponent implements OnInit {
   @Input()
   set data(values: Address[] | undefined) {
-    while (this.addressFormArray.controls.length) {
-      this.addressFormArray.removeAt(0);
-    }
+    this.addressFormArray.clear();
 
     if (values) {
       values.forEach((address) => {
