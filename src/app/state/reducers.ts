@@ -1,11 +1,18 @@
 import { createFeatureSelector, createReducer, on } from '@ngrx/store';
-import { addAddress, updateUser } from './actions';
+import { addAddress, changeRole, updateUser } from './actions';
 
 export interface User {
   firstName: string | undefined;
   lastName: string | undefined;
   email: string | undefined;
   addresses: Address[];
+  role: Role | undefined;
+  teamMembers: string[];
+}
+
+export enum Role {
+  Employee = 'employee',
+  Manager = 'manager',
 }
 
 export interface Address {
@@ -24,6 +31,8 @@ const initialUserState: User = {
   lastName: undefined,
   email: undefined,
   addresses: [],
+  role: undefined,
+  teamMembers: [],
 };
 
 export const userReducer = createReducer(
@@ -44,6 +53,12 @@ export const userReducer = createReducer(
     return {
       ...state,
       addresses: [...state.addresses, emptyAddress],
+    };
+  }),
+  on(changeRole, (state, { role }) => {
+    return {
+      ...state,
+      role,
     };
   })
 );

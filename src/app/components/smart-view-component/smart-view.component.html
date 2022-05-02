@@ -8,3 +8,13 @@ I'm smart
   [data]="(user$ | async)?.addresses ?? undefined"
   (addAddress)="onAddAddress()"
 ></dynamic-form-array>
+
+<br />
+<role-selection
+  [data]="(user$ | async)?.role ?? undefined"
+  (roleChanged)="onRoleChange($event)"
+></role-selection>
+
+<ng-container *ngIf="(user$ | async)?.role === Role.Manager">
+  <team-members-selection></team-members-selection>
+</ng-container>
