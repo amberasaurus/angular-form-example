@@ -11,10 +11,10 @@ import { Subject, takeUntil } from 'rxjs';
 import { User } from 'src/app/state/reducers';
 
 @Component({
-  selector: 'dumb-component',
-  templateUrl: 'dumb.component.html',
+  selector: 'user-details',
+  templateUrl: 'user-details.component.html',
 })
-export class DumbComponent implements OnInit, OnDestroy {
+export class UserDetailsComponent implements OnInit, OnDestroy {
   @Input()
   set data(value: User | undefined) {
     if (value) {

@@ -4,10 +4,10 @@ import { addAddress, updateUser, changeRole } from '../../state/actions';
 import { selectUser, Role, User } from '../../state/reducers';
 
 @Component({
-  selector: 'smart-view-component',
-  templateUrl: 'smart-view.component.html',
+  selector: 'basic-info',
+  templateUrl: 'basic-info.component.html',
 })
-export class SmartViewComponent implements OnInit {
+export class BasicInfoComponent implements OnInit {
   user$ = this.store.select(selectUser);
   Role = Role;
 

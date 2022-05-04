@@ -5,18 +5,36 @@ import { AppComponent } from './app.component';
 import { StoreModule } from '@ngrx/store';
 import { ReactiveFormsModule } from '@angular/forms';
 import { userReducer } from './state/reducers';
-import { SmartViewComponent } from './components/smart-view-component/smart-view.component';
-import { DumbComponent } from './components/dumb-component/dumb.component';
-import { DynamicFormArrayComponent } from './components/form-array-component/form-array.component';
+import { AddressListComponent } from './components/address-list-component/address-list.component';
 import { RoleComponent } from './components/role-component/role.component';
 import { TeamMembersComponent } from './components/team-members-component/team-members.component';
+import { RouterModule, Routes } from '@angular/router';
+import { BasicInfoComponent } from './components/basic-info-component/basic-info.component';
+import { UserDetailsComponent } from './components/user-details-component/user-details.component';
+import { RoleInfoComponent } from './components/role-info-component/role-info.component';
+
+const routes: Routes = [
+  {
+    path: '',
+    redirectTo: 'basicInfo',
+    pathMatch: 'full',
+  },
+  {
+    path: 'basicInfo',
+    component: BasicInfoComponent,
+  },
+  {
+    path: 'routeTwo',
+    component: RoleInfoComponent,
+  },
+];
 
 @NgModule({
   declarations: [
     AppComponent,
-    SmartViewComponent,
-    DumbComponent,
-    DynamicFormArrayComponent,
+    BasicInfoComponent,
+    UserDetailsComponent,
+    AddressListComponent,
     RoleComponent,
     TeamMembersComponent,
   ],
@@ -24,6 +42,7 @@ import { TeamMembersComponent } from './components/team-members-component/team-m
     BrowserModule,
     StoreModule.forRoot({ user: userReducer }),
     ReactiveFormsModule,
+    RouterModule.forRoot(routes),
   ],
   providers: [],
   bootstrap: [AppComponent],

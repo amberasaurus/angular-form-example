@@ -3,10 +3,10 @@ import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 import { Address } from 'src/app/state/reducers';
 
 @Component({
-  selector: 'dynamic-form-array',
-  templateUrl: 'form-array.component.html',
+  selector: 'address-list',
+  templateUrl: 'address-list.component.html',
 })
-export class DynamicFormArrayComponent implements OnInit {
+export class AddressListComponent implements OnInit {
   @Input()
   set data(values: Address[] | undefined) {
     this.addressFormArray.clear();

@@ -1,0 +1,23 @@
+Basic Info Tab
+<ng-container *ngIf="user$ | async as user">
+  <user-details
+    [data]="user"
+    (formChanged)="onFormChanged($event)"
+  ></user-details>
+
+  <address-list
+    [data]="user.addresses"
+    (addAddress)="onAddAddress()"
+  ></address-list>
+
+  <br />
+
+  <role-selection
+    [data]="user.role"
+    (roleChanged)="onRoleChange($event)"
+  ></role-selection>
+
+  <ng-container *ngIf="user.role === Role.Manager">
+    <team-members-selection></team-members-selection>
+  </ng-container>
+</ng-container>
