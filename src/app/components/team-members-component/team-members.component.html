@@ -1,4 +1,11 @@
-<ng-container *ngFor="let control of teamMembers.controls">
-  <input [formControl]="getControl(control)" />
-</ng-container>
+<form [formGroup]="form">
+  <ng-container formArrayName="teamMembers">
+    <ng-container
+      *ngFor="let address of teamMembersFormArray.controls; index as i"
+    >
+      <input [formControlName]="i" />
+    </ng-container>
+  </ng-container>
+</form>
+
 <button (click)="addTeamMember()">Add Team Member</button>

@@ -1,48 +1,17 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  OnInit,
-  Output,
-  OnDestroy,
-} from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
-import { Subject, takeUntil } from 'rxjs';
-import { User } from 'src/app/state/reducers';
+import { Component, OnInit } from '@angular/core';
+import { FormGroup } from '@angular/forms';
+import { FormService } from 'src/app/services/form.service';
 
 @Component({
   selector: 'user-details',
   templateUrl: 'user-details.component.html',
 })
-export class UserDetailsComponent implements OnInit, OnDestroy {
-  @Input()
-  set data(value: User | undefined) {
-    if (value) {
-      this.form.patchValue(value, { emitEvent: false });
-    }
-  }
+export class UserDetailsComponent implements OnInit {
+  public form: FormGroup;
 
-  @Output() formChanged = new EventEmitter<User>();
-
-  private destroy$ = new Subject<void>();
-
-  form: FormGroup = this.fb.group({
-    firstName: [],
-    lastName: [],
-    email: [],
-  });
-
-  constructor(private fb: FormBuilder) {
-    this.form.valueChanges.pipe(takeUntil(this.destroy$)).subscribe((value) => {
-      console.log('valueChanges fired');
-      this.formChanged.emit(value);
-    });
+  constructor(private formService: FormService) {
+    this.form = this.formService.form;
   }
 
   ngOnInit() {}
-
-  ngOnDestroy() {
-    this.destroy$.next();
-    this.destroy$.complete();
-  }
 }

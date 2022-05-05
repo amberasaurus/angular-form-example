@@ -1,5 +1,6 @@
-import { Component, Input, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormControl } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { FormControl } from '@angular/forms';
+import { FormService } from 'src/app/services/form.service';
 import { Role } from 'src/app/state/reducers';
 
 @Component({
@@ -9,16 +10,11 @@ import { Role } from 'src/app/state/reducers';
 export class RoleComponent implements OnInit {
   Role = Role;
 
-  formControl: FormControl = this.fb.control('');
+  public roleFormControl: FormControl;
 
-  @Input()
-  set data(value: Role | undefined) {
-    this.formControl.setValue(value);
+  constructor(private formService: FormService) {
+    this.roleFormControl = this.formService.form.get('role') as FormControl;
   }
-
-  @Output() roleChanged = this.formControl.valueChanges;
-
-  constructor(private fb: FormBuilder) {}
 
   ngOnInit() {}
 }
