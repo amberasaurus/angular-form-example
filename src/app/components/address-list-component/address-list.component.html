@@ -1,7 +1,7 @@
-<form [formGroup]="addressFormGroup">
+<form [formGroup]="form">
   <ng-container formArrayName="addresses">
     <ng-container
-      *ngFor="let address of addressFormArray.controls; index as i"
+      *ngFor="let address of addresses.controls; index as i"
       [formGroupName]="i"
     >
       Street:
@@ -16,4 +16,5 @@
     </ng-container>
   </ng-container>
 </form>
-<button type="button" (click)="addAddress.emit()">Add Address</button>
+
+<button type="button" (click)="addAddress()">Add Address</button>

@@ -4,9 +4,9 @@
    1. add - done
    2. remove
    3. change the order
-4. FormGroup display that depends on a different FormControl being selected, etc.
-5. Form split across tabs
-6. Validation across tabs
-   1. Custom validators
-   2. Validations on control in one tab affect validation of control in a different tab
-7. Pre-populating form
+4. FormGroup display that depends on a different FormControl being selected, etc. - done
+5. Form split across tabs within the application
+   1. Validation across tabs within the application
+      1. Validations on control in one tab affect validation of control in a different tab
+6. Pre-populating form
+7. Custom validators

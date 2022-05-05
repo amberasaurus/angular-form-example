@@ -1,35 +1,23 @@
-import { Component, Input, OnInit } from '@angular/core';
-import {
-  AbstractControl,
-  FormArray,
-  FormControl,
-  FormGroup,
-} from '@angular/forms';
-import { Role } from 'src/app/state/reducers';
+import { Component } from '@angular/core';
+import { FormArray, FormControl, FormGroup } from '@angular/forms';
+import { FormService } from 'src/app/services/form.service';
 
 @Component({
   selector: 'team-members-selection',
   templateUrl: 'team-members.component.html',
 })
 export class TeamMembersComponent {
-  @Input()
-  set data(values: string[]) {
-    this.teamMembers.clear();
+  public form: FormGroup;
 
-    if (values) {
-      values.forEach((teamMember) => {
-        this.teamMembers.push(new FormControl(teamMember));
-      });
-    }
+  constructor(private formService: FormService) {
+    this.form = this.formService.form;
   }
 
-  teamMembers = new FormArray([]);
+  public get teamMembersFormArray() {
+    return this.form.get('teamMembers') as FormArray;
+  }
 
   addTeamMember() {
-    this.teamMembers.push(new FormControl());
-  }
-
-  getControl(control: AbstractControl): FormControl {
-    return control as FormControl;
+    this.teamMembersFormArray.controls.push(new FormControl());
   }
 }

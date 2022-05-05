@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { FormService } from './services/form.service';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +7,9 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-  title = 'Lance';
+  public get form() {
+    return this.formService.form;
+  }
+
+  constructor(private formService: FormService) {}
 }
