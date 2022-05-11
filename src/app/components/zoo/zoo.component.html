@@ -1,0 +1,36 @@
+<div class="navbar bg-base-100">
+  <div class="navbar-start"><span>Welcome to the Zoo!</span></div>
+  <div class="navbar-center"></div>
+  <div class="navbar-end">
+    <button class="btn btn-sm btn-accent" (click)="showAddEnvironment = true">
+      Add Environment
+    </button>
+    <button class="btn btn-sm btn-accent">Add Zone</button>
+    <button class="btn btn-sm btn-accent" (click)="showAddSpecies = true">
+      Add Species
+    </button>
+    <button class="btn btn-sm btn-accent">Add Animal</button>
+  </div>
+</div>
+
+<div class="tabs">
+  <a
+    class="tab tab-lifted"
+    *ngFor="let env of environments.controls"
+    [class.tab-active]="activeEnv === env.value.name"
+    (click)="activeEnv = env.value.name"
+  >
+    {{ env.value.name }}
+  </a>
+</div>
+
+<p>{{ activeEnv }}</p>
+
+<button class="btn btn-primary">Is my zoo safe?</button>
+
+<app-environment-form
+  *ngIf="showAddEnvironment"
+  (addEnvironment)="onAddEnvironment($event)"
+></app-environment-form>
+
+<app-species-form *ngIf="showAddSpecies"> </app-species-form>

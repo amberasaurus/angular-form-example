@@ -1,0 +1,22 @@
+<form [formGroup]="environmentForm" (ngSubmit)="submit(environmentForm)">
+  <div class="form-control w-full max-w-xs">
+    <label class="label">
+      <span class="label-text">Name</span>
+    </label>
+    <input
+      formControlName="name"
+      type="text"
+      class="input input-bordered input-sm w-full max-w-xs"
+    />
+  </div>
+  <div class="form-control w-full max-w-xs">
+    <label class="label">
+      <span class="label-text">Type</span>
+    </label>
+    <select class="select select-bordered select-sm">
+      <option *ngFor="let type of environmentTypes">{{ type }}</option>
+    </select>
+  </div>
+
+  <button type="submit" class="btn btn-primary btn-sm">Add</button>
+</form>

@@ -1,0 +1,13 @@
+<div class="form-control w-full max-w-xs">
+  <label class="label">
+    <span class="label-text">Species</span>
+  </label>
+  <select
+    class="select select-bordered select-lg text-5xl"
+    style="height: 80px; line-height: 1.5"
+  >
+    <option class="text-5xl" *ngFor="let species of speciesEmoji">
+      {{ species }}
+    </option>
+  </select>
+</div>
