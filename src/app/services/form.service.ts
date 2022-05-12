@@ -5,7 +5,6 @@ import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 export class FormService {
   form = this.fb.group({
     environments: this.fb.array([]),
-    species: this.fb.array([]),
   });
 
   constructor(private fb: FormBuilder) {}
@@ -20,15 +19,6 @@ export class FormService {
 
   public addEnvironment(env: FormGroup) {
     (this.form.get('environments') as FormArray).push(env);
-  }
-
-  private getSpeciesFormGroup(): FormGroup {
-    return this.fb.group({
-      name: [],
-      emoji: [],
-      prey: this.fb.array([]),
-      type: [],
-    });
   }
 
   private getZoneFormGroup(): FormGroup {

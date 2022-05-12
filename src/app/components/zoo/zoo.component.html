@@ -1,20 +1,20 @@
-<div class="navbar bg-base-100">
+<div class="navbar bg-neutral text-neutral-content">
   <div class="navbar-start"><span>Welcome to the Zoo!</span></div>
   <div class="navbar-center"></div>
   <div class="navbar-end">
-    <button class="btn btn-sm btn-accent" (click)="showAddEnvironment = true">
+    <button
+      class="btn btn-sm btn-secondary"
+      (click)="showAddEnvironment = true"
+    >
       Add Environment
     </button>
-    <button class="btn btn-sm btn-accent">Add Zone</button>
-    <button class="btn btn-sm btn-accent" (click)="showAddSpecies = true">
-      Add Species
-    </button>
-    <button class="btn btn-sm btn-accent">Add Animal</button>
+    <button class="btn btn-sm btn-secondary">Add Zone</button>
+    <button class="btn btn-sm btn-secondary">Add Animal</button>
   </div>
 </div>
 <p>
-  This project was created with the intention of demonstrating the power of
-  complex Angular reactive forms.
+  This project was created with the intention of demonstrating a complex Angular
+  reactive form.
 </p>
 
 <p>
@@ -52,4 +52,20 @@
   (addEnvironment)="onAddEnvironment($event)"
 ></app-environment-form>
 
-<app-species-form *ngIf="showAddSpecies"> </app-species-form>
+<div class="form-control w-full max-w-xs">
+  <label class="label">
+    <span class="label-text">Species</span>
+  </label>
+  <select
+    class="select select-bordered select-lg text-3xl"
+    style="height: 80px; line-height: 1.5"
+  >
+    <option *ngFor="let species of species">
+      <div class="text-5xl">
+        {{ species.emoji }}
+      </div>
+      <div class="text-3xl">{{ species.name }}</div>
+      <div class="text-3xl ml-1">{{ species.type }}</div>
+    </option>
+  </select>
+</div>

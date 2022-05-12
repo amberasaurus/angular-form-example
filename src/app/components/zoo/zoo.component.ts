@@ -1,6 +1,43 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormGroup } from '@angular/forms';
 import { FormService } from 'src/app/services/form.service';
+const availableSpecies = [
+  {
+    name: 'Tiger',
+    emoji: '🐅',
+    type: 'Carnivore',
+  },
+  {
+    name: 'Monkey',
+    emoji: '🐒',
+    type: 'Herbivore',
+  },
+  {
+    name: 'Zebra',
+    emoji: '🦓',
+    type: 'Herbivore',
+  },
+  {
+    name: 'Deer',
+    emoji: '🦌',
+    type: 'Herbivore',
+  },
+  {
+    name: 'Flamingo',
+    emoji: '🦩',
+    type: 'Carnivore',
+  },
+  {
+    name: 'Alligator',
+    emoji: '🐊',
+    type: 'Carnivore',
+  },
+  {
+    name: 'T-Rex',
+    emoji: '🦖',
+    type: 'Carnivore',
+  },
+];
 
 @Component({
   selector: 'app-zoo',
@@ -9,8 +46,8 @@ import { FormService } from 'src/app/services/form.service';
 })
 export class ZooComponent implements OnInit {
   showAddEnvironment = false;
-  showAddSpecies = false;
   activeEnv = '';
+  species = availableSpecies;
 
   constructor(private formService: FormService) {}
 
