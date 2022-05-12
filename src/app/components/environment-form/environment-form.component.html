@@ -5,9 +5,20 @@
     </label>
     <input
       formControlName="name"
+      [class.input-error]="
+        environmentForm.get('name')?.touched &&
+        environmentForm.get('name')?.errors
+      "
       type="text"
       class="input input-bordered input-sm w-full max-w-xs"
     />
+    <small
+      *ngIf="
+        environmentForm.get('name')?.touched &&
+        environmentForm.get('name')?.errors
+      "
+      >Name is required</small
+    >
   </div>
   <div class="form-control w-full max-w-xs">
     <label class="label">

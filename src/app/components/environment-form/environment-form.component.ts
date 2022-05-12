@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
 import { FormService } from 'src/app/services/form.service';
 
 const availableEnvironments = ['Forest', 'Jungle', 'Desert'];
@@ -13,12 +14,14 @@ export class EnvironmentFormComponent implements OnInit {
   environmentTypes = availableEnvironments;
   environmentForm: FormGroup;
 
-  constructor(private formService: FormService) {
+  constructor(private formService: FormService, private router: Router) {
     this.environmentForm = this.formService.getEnvironmentFormGroup();
-    this.formService.addEnvironment(this.environmentForm);
   }
 
   ngOnInit(): void {}
 
-  submit(form: FormGroup): void {}
+  submit(form: FormGroup): void {
+    this.formService.addEnvironment(form);
+    this.router.navigate(['']);
+  }
 }
