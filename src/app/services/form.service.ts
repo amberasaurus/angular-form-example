@@ -1,20 +1,27 @@
 import { Injectable } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { environmentNameValidator } from './form-validator.service';
 
 @Injectable({ providedIn: 'root' })
 export class FormService {
   form = this.fb.group({
     environments: this.fb.array([]),
+    validators: [],
   });
 
   constructor(private fb: FormBuilder) {}
 
   public getEnvironmentFormGroup(): FormGroup {
-    return this.fb.group({
-      name: [''],
-      type: [''],
-      zones: this.fb.array([]),
-    });
+    return this.fb.group(
+      {
+        name: ['', [Validators.required]],
+        type: [''],
+        zones: this.fb.array([]),
+      },
+      {
+        validators: [environmentNameValidator],
+      }
+    );
   }
 
   public addEnvironment(env: FormGroup) {

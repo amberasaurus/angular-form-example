@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { FormService } from 'src/app/services/form.service';
 
@@ -13,15 +13,12 @@ export class EnvironmentFormComponent implements OnInit {
   environmentTypes = availableEnvironments;
   environmentForm: FormGroup;
 
-  @Output() addEnvironment = new EventEmitter<FormGroup>();
-
   constructor(private formService: FormService) {
     this.environmentForm = this.formService.getEnvironmentFormGroup();
+    this.formService.addEnvironment(this.environmentForm);
   }
 
   ngOnInit(): void {}
 
-  submit(form: FormGroup): void {
-    this.addEnvironment.emit(form);
-  }
+  submit(form: FormGroup): void {}
 }

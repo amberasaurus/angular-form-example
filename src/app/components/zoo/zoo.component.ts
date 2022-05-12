@@ -45,7 +45,6 @@ const availableSpecies = [
   styleUrls: ['./zoo.component.scss'],
 })
 export class ZooComponent implements OnInit {
-  showAddEnvironment = false;
   activeEnv = '';
   species = availableSpecies;
 
@@ -59,7 +58,6 @@ export class ZooComponent implements OnInit {
 
   onAddEnvironment(formGroup: FormGroup) {
     this.formService.addEnvironment(formGroup);
-    this.showAddEnvironment = false;
 
     console.log(this.formService.form);
   }
