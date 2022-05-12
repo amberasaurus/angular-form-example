@@ -35,7 +35,7 @@ const availableSpecies = [
   {
     name: 'T-Rex',
     emoji: '🦖',
-    type: 'Carnivore',
+    type: 'Omnivore',
   },
 ];
 
