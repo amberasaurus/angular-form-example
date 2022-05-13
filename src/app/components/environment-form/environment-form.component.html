@@ -1,37 +1,36 @@
-<form [formGroup]="environmentForm" (ngSubmit)="submit(environmentForm)">
-  <div class="form-control w-full max-w-xs">
-    <label class="label">
-      <span class="label-text">Name</span>
-    </label>
-    <input
-      formControlName="name"
-      [class.input-error]="
-        environmentForm.get('name')?.touched &&
-        environmentForm.get('name')?.errors
-      "
-      type="text"
-      class="input input-bordered input-sm w-full max-w-xs"
-    />
-    <small
-      *ngIf="
-        environmentForm.get('name')?.touched &&
-        environmentForm.get('name')?.errors
-      "
-      >Name is required</small
-    >
-  </div>
-  <div class="form-control w-full max-w-xs">
-    <label class="label">
-      <span class="label-text">Type</span>
-    </label>
-    <select class="select select-bordered select-sm">
-      <option *ngFor="let type of environmentTypes">{{ type }}</option>
-    </select>
-  </div>
+<form
+  class="environment-form"
+  [formGroup]="environmentForm"
+  (ngSubmit)="submit(environmentForm)"
+>
+  <p>
+    <mat-form-field appearance="fill">
+      <mat-label>Name</mat-label>
+      <input matInput formControlName="name" />
+      <mat-error *ngIf="environmentForm.get('name')?.hasError('required')">
+        Name is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+  </p>
+
+  <p>
+    <mat-form-field appearance="fill">
+      <mat-label>Type</mat-label>
+      <mat-select formControlName="type">
+        <mat-option *ngFor="let type of environmentTypes" [value]="type">
+          {{ type }}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="environmentForm.get('type')?.hasError('required')">
+        Type is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+  </p>
 
   <button
     type="submit"
-    class="btn btn-primary btn-sm"
+    mat-raised-button
+    color="primary"
     [disabled]="!environmentForm.valid"
   >
     Save

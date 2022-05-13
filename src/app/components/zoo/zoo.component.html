@@ -21,35 +21,19 @@
 
 <h2 class="text-2xl mt-2 mb-4">Current Environments:</h2>
 
-<div class="tabs mb-4">
-  <a
-    class="tab tab-lifted"
-    *ngFor="let env of environments.controls"
-    [class.tab-active]="activeEnv === env.value.name"
-    (click)="activeEnv = env.value.name"
+<mat-tab-group
+  [selectedIndex]="selectedEnv.value"
+  (selectedIndexChange)="selectedEnv.setValue($event)"
+>
+  <mat-tab
+    *ngFor="let env of environments.controls; let index = index"
+    [label]="env.value.name"
   >
-    {{ env.value.name }}
-  </a>
-</div>
+    <ng-template mat-tab-label>
+      {{ env.value.name }} - {{ env.value.type }}
+    </ng-template>
+    zones go here
+  </mat-tab>
+</mat-tab-group>
 
-<p>{{ activeEnv }}</p>
-
-<button class="btn btn-primary">Is my zoo safe?</button>
-
-<!-- <div class="form-control w-full max-w-xs">
-  <label class="label">
-    <span class="label-text">Species</span>
-  </label>
-  <select
-    class="select select-bordered select-lg text-3xl"
-    style="height: 80px; line-height: 1.5"
-  >
-    <option *ngFor="let species of species">
-      <div class="text-5xl">
-        {{ species.emoji }}
-      </div>
-      <div class="text-3xl">{{ species.name }}</div>
-      <div class="text-3xl ml-1">{{ species.type }}</div>
-    </option>
-  </select>
-</div> -->
+<button mat-raised-button color="warn">Is my zoo safe?</button>

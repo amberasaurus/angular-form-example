@@ -1,17 +1,13 @@
-<div class="navbar bg-neutral text-neutral-content">
-  <div class="navbar-start">
-    <a href="" [routerLink]="['']">Welcome to the Zoo!</a>
+<mat-toolbar color="primary">
+  <button mat-button [routerLink]="['']">Welcome to the Zoo!</button>
+
+  <span class="spacer"></span>
+  <div class="nav-buttons">
+    <button mat-raised-button color="accent" [routerLink]="['environment/add']">
+      Add Environment
+    </button>
+    <button mat-raised-button color="accent">Add Zone</button>
+    <button mat-raised-button color="accent">Add Animal</button>
   </div>
-  <div class="navbar-center"></div>
-  <div class="navbar-end">
-    <a
-      href=""
-      [routerLink]="['environment', 'add']"
-      class="btn btn-sm btn-secondary"
-      >Add Environment</a
-    >
-    <button class="btn btn-sm btn-secondary">Add Zone</button>
-    <button class="btn btn-sm btn-secondary">Add Animal</button>
-  </div>
-</div>
+</mat-toolbar>
 <router-outlet></router-outlet>

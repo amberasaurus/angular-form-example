@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormGroup } from '@angular/forms';
+import { FormArray, FormControl, FormGroup } from '@angular/forms';
 import { FormService } from 'src/app/services/form.service';
 const availableSpecies = [
   {
@@ -45,7 +45,7 @@ const availableSpecies = [
   styleUrls: ['./zoo.component.scss'],
 })
 export class ZooComponent implements OnInit {
-  activeEnv = '';
+  selectedEnv = new FormControl(0);
   species = availableSpecies;
 
   constructor(private formService: FormService) {}

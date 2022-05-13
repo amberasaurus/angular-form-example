@@ -15,7 +15,7 @@ export class FormService {
     return this.fb.group(
       {
         name: ['', [Validators.required]],
-        type: [''],
+        type: ['', [Validators.required]],
         zones: this.fb.array([]),
       },
       {

@@ -1,7 +1,9 @@
-.navbar {
-  display: flex;
-  column-gap: 15px;
+.spacer {
+  flex: 1 1 auto;
 }
-.active-link {
-  background-color: lightgreen;
+
+.nav-buttons {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  column-gap: 5px;
 }
