@@ -28,12 +28,23 @@ export class FormService {
     (this.form.get('environments') as FormArray).push(env);
   }
 
-  private getZoneFormGroup(): FormGroup {
+  public getCurrentEnvironments(): FormArray {
+    return this.form.get('environments') as FormArray;
+  }
+
+  public getZoneFormGroup(): FormGroup {
     return this.fb.group({
-      name: [],
-      maxCapacity: [],
+      name: ['', [Validators.required]],
+      maxCapacity: ['', [Validators.required]],
       animals: this.fb.array([]),
     });
+  }
+
+  public addZoneToEnvironment(envName: string, zone: FormGroup) {
+    const env = this.findEnvironmentByName(envName);
+    if (env) {
+      (env.get('zones') as FormArray).push(zone);
+    }
   }
 
   private getAnimalFormGroup(): FormGroup {
@@ -42,5 +53,11 @@ export class FormService {
       species: [],
       lifeStage: [],
     });
+  }
+
+  private findEnvironmentByName(name: string) {
+    return this.getCurrentEnvironments().controls.find(
+      (control) => control.value.name === name
+    );
   }
 }

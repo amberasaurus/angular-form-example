@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { FormService } from 'src/app/services/form.service';
@@ -10,7 +10,7 @@ const availableEnvironments = ['Forest', 'Jungle', 'Desert'];
   templateUrl: './environment-form.component.html',
   styleUrls: ['./environment-form.component.scss'],
 })
-export class EnvironmentFormComponent implements OnInit {
+export class EnvironmentFormComponent {
   environmentTypes = availableEnvironments;
   environmentForm: FormGroup;
 
@@ -18,10 +18,8 @@ export class EnvironmentFormComponent implements OnInit {
     this.environmentForm = this.formService.getEnvironmentFormGroup();
   }
 
-  ngOnInit(): void {}
-
-  submit(form: FormGroup): void {
-    this.formService.addEnvironment(form);
+  submit(): void {
+    this.formService.addEnvironment(this.environmentForm);
     this.router.navigate(['']);
   }
 }

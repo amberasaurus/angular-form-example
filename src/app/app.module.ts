@@ -9,10 +9,13 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule, Routes } from '@angular/router';
 import { AppComponent } from './app.component';
+import { EnvironmentDisplayComponent } from './components/environment-display/environment-display.component';
 import { EnvironmentFormComponent } from './components/environment-form/environment-form.component';
 import { SpeciesFormComponent } from './components/species-form/species-form.component';
 import { TeamMembersComponent } from './components/team-members-component/team-members.component';
+import { ZoneFormComponent } from './components/zone-form/zone-form.component';
 import { ZooComponent } from './components/zoo/zoo.component';
+import { ZoneListComponent } from './components/zone-list/zone-list.component';
 
 const routes: Routes = [
   {
@@ -28,6 +31,10 @@ const routes: Routes = [
     path: 'environment/add',
     component: EnvironmentFormComponent,
   },
+  {
+    path: 'zone/add',
+    component: ZoneFormComponent,
+  },
 ];
 
 @NgModule({
@@ -37,6 +44,9 @@ const routes: Routes = [
     ZooComponent,
     EnvironmentFormComponent,
     SpeciesFormComponent,
+    ZoneFormComponent,
+    EnvironmentDisplayComponent,
+    ZoneListComponent,
   ],
   imports: [
     BrowserModule,

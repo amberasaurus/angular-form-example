@@ -1,0 +1,46 @@
+<form class="standard-form" [formGroup]="zoneForm" (ngSubmit)="submit()">
+  <p>
+    <mat-form-field appearance="fill">
+      <mat-label>Environment</mat-label>
+      <mat-select [formControl]="selectedEnvironment">
+        <mat-option
+          *ngFor="let env of currentEnvironments.controls"
+          [value]="env.value.name"
+        >
+          {{ env.value.name }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </p>
+
+  <ng-container *ngIf="selectedEnvironment.value">
+    <p>
+      <mat-form-field appearance="fill">
+        <mat-label>Name</mat-label>
+        <input matInput formControlName="name" />
+        <mat-error *ngIf="zoneForm.get('name')?.hasError('required')">
+          Name is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+    </p>
+
+    <p>
+      <mat-form-field appearance="fill">
+        <mat-label>Max Capacity</mat-label>
+        <input type="number" matInput formControlName="maxCapacity" />
+        <mat-error *ngIf="zoneForm.get('maxCapacity')?.hasError('required')">
+          Max Capacity is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+    </p>
+  </ng-container>
+
+  <button
+    type="submit"
+    mat-raised-button
+    color="primary"
+    [disabled]="!zoneForm.valid"
+  >
+    Save
+  </button>
+</form>

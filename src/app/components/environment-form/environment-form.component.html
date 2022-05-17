@@ -1,8 +1,4 @@
-<form
-  class="environment-form"
-  [formGroup]="environmentForm"
-  (ngSubmit)="submit(environmentForm)"
->
+<form class="standard-form" [formGroup]="environmentForm" (ngSubmit)="submit()">
   <p>
     <mat-form-field appearance="fill">
       <mat-label>Name</mat-label>
