@@ -1,1 +1,53 @@
-<p>animal-form works!</p>
+<form class="standard-form" [formGroup]="animalForm" (ngSubmit)="submit()">
+  <h1>Add Animal</h1>
+  <p>
+    <mat-form-field appearance="fill">
+      <mat-label>Environment</mat-label>
+      <mat-select [formControl]="selectedEnvironment">
+        <mat-option
+          *ngFor="let env of currentEnvironments.controls"
+          [value]="env.value.name"
+        >
+          {{ env.value.name }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </p>
+
+  <ng-container *ngIf="selectedEnvironment.value">
+    <p>
+      <mat-form-field appearance="fill">
+        <mat-label>Zone</mat-label>
+        <mat-select [formControl]="selectedZone">
+          <mat-option
+            *ngFor="let zone of availableZones?.controls"
+            [value]="zone.value.name"
+          >
+            {{ zone.value.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </p>
+  </ng-container>
+
+  <ng-container *ngIf="selectedEnvironment.value && selectedZone.value">
+    <p>
+      <mat-form-field appearance="fill">
+        <mat-label>Name</mat-label>
+        <input matInput formControlName="name" />
+        <mat-error *ngIf="animalForm.controls.name.hasError('required')">
+          Name is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+    </p>
+  </ng-container>
+
+  <button
+    type="submit"
+    mat-raised-button
+    color="primary"
+    [disabled]="!animalForm.valid"
+  >
+    Save
+  </button>
+</form>

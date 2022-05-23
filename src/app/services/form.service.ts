@@ -72,6 +72,14 @@ export class FormService {
     }
   }
 
+  public getZonesForEnvironment(
+    envName: string
+  ): FormArray<FormGroup<Zone>> | undefined {
+    return this.form.controls.environments.controls.find(
+      (env) => env.controls.name.value === envName
+    )?.controls.zones;
+  }
+
   public getAnimalFormGroup(): FormGroup<Animal> {
     return this.fb.group<Animal>({
       name: this.fb.control(''),
