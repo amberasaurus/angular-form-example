@@ -16,6 +16,7 @@ import { TeamMembersComponent } from './components/team-members-component/team-m
 import { ZoneFormComponent } from './components/zone-form/zone-form.component';
 import { ZooComponent } from './components/zoo/zoo.component';
 import { ZoneListComponent } from './components/zone-list/zone-list.component';
+import { AnimalFormComponent } from './components/animal-form/animal-form.component';
 
 const routes: Routes = [
   {
@@ -47,6 +48,7 @@ const routes: Routes = [
     ZoneFormComponent,
     EnvironmentDisplayComponent,
     ZoneListComponent,
+    AnimalFormComponent,
   ],
   imports: [
     BrowserModule,
