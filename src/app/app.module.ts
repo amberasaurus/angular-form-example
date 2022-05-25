@@ -12,8 +12,6 @@ import { AppComponent } from './app.component';
 import { AnimalFormComponent } from './components/animal-form/animal-form.component';
 import { EnvironmentDisplayComponent } from './components/environment-display/environment-display.component';
 import { EnvironmentFormComponent } from './components/environment-form/environment-form.component';
-import { SpeciesFormComponent } from './components/species-form/species-form.component';
-import { TeamMembersComponent } from './components/team-members-component/team-members.component';
 import { ZoneFormComponent } from './components/zone-form/zone-form.component';
 import { ZoneListComponent } from './components/zone-list/zone-list.component';
 import { ZooComponent } from './components/zoo/zoo.component';
@@ -45,10 +43,8 @@ const routes: Routes = [
 @NgModule({
   declarations: [
     AppComponent,
-    TeamMembersComponent,
     ZooComponent,
     EnvironmentFormComponent,
-    SpeciesFormComponent,
     ZoneFormComponent,
     EnvironmentDisplayComponent,
     ZoneListComponent,
