@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormArray, FormControl, FormGroup } from '@angular/forms';
+import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Environment, FormService, Zone } from 'src/app/services/form.service';
 
@@ -11,7 +11,10 @@ import { Environment, FormService, Zone } from 'src/app/services/form.service';
 export class ZoneFormComponent {
   zoneForm: FormGroup<Zone>;
   currentEnvironments: FormArray<FormGroup<Environment>>;
-  selectedEnvironment = new FormControl<string>('');
+  selectedEnvironment = new FormControl<number>(-1, {
+    initialValueIsDefault: true,
+    validators: [Validators.required, Validators.min(0)],
+  });
 
   constructor(private formService: FormService, private router: Router) {
     this.zoneForm = this.formService.getZoneFormGroup();
@@ -20,7 +23,7 @@ export class ZoneFormComponent {
 
   submit(): void {
     this.formService.addZoneToEnvironment(
-      this.selectedEnvironment.value || '',
+      this.selectedEnvironment.value,
       this.zoneForm
     );
     this.router.navigate(['']);

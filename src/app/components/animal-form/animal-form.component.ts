@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormArray, FormControl, FormGroup } from '@angular/forms';
+import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import {
@@ -16,12 +16,22 @@ import {
 })
 export class AnimalFormComponent implements OnInit, OnDestroy {
   animalForm: FormGroup<Animal>;
-  selectedEnvironment = new FormControl<string>('', {
+  availableSpecies = availableSpecies;
+  availableLifeStages = availableLifeStages;
+
+  selectedEnvironment = new FormControl<number>(-1, {
     initialValueIsDefault: true,
+    validators: [Validators.required, Validators.min(0)],
   });
+
   selectedEnvironmentSub: Subscription;
+
   currentEnvironments: FormArray<FormGroup<Environment>>;
-  selectedZone = new FormControl<string>('');
+
+  selectedZone = new FormControl<number>(-1, {
+    initialValueIsDefault: true,
+    validators: [Validators.required, Validators.min(0)],
+  });
 
   availableZones: FormArray<FormGroup<Zone>> | undefined;
 
@@ -35,6 +45,7 @@ export class AnimalFormComponent implements OnInit, OnDestroy {
         this.availableZones = this.formService.getZonesForEnvironment(env);
       });
   }
+
   ngOnDestroy(): void {
     this.selectedEnvironmentSub.unsubscribe();
   }
@@ -42,6 +53,58 @@ export class AnimalFormComponent implements OnInit, OnDestroy {
   ngOnInit(): void {}
 
   submit(): void {
+    this.formService.addAnimalToZoneInEnv(
+      this.selectedEnvironment.value,
+      this.selectedZone.value,
+      this.animalForm
+    );
     this.router.navigate(['']);
   }
 }
+
+const availableLifeStages = ['Juvenile', 'Adult'];
+
+const availableSpecies = [
+  {
+    id: 'tiger',
+    name: 'Tiger',
+    emoji: '🐅',
+    type: 'Carnivore',
+  },
+  {
+    id: 'monkey',
+    name: 'Monkey',
+    emoji: '🐒',
+    type: 'Herbivore',
+  },
+  {
+    id: 'zebra',
+    name: 'Zebra',
+    emoji: '🦓',
+    type: 'Herbivore',
+  },
+  {
+    id: 'deer',
+    name: 'Deer',
+    emoji: '🦌',
+    type: 'Herbivore',
+  },
+  {
+    id: 'flamingo',
+    name: 'Flamingo',
+    emoji: '🦩',
+    type: 'Carnivore',
+  },
+  {
+    id: 'alligator',
+    name: 'Alligator',
+    emoji: '🐊',
+    type: 'Carnivore',
+  },
+  {
+    id: 't-rex',
+    name: 'T-Rex',
+    emoji: '🦖',
+    type: 'Omnivore',
+  },
+];

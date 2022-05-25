@@ -65,34 +65,38 @@ export class FormService {
     });
   }
 
-  public addZoneToEnvironment(envName: string, zone: FormGroup) {
-    const env = this.findEnvironmentByName(envName);
+  public addZoneToEnvironment(envIndex: number, zone: FormGroup) {
+    const env = this.form.controls.environments.controls[envIndex];
     if (env) {
       env.controls.zones.push(zone);
     }
   }
 
   public getZonesForEnvironment(
-    envName: string
+    envIndex: number
   ): FormArray<FormGroup<Zone>> | undefined {
-    return this.form.controls.environments.controls.find(
-      (env) => env.controls.name.value === envName
-    )?.controls.zones;
+    return this.form.controls.environments.controls[envIndex]?.controls.zones;
   }
 
   public getAnimalFormGroup(): FormGroup<Animal> {
     return this.fb.group<Animal>({
-      name: this.fb.control(''),
-      species: this.fb.control(''),
-      lifeStage: this.fb.control(''),
+      name: this.fb.control('', Validators.required),
+      species: this.fb.control('', Validators.required),
+      lifeStage: this.fb.control('', Validators.required),
     });
   }
 
-  private findEnvironmentByName(
-    name: string
-  ): FormGroup<Environment> | undefined {
-    return this.getCurrentEnvironments().controls.find(
-      (env) => env.controls.name.value === name
-    );
+  public addAnimalToZoneInEnv(
+    envIndex: number,
+    zoneIndex: number,
+    animal: FormGroup<Animal>
+  ) {
+    const env = this.form.controls.environments.controls[envIndex];
+    if (env) {
+      const zone = env.controls.zones.controls[zoneIndex];
+      if (zone) {
+        zone.controls.animals.push(animal);
+      }
+    }
   }
 }
