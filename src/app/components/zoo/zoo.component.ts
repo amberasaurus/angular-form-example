@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormControl, FormGroup } from '@angular/forms';
+import { FormLoaderService } from 'src/app/services/form-loader.service';
 import { FormService } from 'src/app/services/form.service';
 
 @Component({
@@ -10,7 +11,10 @@ import { FormService } from 'src/app/services/form.service';
 export class ZooComponent implements OnInit {
   selectedEnv = new FormControl(0);
 
-  constructor(private formService: FormService) {}
+  constructor(
+    private formService: FormService,
+    private formLoaderService: FormLoaderService
+  ) {}
 
   ngOnInit(): void {}
 
@@ -22,5 +26,9 @@ export class ZooComponent implements OnInit {
     this.formService.addEnvironment(formGroup);
 
     console.log(this.formService.form);
+  }
+
+  loadSafeZoo() {
+    this.formLoaderService.loadSafeZoo();
   }
 }

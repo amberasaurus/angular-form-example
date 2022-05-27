@@ -1,0 +1,87 @@
+{
+  "data": {
+    "environments": [
+      {
+        "name": "Environment 1",
+        "type": "Jungle",
+        "zones": [
+          {
+            "name": "Zone 1",
+            "maxCapacity": 2,
+            "animals": [
+              {
+                "name": "Joe",
+                "lifeStage": "Adult",
+                "species": "tiger"
+              },
+              {
+                "name": "Bob",
+                "lifeStage": "Adult",
+                "species": "alligator"
+              }
+            ]
+          },
+          {
+            "name": "Zone 2",
+            "maxCapacity": 3,
+            "animals": [
+              {
+                "name": "Jane",
+                "lifeStage": "Juvenile",
+                "species": "deer"
+              },
+              {
+                "name": "Jill",
+                "lifeStage": "Adult",
+                "species": "zebra"
+              },
+              {
+                "name": "Robert",
+                "lifeStage": "Adult",
+                "species": "monkey"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Environment 2",
+        "type": "Desert",
+        "zones": [
+          {
+            "name": "Zone 1",
+            "maxCapacity": 2,
+            "animals": [
+              {
+                "name": "Teddy",
+                "lifeStage": "Adult",
+                "species": "t-rex"
+              },
+              {
+                "name": "Sally",
+                "lifeStage": "Juvenile",
+                "species": "t-rex"
+              }
+            ]
+          },
+          {
+            "name": "Zone 2",
+            "maxCapacity": 2,
+            "animals": [
+              {
+                "name": "Felicia",
+                "lifeStage": "Juvenile",
+                "species": "flamingo"
+              },
+              {
+                "name": "Candy",
+                "lifeStage": "Adult",
+                "species": "zebra"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}
