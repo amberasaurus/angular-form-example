@@ -18,22 +18,19 @@ export class AnimalFormComponent implements OnInit, OnDestroy {
   animalForm: FormGroup<Animal>;
   availableSpecies = availableSpecies;
   availableLifeStages = availableLifeStages;
+  availableZones: FormArray<FormGroup<Zone>> | undefined;
+  currentEnvironments: FormArray<FormGroup<Environment>>;
 
   selectedEnvironment = new FormControl<number>(-1, {
     initialValueIsDefault: true,
     validators: [Validators.required, Validators.min(0)],
   });
-
   selectedEnvironmentSub: Subscription;
-
-  currentEnvironments: FormArray<FormGroup<Environment>>;
 
   selectedZone = new FormControl<number>(-1, {
     initialValueIsDefault: true,
     validators: [Validators.required, Validators.min(0)],
   });
-
-  availableZones: FormArray<FormGroup<Zone>> | undefined;
 
   constructor(private formService: FormService, private router: Router) {
     this.animalForm = this.formService.getAnimalFormGroup();
