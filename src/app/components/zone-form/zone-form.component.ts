@@ -12,7 +12,7 @@ export class ZoneFormComponent {
   zoneForm: FormGroup<Zone>;
   currentEnvironments: FormArray<FormGroup<Environment>>;
   selectedEnvironment = new FormControl<number>(-1, {
-    initialValueIsDefault: true,
+    nonNullable: true,
     validators: [Validators.required, Validators.min(0)],
   });
 

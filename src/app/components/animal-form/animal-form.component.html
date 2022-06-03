@@ -14,24 +14,29 @@
     </mat-form-field>
   </p>
 
-  <ng-container *ngIf="selectedEnvironment.value >= 0">
+  <ng-container *ngIf="availableZones | async as zones">
     <p>
       <mat-form-field appearance="fill">
         <mat-label>Zone</mat-label>
         <mat-select [formControl]="selectedZone">
           <mat-option
-            *ngFor="let zone of availableZones?.controls; index as index"
-            [value]="index"
+            *ngFor="let zone of zones.controls; index as index"
+            [value]="zone.value"
           >
             {{ zone.value.name }}
           </mat-option>
         </mat-select>
+        <mat-error *ngIf="selectedZone.hasError('maxCapacity')">
+          This zone is full.
+        </mat-error>
       </mat-form-field>
     </p>
   </ng-container>
 
   <ng-container
-    *ngIf="selectedEnvironment.value >= 0 && selectedZone.value >= 0"
+    *ngIf="
+      selectedEnvironment.value >= 0 && selectedZone.value && selectedZone.valid
+    "
   >
     <p>
       <mat-form-field appearance="fill">

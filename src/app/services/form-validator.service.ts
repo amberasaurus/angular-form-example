@@ -1,4 +1,10 @@
-import { AbstractControl, FormArray, ValidationErrors } from '@angular/forms';
+import {
+  AbstractControl,
+  FormArray,
+  FormControl,
+  ValidationErrors,
+} from '@angular/forms';
+import { ZoneTemp } from '../types/types';
 
 export function environmentNameValidator(
   group: AbstractControl
@@ -23,6 +29,24 @@ export function environmentNameValidator(
   //     duplicateName: true,
   //   };
   // }
+
+  return null;
+}
+
+export function zoneCapacityValidator(
+  control: FormControl<ZoneTemp | undefined>
+): ValidationErrors | null {
+  if (!control.value) {
+    return null;
+  }
+
+  const animals = control.value.animals;
+
+  if (animals.length >= control.value.maxCapacity) {
+    return {
+      maxCapacity: true,
+    };
+  }
 
   return null;
 }

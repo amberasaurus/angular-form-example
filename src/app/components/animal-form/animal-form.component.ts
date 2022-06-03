@@ -1,13 +1,15 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { map, Observable } from 'rxjs';
+import { zoneCapacityValidator } from 'src/app/services/form-validator.service';
 import {
   Animal,
   Environment,
   FormService,
   Zone,
 } from 'src/app/services/form.service';
+import { ZoneTemp } from 'src/app/types/types';
 
 @Component({
   selector: 'app-animal-form',
@@ -18,43 +20,32 @@ export class AnimalFormComponent implements OnInit, OnDestroy {
   animalForm: FormGroup<Animal>;
   availableSpecies = availableSpecies;
   availableLifeStages = availableLifeStages;
-  availableZones: FormArray<FormGroup<Zone>> | undefined;
+  availableZones: Observable<FormArray<FormGroup<Zone>> | undefined>;
   currentEnvironments: FormArray<FormGroup<Environment>>;
 
   selectedEnvironment = new FormControl<number>(-1, {
-    initialValueIsDefault: true,
+    nonNullable: true,
     validators: [Validators.required, Validators.min(0)],
   });
-  selectedEnvironmentSub: Subscription;
 
-  selectedZone = new FormControl<number>(-1, {
-    initialValueIsDefault: true,
-    validators: [Validators.required, Validators.min(0)],
+  selectedZone = new FormControl<ZoneTemp | undefined>(undefined, {
+    validators: [Validators.required, zoneCapacityValidator],
   });
 
   constructor(private formService: FormService, private router: Router) {
     this.animalForm = this.formService.getAnimalFormGroup();
     this.currentEnvironments = this.formService.getCurrentEnvironments();
 
-    // is there a better way or is this the best way to do this?
-    this.selectedEnvironmentSub =
-      this.selectedEnvironment.valueChanges.subscribe((env) => {
-        this.availableZones = this.formService.getZonesForEnvironment(env);
-      });
+    this.availableZones = this.selectedEnvironment.valueChanges.pipe(
+      map((e) => this.formService.getZonesForEnvironment(e))
+    );
   }
 
-  ngOnDestroy(): void {
-    this.selectedEnvironmentSub.unsubscribe();
-  }
+  ngOnDestroy(): void {}
 
   ngOnInit(): void {}
 
   submit(): void {
-    this.formService.addAnimalToZoneInEnv(
-      this.selectedEnvironment.value,
-      this.selectedZone.value,
-      this.animalForm
-    );
     this.router.navigate(['']);
   }
 }
