@@ -32,7 +32,7 @@
     <ng-template mat-tab-label>
       {{ env.value.name }} - {{ env.value.type }}
     </ng-template>
-    zones go here
+    <app-environment-display [environment]="env.value"></app-environment-display>
   </mat-tab>
 </mat-tab-group>
 

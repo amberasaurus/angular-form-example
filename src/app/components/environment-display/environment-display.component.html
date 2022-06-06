@@ -1,1 +1,6 @@
-<p>environment-display works!</p>
+<div class="zones">
+  <app-zone-display
+    *ngFor="let zone of environment?.zones"
+    [zone]="zone"
+  ></app-zone-display>
+</div>

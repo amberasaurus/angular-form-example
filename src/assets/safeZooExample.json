@@ -7,7 +7,7 @@
         "zones": [
           {
             "name": "Zone 1",
-            "maxCapacity": 2,
+            "maxCapacity": 5,
             "animals": [
               {
                 "name": "Joe",

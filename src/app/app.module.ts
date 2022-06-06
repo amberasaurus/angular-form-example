@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTabsModule } from '@angular/material/tabs';
@@ -15,6 +16,8 @@ import { EnvironmentFormComponent } from './components/environment-form/environm
 import { ZoneFormComponent } from './components/zone-form/zone-form.component';
 import { ZoneListComponent } from './components/zone-list/zone-list.component';
 import { ZooComponent } from './components/zoo/zoo.component';
+import { ZoneDisplayComponent } from './components/zone-display/zone-display.component';
+import { AnimalDisplayComponent } from './components/animal-display/animal-display.component';
 
 const routes: Routes = [
   {
@@ -49,6 +52,8 @@ const routes: Routes = [
     EnvironmentDisplayComponent,
     ZoneListComponent,
     AnimalFormComponent,
+    ZoneDisplayComponent,
+    AnimalDisplayComponent,
   ],
   imports: [
     BrowserModule,
@@ -60,6 +65,7 @@ const routes: Routes = [
     MatInputModule,
     MatSelectModule,
     MatTabsModule,
+    MatCardModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

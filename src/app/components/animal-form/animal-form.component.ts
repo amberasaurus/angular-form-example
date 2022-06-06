@@ -10,6 +10,7 @@ import {
   Zone,
 } from 'src/app/services/form.service';
 import { ZoneTemp } from 'src/app/types/types';
+import { availableSpecies, availableLifeStages } from '../../constants';
 
 @Component({
   selector: 'app-animal-form',
@@ -18,7 +19,7 @@ import { ZoneTemp } from 'src/app/types/types';
 })
 export class AnimalFormComponent implements OnInit, OnDestroy {
   animalForm: FormGroup<Animal>;
-  availableSpecies = availableSpecies;
+  availableSpecies = Object.values(availableSpecies);
   availableLifeStages = availableLifeStages;
   availableZones: Observable<FormArray<FormGroup<Zone>> | undefined>;
   currentEnvironments: FormArray<FormGroup<Environment>>;
@@ -49,50 +50,3 @@ export class AnimalFormComponent implements OnInit, OnDestroy {
     this.router.navigate(['']);
   }
 }
-
-const availableLifeStages = ['Juvenile', 'Adult'];
-
-const availableSpecies = [
-  {
-    id: 'tiger',
-    name: 'Tiger',
-    emoji: '🐅',
-    type: 'Carnivore',
-  },
-  {
-    id: 'monkey',
-    name: 'Monkey',
-    emoji: '🐒',
-    type: 'Herbivore',
-  },
-  {
-    id: 'zebra',
-    name: 'Zebra',
-    emoji: '🦓',
-    type: 'Herbivore',
-  },
-  {
-    id: 'deer',
-    name: 'Deer',
-    emoji: '🦌',
-    type: 'Herbivore',
-  },
-  {
-    id: 'flamingo',
-    name: 'Flamingo',
-    emoji: '🦩',
-    type: 'Carnivore',
-  },
-  {
-    id: 'alligator',
-    name: 'Alligator',
-    emoji: '🐊',
-    type: 'Carnivore',
-  },
-  {
-    id: 't-rex',
-    name: 'T-Rex',
-    emoji: '🦖',
-    type: 'Omnivore',
-  },
-];
