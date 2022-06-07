@@ -1,0 +1,25 @@
+.animal-display-container {
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  height: 100%;
+  padding: 10px;
+
+  .juvenile {
+    font-size: 1.3rem;
+    text-align: right;
+    height: 5px;
+  }
+}
+
+.animal-emoji {
+  font-size: 3rem;
+}
+
+.animal-name {
+  padding-top: 5px;
+  text-align: center;
+}
+
+.empty-animal {
+  padding: 20px;
+}

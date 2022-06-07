@@ -10,7 +10,7 @@ import {
   Zone,
 } from 'src/app/services/form.service';
 import { ZoneTemp } from 'src/app/types/types';
-import { availableSpecies, availableLifeStages } from '../../constants';
+import { availableLifeStages, availableSpecies } from '../../constants';
 
 @Component({
   selector: 'app-animal-form',
@@ -47,6 +47,11 @@ export class AnimalFormComponent implements OnInit, OnDestroy {
   ngOnInit(): void {}
 
   submit(): void {
+    this.formService.addAnimalToZoneInEnv(
+      this.selectedEnvironment.value,
+      this.selectedZone.value?.name,
+      this.animalForm
+    );
     this.router.navigate(['']);
   }
 }

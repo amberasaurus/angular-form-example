@@ -1,0 +1,11 @@
+.zone-card {
+  border: 5px double #b5651d;
+  margin: 10px;
+}
+
+.zone-animal-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  margin: 10px;
+  padding: 5px;
+}

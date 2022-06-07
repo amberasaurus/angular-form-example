@@ -1,15 +1,15 @@
-import { Component } from '@angular/core';
-import { FormService } from './services/form.service';
+import { Component, OnInit } from '@angular/core';
+import { FormLoaderService } from './services/form-loader.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
-export class AppComponent {
-  public get form() {
-    return this.formService.form;
-  }
+export class AppComponent implements OnInit {
+  constructor(private formLoaderService: FormLoaderService) {}
 
-  constructor(private formService: FormService) {}
+  ngOnInit(): void {
+    this.formLoaderService.loadSafeZoo();
+  }
 }

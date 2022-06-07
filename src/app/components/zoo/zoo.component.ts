@@ -16,9 +16,7 @@ export class ZooComponent implements OnInit {
     private formLoaderService: FormLoaderService
   ) {}
 
-  ngOnInit(): void {
-    this.formLoaderService.loadSafeZoo();
-  }
+  ngOnInit(): void {}
 
   public get environments(): FormArray {
     return this.formService.form.get('environments') as FormArray;

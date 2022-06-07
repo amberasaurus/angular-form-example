@@ -1,8 +1,12 @@
-<mat-card>
-  <ng-container *ngIf="animal; else empty">
-    {{availableSpecies[animal.species]?.emoji}} ({{animal.name}})
-  </ng-container>
-  <ng-template #empty>
+<div *ngIf="animal; else empty" class="animal-display-container">
+  <div class="animal-emoji">
+    {{ availableSpecies[animal.species]?.emoji }}
+    <div class="juvenile" *ngIf="animal.lifeStage === 'Juvenile'">🚼</div>
+  </div>
+  <div class="animal-name">({{ animal.name }})</div>
+</div>
+<ng-template #empty>
+  <div class="empty-animal">
     <strong>Empty</strong>
-  </ng-template>
-</mat-card>
+  </div>
+</ng-template>

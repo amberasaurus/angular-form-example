@@ -1,7 +1,9 @@
-<mat-card *ngIf="zone">
+<mat-card *ngIf="zone" class="zone-card">
   <strong>{{ zone.name }}</strong>
-  <app-animal-display
-    [animal]="zone.animals?.[i]"
-    *ngFor="let item of [].constructor(zone?.maxCapacity ?? 0); index as i"
-  ></app-animal-display>
+  <div class="zone-animal-container">
+    <app-animal-display
+      [animal]="zone.animals?.[i]"
+      *ngFor="let item of [].constructor(zone?.maxCapacity ?? 0); index as i"
+    ></app-animal-display>
+  </div>
 </mat-card>

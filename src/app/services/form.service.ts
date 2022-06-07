@@ -87,16 +87,21 @@ export class FormService {
   }
 
   public addAnimalToZoneInEnv(
-    envIndex: number,
-    zoneIndex: number,
+    envIdx: number,
+    zoneName: string | undefined,
     animal: FormGroup<Animal>
   ) {
-    const env = this.form.controls.environments.controls[envIndex];
-    if (env) {
+    // TODO: looking up by name might not be the best approach
+    const zoneIndex = this.form.controls.environments.controls[
+      envIdx
+    ]?.controls.zones.controls.findIndex(
+      (zone) => zone.controls.name.value === zoneName
+    );
+    if (envIdx !== -1 && zoneIndex !== -1) {
+      const env = this.form.controls.environments.controls[envIdx];
       const zone = env.controls.zones.controls[zoneIndex];
-      if (zone) {
-        zone.controls.animals.push(animal);
-      }
+
+      zone.controls.animals.push(animal);
     }
   }
 }
