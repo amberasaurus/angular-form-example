@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { AnimalTemp } from '../../types/types';
+import { Animal } from '../../types/types';
 import { availableSpecies } from '../../constants';
 
 @Component({
@@ -8,7 +8,7 @@ import { availableSpecies } from '../../constants';
   styleUrls: ['./animal-display.component.scss']
 })
 export class AnimalDisplayComponent {
-  @Input() animal?: AnimalTemp | undefined;
+  @Input() animal?: Animal | undefined;
 
   availableSpecies = availableSpecies;
 

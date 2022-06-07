@@ -8,19 +8,19 @@ import {
 } from '@angular/forms';
 import { environmentNameValidator } from './form-validator.service';
 
-export interface Environment {
+export interface EnvironmentForm {
   name: FormControl<string>;
   type: FormControl<string>;
-  zones: FormArray<FormGroup<Zone>>;
+  zones: FormArray<FormGroup<ZoneForm>>;
 }
 
-export interface Zone {
+export interface ZoneForm {
   name: FormControl<string>;
   maxCapacity: FormControl<number>;
-  animals: FormArray<FormGroup<Animal>>;
+  animals: FormArray<FormGroup<AnimalForm>>;
 }
 
-export interface Animal {
+export interface AnimalForm {
   name: FormControl<string>;
   species: FormControl<string>;
   lifeStage: FormControl<string>;
@@ -29,19 +29,19 @@ export interface Animal {
 @Injectable({ providedIn: 'root' })
 export class FormService {
   form: FormGroup<{
-    environments: FormArray<FormGroup<Environment>>;
+    environments: FormArray<FormGroup<EnvironmentForm>>;
   }> = this.fb.group({
-    environments: this.fb.array<FormGroup<Environment>>([]),
+    environments: this.fb.array<FormGroup<EnvironmentForm>>([]),
   });
 
   constructor(private fb: NonNullableFormBuilder) {}
 
-  public getEnvironmentFormGroup(): FormGroup<Environment> {
-    return this.fb.group<Environment>(
+  public getEnvironmentFormGroup(): FormGroup<EnvironmentForm> {
+    return this.fb.group<EnvironmentForm>(
       {
         name: this.fb.control('', [Validators.required]),
         type: this.fb.control('', [Validators.required]),
-        zones: this.fb.array<FormGroup<Zone>>([]),
+        zones: this.fb.array<FormGroup<ZoneForm>>([]),
       },
       {
         validators: [environmentNameValidator],
@@ -49,19 +49,19 @@ export class FormService {
     );
   }
 
-  public addEnvironment(env: FormGroup<Environment>) {
+  public addEnvironment(env: FormGroup<EnvironmentForm>) {
     this.form.controls.environments.push(env);
   }
 
-  public getCurrentEnvironments(): FormArray<FormGroup<Environment>> {
+  public getCurrentEnvironments(): FormArray<FormGroup<EnvironmentForm>> {
     return this.form.controls.environments;
   }
 
-  public getZoneFormGroup(): FormGroup<Zone> {
-    return this.fb.group<Zone>({
+  public getZoneFormGroup(): FormGroup<ZoneForm> {
+    return this.fb.group<ZoneForm>({
       name: this.fb.control('', [Validators.required]),
       maxCapacity: this.fb.control(0, [Validators.required]),
-      animals: this.fb.array<FormGroup<Animal>>([]),
+      animals: this.fb.array<FormGroup<AnimalForm>>([]),
     });
   }
 
@@ -74,12 +74,12 @@ export class FormService {
 
   public getZonesForEnvironment(
     envIndex: number
-  ): FormArray<FormGroup<Zone>> | undefined {
+  ): FormArray<FormGroup<ZoneForm>> | undefined {
     return this.form.controls.environments.controls[envIndex]?.controls.zones;
   }
 
-  public getAnimalFormGroup(): FormGroup<Animal> {
-    return this.fb.group<Animal>({
+  public getAnimalFormGroup(): FormGroup<AnimalForm> {
+    return this.fb.group<AnimalForm>({
       name: this.fb.control('', Validators.required),
       species: this.fb.control('', Validators.required),
       lifeStage: this.fb.control('', Validators.required),
@@ -89,7 +89,7 @@ export class FormService {
   public addAnimalToZoneInEnv(
     envIdx: number,
     zoneName: string | undefined,
-    animal: FormGroup<Animal>
+    animal: FormGroup<AnimalForm>
   ) {
     // TODO: looking up by name might not be the best approach
     const zoneIndex = this.form.controls.environments.controls[

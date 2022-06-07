@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Environment, FormService, Zone } from 'src/app/services/form.service';
+import { EnvironmentForm, FormService, ZoneForm } from 'src/app/services/form.service';
 
 @Component({
   selector: 'app-zone-form',
@@ -9,8 +9,8 @@ import { Environment, FormService, Zone } from 'src/app/services/form.service';
   styleUrls: ['./zone-form.component.scss'],
 })
 export class ZoneFormComponent {
-  zoneForm: FormGroup<Zone>;
-  currentEnvironments: FormArray<FormGroup<Environment>>;
+  zoneForm: FormGroup<ZoneForm>;
+  currentEnvironments: FormArray<FormGroup<EnvironmentForm>>;
   selectedEnvironment = new FormControl<number>(-1, {
     nonNullable: true,
     validators: [Validators.required, Validators.min(0)],

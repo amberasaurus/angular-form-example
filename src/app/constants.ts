@@ -1,8 +1,8 @@
-import { SpeciesTemp } from './types/types';
+import { Species } from './types/types';
 
 export const availableLifeStages = ['Juvenile', 'Adult'];
 
-export const availableSpecies: Record<string, SpeciesTemp> = {
+export const availableSpecies: Record<string, Species> = {
    'tiger': {
     id: 'tiger',
     name: 'Tiger',

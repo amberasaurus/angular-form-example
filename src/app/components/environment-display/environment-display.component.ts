@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { EnvironmentTemp } from '../../types/types';
+import { Environment } from '../../types/types';
 
 @Component({
   selector: 'app-environment-display',
@@ -7,7 +7,7 @@ import { EnvironmentTemp } from '../../types/types';
   styleUrls: ['./environment-display.component.scss']
 })
 export class EnvironmentDisplayComponent {
-  @Input() environment?: EnvironmentTemp
+  @Input() environment?: Environment
 
   constructor() { }
 

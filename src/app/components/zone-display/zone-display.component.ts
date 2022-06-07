@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { ZoneTemp } from '../../types/types';
+import { Zone } from '../../types/types';
 
 @Component({
   selector: 'app-zone-display',
@@ -8,7 +8,7 @@ import { ZoneTemp } from '../../types/types';
 })
 
 export class ZoneDisplayComponent {
-  @Input() zone?: ZoneTemp;
+  @Input() zone?: Zone;
 
   constructor() { }
 

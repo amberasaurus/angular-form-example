@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Environment, FormService } from 'src/app/services/form.service';
+import { EnvironmentForm, FormService } from 'src/app/services/form.service';
 
 const availableEnvironments = ['Forest', 'Jungle', 'Desert'];
 
@@ -12,7 +12,7 @@ const availableEnvironments = ['Forest', 'Jungle', 'Desert'];
 })
 export class EnvironmentFormComponent {
   environmentTypes = availableEnvironments;
-  environmentForm: FormGroup<Environment>;
+  environmentForm: FormGroup<EnvironmentForm>;
 
   constructor(private formService: FormService, private router: Router) {
     this.environmentForm = this.formService.getEnvironmentFormGroup();

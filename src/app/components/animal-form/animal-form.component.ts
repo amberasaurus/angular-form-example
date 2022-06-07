@@ -4,12 +4,12 @@ import { Router } from '@angular/router';
 import { map, Observable } from 'rxjs';
 import { zoneCapacityValidator } from 'src/app/services/form-validator.service';
 import {
-  Animal,
-  Environment,
+  AnimalForm,
+  EnvironmentForm,
   FormService,
-  Zone,
+  ZoneForm,
 } from 'src/app/services/form.service';
-import { ZoneTemp } from 'src/app/types/types';
+import { Zone } from 'src/app/types/types';
 import { availableLifeStages, availableSpecies } from '../../constants';
 
 @Component({
@@ -18,18 +18,18 @@ import { availableLifeStages, availableSpecies } from '../../constants';
   styleUrls: ['./animal-form.component.scss'],
 })
 export class AnimalFormComponent implements OnInit, OnDestroy {
-  animalForm: FormGroup<Animal>;
+  animalForm: FormGroup<AnimalForm>;
   availableSpecies = Object.values(availableSpecies);
   availableLifeStages = availableLifeStages;
-  availableZones: Observable<FormArray<FormGroup<Zone>> | undefined>;
-  currentEnvironments: FormArray<FormGroup<Environment>>;
+  availableZones: Observable<FormArray<FormGroup<ZoneForm>> | undefined>;
+  currentEnvironments: FormArray<FormGroup<EnvironmentForm>>;
 
   selectedEnvironment = new FormControl<number>(-1, {
     nonNullable: true,
     validators: [Validators.required, Validators.min(0)],
   });
 
-  selectedZone = new FormControl<ZoneTemp | undefined>(undefined, {
+  selectedZone = new FormControl<Zone | undefined>(undefined, {
     validators: [Validators.required, zoneCapacityValidator],
   });
 

@@ -4,7 +4,7 @@ import {
   FormControl,
   ValidationErrors,
 } from '@angular/forms';
-import { ZoneTemp } from '../types/types';
+import { Zone } from '../types/types';
 
 export function environmentNameValidator(
   group: AbstractControl
@@ -34,7 +34,7 @@ export function environmentNameValidator(
 }
 
 export function zoneCapacityValidator(
-  control: FormControl<ZoneTemp | undefined>
+  control: FormControl<Zone | undefined>
 ): ValidationErrors | null {
   if (!control.value) {
     return null;
