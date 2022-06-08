@@ -6,7 +6,7 @@ import {
   NonNullableFormBuilder,
   Validators,
 } from '@angular/forms';
-import { environmentNameValidator } from './form-validator.service';
+import { environmentNameFactory } from './form-validator.service';
 
 export interface EnvironmentForm {
   name: FormControl<string>;
@@ -39,12 +39,15 @@ export class FormService {
   public getEnvironmentFormGroup(): FormGroup<EnvironmentForm> {
     return this.fb.group<EnvironmentForm>(
       {
-        name: this.fb.control('', [Validators.required]),
+        name: this.fb.control('', [
+          Validators.required,
+          environmentNameFactory(this.form.controls.environments),
+        ]),
         type: this.fb.control('', [Validators.required]),
         zones: this.fb.array<FormGroup<ZoneForm>>([]),
       },
       {
-        validators: [environmentNameValidator],
+        validators: [],
       }
     );
   }

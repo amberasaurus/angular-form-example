@@ -2,35 +2,23 @@ import {
   AbstractControl,
   FormArray,
   FormControl,
+  FormGroup,
   ValidationErrors,
 } from '@angular/forms';
 import { Zone } from '../types/types';
+import { EnvironmentForm } from './form.service';
 
-export function environmentNameValidator(
-  group: AbstractControl
-): ValidationErrors | null {
-  const environments = group.parent as FormArray;
-
-  // ['foo', 'bar', 'foo']
-
-  // TODO: figure this out
-  // if (!environments) {
-  //   return null;
-  // }
-
-  // const names = environments?.value.map((env: { name: string }) => env.name);
-  // console.log(names);
-
-  // const set = new Set(names);
-  // console.log(set);
-
-  // if (names.length !== set.size) {
-  //   return {
-  //     duplicateName: true,
-  //   };
-  // }
-
-  return null;
+export function environmentNameFactory(
+  environments: FormArray<FormGroup<EnvironmentForm>>
+) {
+  return (control: AbstractControl): ValidationErrors | null => {
+    if (environments.value.find((env) => env.name === control.value)) {
+      return {
+        duplicateEnvironmentName: true,
+      };
+    }
+    return null;
+  };
 }
 
 export function zoneCapacityValidator(

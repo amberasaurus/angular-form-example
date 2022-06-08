@@ -7,6 +7,13 @@
       <mat-error *ngIf="environmentForm.controls.name.hasError('required')">
         Name is <strong>required</strong>
       </mat-error>
+      <mat-error
+        *ngIf="
+          environmentForm.controls.name.hasError('duplicateEnvironmentName')
+        "
+      >
+        Name must be <strong>unique</strong>
+      </mat-error>
     </mat-form-field>
   </p>
 
