@@ -32,11 +32,15 @@
     <ng-template mat-tab-label>
       {{ env.value.name }} - {{ env.value.type }}
     </ng-template>
-    <app-environment-display [environment]="env.value"></app-environment-display>
+    <app-environment-display
+      [environment]="env.value"
+    ></app-environment-display>
   </mat-tab>
 </mat-tab-group>
 
-<button mat-raised-button color="warn">Is my zoo safe?</button>
+<button mat-raised-button color="warn" (click)="checkSafeZoo()">
+  Is my zoo safe?
+</button>
 <button mat-raised-button color="primary" (click)="loadSafeZoo()">
   Load Safe Zoo Example
 </button>

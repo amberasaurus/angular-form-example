@@ -31,4 +31,8 @@ export class ZooComponent implements OnInit {
   loadSafeZoo() {
     this.formLoaderService.loadSafeZoo();
   }
+
+  checkSafeZoo() {
+    console.log(this.formService.form);
+  }
 }
