@@ -18,6 +18,11 @@
                 "name": "Bob",
                 "lifeStage": "Adult",
                 "species": "alligator"
+              },
+              {
+                "name": "John",
+                "lifeStage": "Adult",
+                "species": "deer"
               }
             ]
           },

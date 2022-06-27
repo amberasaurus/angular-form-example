@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormControl, FormGroup } from '@angular/forms';
 import { FormLoaderService } from 'src/app/services/form-loader.service';
-import { FormService } from 'src/app/services/form.service';
+import { FormService, EnvironmentForm } from 'src/app/services/form.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-zoo',
@@ -13,13 +14,14 @@ export class ZooComponent implements OnInit {
 
   constructor(
     private formService: FormService,
-    private formLoaderService: FormLoaderService
+    private formLoaderService: FormLoaderService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {}
 
-  public get environments(): FormArray {
-    return this.formService.form.get('environments') as FormArray;
+  public get environments(): FormArray<FormGroup<EnvironmentForm>> {
+    return this.formService.form.get('environments') as FormArray<FormGroup<EnvironmentForm>>;
   }
 
   onAddEnvironment(formGroup: FormGroup) {
@@ -34,5 +36,9 @@ export class ZooComponent implements OnInit {
 
   checkSafeZoo() {
     console.log(this.formService.form);
+  }
+
+  editEnvironment(env: FormGroup<EnvironmentForm>) {
+    this.router.navigate([{ outlets: {edit: ['environment', env.value.name] } }]);
   }
 }

@@ -63,6 +63,11 @@ export class FormService {
     return this.form.controls.environments;
   }
 
+  public getEnvironmentByName(name: string) {
+    const envs = this.getCurrentEnvironments().controls as FormGroup<EnvironmentForm>[];
+    return envs.find(env => env.value.name === name);
+  }
+
   public getZoneFormGroup(): FormGroup<ZoneForm> {
     return this.fb.group<ZoneForm>(
       {
