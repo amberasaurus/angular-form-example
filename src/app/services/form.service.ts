@@ -64,8 +64,21 @@ export class FormService {
   }
 
   public getEnvironmentByName(name: string) {
-    const envs = this.getCurrentEnvironments().controls as FormGroup<EnvironmentForm>[];
-    return envs.find(env => env.value.name === name);
+    const envs = this.getCurrentEnvironments()
+      .controls as FormGroup<EnvironmentForm>[];
+    return envs.find((env) => env.value.name === name);
+  }
+
+  public getZoneByName(envName: string, zoneName: string) {
+    const env = this.getEnvironmentByName(envName);
+    const zones = env?.controls.zones.controls as FormGroup<ZoneForm>[];
+    return zones.find((zone) => zone.value.name === zoneName);
+  }
+
+  public getAnimalByName(envName: string, zoneName: string, name: string) {
+    const zone = this.getZoneByName(envName, zoneName);
+    const animals = zone?.controls.animals.controls as FormGroup<AnimalForm>[];
+    return animals.find((animal) => animal.value.name === name);
   }
 
   public getZoneFormGroup(): FormGroup<ZoneForm> {

@@ -1,5 +1,5 @@
 <form class="standard-form" [formGroup]="animalForm" (ngSubmit)="submit()">
-  <h1>Add Animal</h1>
+  <h1>Edit Animal</h1>
   <p>
     <mat-form-field appearance="fill">
       <mat-label>Environment</mat-label>
@@ -20,8 +20,12 @@
         <mat-label>Zone</mat-label>
         <mat-select [formControl]="selectedZone">
           <mat-option
-            *ngFor="let zone of zones.controls; index as index"
-            [value]="zone.value"
+            *ngFor="
+              let zone of zones.controls;
+              index as index;
+              trackBy: getZoneName
+            "
+            [value]="zone.getRawValue()"
           >
             {{ zone.value.name }}
           </mat-option>

@@ -10,14 +10,14 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule, Routes } from '@angular/router';
 import { AppComponent } from './app.component';
+import { AnimalDisplayComponent } from './components/animal-display/animal-display.component';
 import { AnimalFormComponent } from './components/animal-form/animal-form.component';
 import { EnvironmentDisplayComponent } from './components/environment-display/environment-display.component';
 import { EnvironmentFormComponent } from './components/environment-form/environment-form.component';
+import { ZoneDisplayComponent } from './components/zone-display/zone-display.component';
 import { ZoneFormComponent } from './components/zone-form/zone-form.component';
 import { ZoneListComponent } from './components/zone-list/zone-list.component';
 import { ZooComponent } from './components/zoo/zoo.component';
-import { ZoneDisplayComponent } from './components/zone-display/zone-display.component';
-import { AnimalDisplayComponent } from './components/animal-display/animal-display.component';
 
 const routes: Routes = [
   {
@@ -32,17 +32,17 @@ const routes: Routes = [
   {
     path: 'environment/:name',
     component: EnvironmentFormComponent,
-    outlet: 'edit'
+    outlet: 'edit',
   },
   {
-    path: 'zone',
+    path: 'environment/:envName/zone/:zoneName',
     component: ZoneFormComponent,
-    outlet: 'edit'
+    outlet: 'edit',
   },
   {
-    path: 'animal',
+    path: 'environment/:envName/zone/:zoneName/animal/:animalName',
     component: AnimalFormComponent,
-    outlet: 'edit'
+    outlet: 'edit',
   },
 ];
 

@@ -1,5 +1,5 @@
 <form class="standard-form" [formGroup]="zoneForm" (ngSubmit)="submit()">
-  <h1>Add Zone</h1>
+  <h1>Edit Zone</h1>
   <p>
     <mat-form-field appearance="fill">
       <mat-label>Environment</mat-label>
@@ -34,11 +34,15 @@
     </mat-form-field>
   </p>
 
+  <!-- TODO: better conditional on the disabled attr -->
   <button
     type="submit"
     mat-raised-button
     color="primary"
-    [disabled]="!zoneForm.valid || !selectedEnvironment.valid"
+    [disabled]="
+      (!zoneForm.valid && zoneForm.hasError('safeZone')) ||
+      !selectedEnvironment.valid
+    "
   >
     Save
   </button>

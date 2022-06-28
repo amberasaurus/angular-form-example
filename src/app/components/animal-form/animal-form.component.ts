@@ -1,7 +1,19 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
-import { map, Observable } from 'rxjs';
+import { ActivatedRoute, Router } from '@angular/router';
+import {
+  filter,
+  map,
+  Observable,
+  shareReplay,
+  startWith,
+  withLatestFrom,
+} from 'rxjs';
 import { zoneCapacityValidator } from 'src/app/services/form-validator.service';
 import {
   AnimalForm,
@@ -16,6 +28,7 @@ import { availableLifeStages, availableSpecies } from '../../constants';
   selector: 'app-animal-form',
   templateUrl: './animal-form.component.html',
   styleUrls: ['./animal-form.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AnimalFormComponent implements OnInit, OnDestroy {
   animalForm: FormGroup<AnimalForm>;
@@ -33,13 +46,55 @@ export class AnimalFormComponent implements OnInit, OnDestroy {
     validators: [Validators.required, zoneCapacityValidator],
   });
 
-  constructor(private formService: FormService, private router: Router) {
+  constructor(
+    private formService: FormService,
+    private router: Router,
+    route: ActivatedRoute
+  ) {
     this.animalForm = this.formService.getAnimalFormGroup();
     this.currentEnvironments = this.formService.getCurrentEnvironments();
 
     this.availableZones = this.selectedEnvironment.valueChanges.pipe(
-      map((e) => this.formService.getZonesForEnvironment(e))
+      startWith(-1),
+      map((e) => this.formService.getZonesForEnvironment(e)),
+      shareReplay(1)
     );
+
+    route.paramMap
+      .pipe(
+        map((params) => ({
+          envName: params.get('envName'),
+          zoneName: params.get('zoneName'),
+          animalName: params.get('animalName'),
+        })),
+        filter(
+          (
+            params
+          ): params is {
+            envName: string;
+            zoneName: string;
+            animalName: string;
+          } => !!params.envName && !!params.zoneName && !!params.animalName
+        ),
+        withLatestFrom(this.availableZones),
+        map(([{ envName, zoneName, animalName }, availableZones]) => {
+          this.selectedEnvironment.setValue(
+            this.currentEnvironments.controls.findIndex(
+              (env) => env.value.name === envName
+            )
+          );
+
+          this.selectedZone.setValue(
+            this.formService.getZoneByName(envName, zoneName)?.getRawValue()
+          );
+
+          this.selectedZone.markAsTouched();
+
+          return formService.getAnimalByName(envName, zoneName, animalName);
+        }),
+        filter((fg): fg is FormGroup<AnimalForm> => !!fg)
+      )
+      .subscribe((fg) => (this.animalForm = fg));
   }
 
   ngOnDestroy(): void {}
@@ -53,5 +108,9 @@ export class AnimalFormComponent implements OnInit, OnDestroy {
       this.animalForm
     );
     this.router.navigate(['']);
+  }
+
+  getZoneName(index: number, zoneControl: FormGroup<ZoneForm>): string {
+    return zoneControl.controls.name.value;
   }
 }

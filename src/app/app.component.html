@@ -3,16 +3,35 @@
 
   <span class="spacer"></span>
   <div class="nav-buttons">
-    <button mat-raised-button color="accent" [routerLink]="[{ outlets: { edit: 'environment' } }]">
+    <!-- <button
+      mat-raised-button
+      color="accent"
+      [routerLink]="[{ outlets: { edit: 'environment' } }]"
+    >
       Add Environment
     </button>
-    <button mat-raised-button color="accent" [routerLink]="[{ outlets: { edit: 'zone' } }]">
+    <button
+      mat-raised-button
+      color="accent"
+      [routerLink]="[{ outlets: { edit: 'zone' } }]"
+    >
       Add Zone
     </button>
-    <button mat-raised-button color="accent" [routerLink]="[{ outlets: { edit: 'animal' } }]">
+    <button
+      mat-raised-button
+      color="accent"
+      [routerLink]="[{ outlets: { edit: 'animal' } }]"
+    >
       Add Animal
-    </button>
+    </button> -->
   </div>
 </mat-toolbar>
-<router-outlet></router-outlet>
-<router-outlet name="edit"></router-outlet>
+
+<div class="zoo-container">
+  <div>
+    <router-outlet></router-outlet>
+  </div>
+  <div>
+    <router-outlet name="edit"></router-outlet>
+  </div>
+</div>

@@ -30,7 +30,11 @@
     [label]="env.value.name ?? ''"
   >
     <ng-template mat-tab-label>
-      {{ env.value.name }} - {{ env.value.type }}&nbsp;<button (click)="editEnvironment(env)">Edit</button>
+      {{ env.value.name }} - {{ env.value.type }}&nbsp;<button
+        (click)="editEnvironment(env)"
+      >
+        Edit
+      </button>
     </ng-template>
     <app-environment-display
       [environment]="env.getRawValue()"

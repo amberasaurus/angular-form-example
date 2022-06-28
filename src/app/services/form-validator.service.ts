@@ -25,6 +25,7 @@ export function environmentNameFactory(
 export function zoneCapacityValidator(
   control: FormControl<Zone | undefined>
 ): ValidationErrors | null {
+  console.log(control.value);
   if (!control.value) {
     return null;
   }

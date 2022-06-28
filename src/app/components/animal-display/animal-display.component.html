@@ -1,10 +1,17 @@
 <div *ngIf="animal; else empty" class="animal-display-container">
-  <div class="animal-emoji">
-    {{ availableSpecies[animal.species]?.emoji }}
-    <div class="juvenile" *ngIf="animal.lifeStage === 'Juvenile'">🚼</div>
+  <div style="display: contents" (click)="editAnimal(animal)">
+    <div class="animal-emoji">
+      {{ availableSpecies[animal.species]?.emoji }}
+      <div class="juvenile" *ngIf="animal.lifeStage === 'Juvenile'">🚼</div>
+    </div>
+    <div class="animal-name">({{ animal.name }})</div>
+
+    <div class="edit-hover">
+      <div class="edit-emoji">📝</div>
+    </div>
   </div>
-  <div class="animal-name">({{ animal.name }})</div>
 </div>
+
 <ng-template #empty>
   <div class="empty-animal">
     <strong>Empty</strong>
