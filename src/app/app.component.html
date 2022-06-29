@@ -1,37 +1,3 @@
-<mat-toolbar color="primary">
-  <button mat-button [routerLink]="['']">Welcome to the Zoo!</button>
+<mat-toolbar color="primary">Welcome to the Zoo! </mat-toolbar>
 
-  <span class="spacer"></span>
-  <div class="nav-buttons">
-    <!-- <button
-      mat-raised-button
-      color="accent"
-      [routerLink]="[{ outlets: { edit: 'environment' } }]"
-    >
-      Add Environment
-    </button>
-    <button
-      mat-raised-button
-      color="accent"
-      [routerLink]="[{ outlets: { edit: 'zone' } }]"
-    >
-      Add Zone
-    </button>
-    <button
-      mat-raised-button
-      color="accent"
-      [routerLink]="[{ outlets: { edit: 'animal' } }]"
-    >
-      Add Animal
-    </button> -->
-  </div>
-</mat-toolbar>
-
-<div class="zoo-container">
-  <div>
-    <router-outlet></router-outlet>
-  </div>
-  <div>
-    <router-outlet name="edit"></router-outlet>
-  </div>
-</div>
+<app-zoo></app-zoo>

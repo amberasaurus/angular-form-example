@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormControl, FormGroup } from '@angular/forms';
+import { FormArray, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { FormLoaderService } from 'src/app/services/form-loader.service';
-import { EnvironmentForm, FormService } from 'src/app/services/form.service';
+import { NoTypeFormService } from 'src/app/services/no-types-form.service';
 
 @Component({
   selector: 'app-zoo',
@@ -13,36 +13,44 @@ export class ZooComponent implements OnInit {
   selectedEnv = new FormControl(0);
 
   constructor(
-    private formService: FormService,
+    private formService: NoTypeFormService,
     private formLoaderService: FormLoaderService,
     private router: Router
   ) {}
 
   ngOnInit(): void {}
 
-  public get environments(): FormArray<FormGroup<EnvironmentForm>> {
-    return this.formService.form.get('environments') as FormArray<
-      FormGroup<EnvironmentForm>
-    >;
+  public get zones(): FormArray {
+    return this.formService.form.get('zones') as FormArray;
   }
 
-  onAddEnvironment(formGroup: FormGroup) {
-    this.formService.addEnvironment(formGroup);
-
-    console.log(this.formService.form);
-  }
-
-  loadSafeZoo() {
-    this.formLoaderService.loadSafeZoo();
-  }
-
-  checkSafeZoo() {
-    console.log(this.formService.form);
-  }
-
-  editEnvironment(env: FormGroup<EnvironmentForm>) {
+  public addZone() {
     this.router.navigate([
-      { outlets: { edit: ['environment', env.value.name] } },
+      {
+        outlets: {
+          edit: ['zone', 'add'],
+        },
+      },
     ]);
   }
+
+  // onAddEnvironment(formGroup: FormGroup) {
+  //   this.formService.addEnvironment(formGroup);
+
+  //   console.log(this.formService.form);
+  // }
+
+  // loadSafeZoo() {
+  //   this.formLoaderService.loadSafeZoo();
+  // }
+
+  // checkSafeZoo() {
+  //   console.log(this.formService.form);
+  // }
+
+  // editEnvironment(env: FormGroup<EnvironmentForm>) {
+  //   this.router.navigate([
+  //     { outlets: { edit: ['environment', env.value.name] } },
+  //   ]);
+  // }
 }

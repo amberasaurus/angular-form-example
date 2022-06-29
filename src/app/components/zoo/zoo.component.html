@@ -19,7 +19,7 @@
 
 <p>Can you create a safe zoo?</p> -->
 
-<h2 class="text-2xl mt-2 mb-4">Current Environments:</h2>
+<!-- <h2 class="text-2xl mt-2 mb-4">Current Environments:</h2>
 
 <mat-tab-group
   [selectedIndex]="selectedEnv.value"
@@ -47,4 +47,14 @@
 </button>
 <button mat-raised-button color="primary" (click)="loadSafeZoo()">
   Load Safe Zoo Example
-</button>
+</button> -->
+
+hello
+
+<button (click)="addZone()">Add Zone</button>
+
+<div *ngFor="let zone of zones.controls">
+  {{ zone.value.name }}
+</div>
+
+<router-outlet name="edit"></router-outlet>

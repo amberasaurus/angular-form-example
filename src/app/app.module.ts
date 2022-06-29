@@ -30,18 +30,18 @@ const routes: Routes = [
     component: ZooComponent,
   },
   {
-    path: 'environment/:name',
+    path: 'environment/add',
     component: EnvironmentFormComponent,
     outlet: 'edit',
   },
   {
-    path: 'environment/:envName/zone/:zoneName',
-    component: ZoneFormComponent,
+    path: 'animal/add',
+    component: AnimalFormComponent,
     outlet: 'edit',
   },
   {
-    path: 'environment/:envName/zone/:zoneName/animal/:animalName',
-    component: AnimalFormComponent,
+    path: 'zone/add',
+    component: ZoneFormComponent,
     outlet: 'edit',
   },
 ];
