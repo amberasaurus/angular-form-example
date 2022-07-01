@@ -4,24 +4,24 @@ import {
   OnDestroy,
   OnInit,
 } from '@angular/core';
-import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import {
-  filter,
   map,
   Observable,
-  shareReplay,
+  of,
   startWith,
-  withLatestFrom,
+  Subject,
+  switchMap,
+  takeUntil,
 } from 'rxjs';
 import { zoneCapacityValidator } from 'src/app/services/form-validator.service';
 import {
-  AnimalForm,
-  EnvironmentForm,
+  Animal,
+  Environment,
   FormService,
-  ZoneForm,
+  Zone,
 } from 'src/app/services/form.service';
-import { Zone } from 'src/app/types/types';
 import { availableLifeStages, availableSpecies } from '../../constants';
 
 @Component({
@@ -31,20 +31,24 @@ import { availableLifeStages, availableSpecies } from '../../constants';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AnimalFormComponent implements OnInit, OnDestroy {
-  animalForm: FormGroup<AnimalForm>;
+  animalForm: Animal;
   availableSpecies = Object.values(availableSpecies);
   availableLifeStages = availableLifeStages;
-  availableZones: Observable<FormArray<FormGroup<ZoneForm>> | undefined>;
-  currentEnvironments: FormArray<FormGroup<EnvironmentForm>>;
+  availableZones: Observable<FormArray<Zone> | undefined>;
+  currentEnvironments: FormArray<Environment>;
 
-  selectedEnvironment = new FormControl<number>(-1, {
+  selectedEnvironment = new FormControl<Environment | undefined>(undefined, {
     nonNullable: true,
-    validators: [Validators.required, Validators.min(0)],
+    validators: [Validators.required],
   });
 
   selectedZone = new FormControl<Zone | undefined>(undefined, {
+    nonNullable: true,
     validators: [Validators.required, zoneCapacityValidator],
   });
+
+  isNew = true;
+  destroy$ = new Subject<void>();
 
   constructor(
     private formService: FormService,
@@ -55,62 +59,44 @@ export class AnimalFormComponent implements OnInit, OnDestroy {
     this.currentEnvironments = this.formService.getCurrentEnvironments();
 
     this.availableZones = this.selectedEnvironment.valueChanges.pipe(
-      startWith(-1),
-      map((e) => this.formService.getZonesForEnvironment(e)),
-      shareReplay(1)
+      startWith(this.selectedEnvironment.value),
+      switchMap((e) => of(e?.controls.zones))
     );
 
-    route.paramMap
+    // TODO: need to handle moving animal between env/zones
+
+    route.data
       .pipe(
-        map((params) => ({
-          envName: params.get('envName'),
-          zoneName: params.get('zoneName'),
-          animalName: params.get('animalName'),
-        })),
-        filter(
-          (
-            params
-          ): params is {
-            envName: string;
-            zoneName: string;
-            animalName: string;
-          } => !!params.envName && !!params.zoneName && !!params.animalName
-        ),
-        withLatestFrom(this.availableZones),
-        map(([{ envName, zoneName, animalName }, availableZones]) => {
-          this.selectedEnvironment.setValue(
-            this.currentEnvironments.controls.findIndex(
-              (env) => env.value.name === envName
-            )
-          );
-
-          this.selectedZone.setValue(
-            this.formService.getZoneByName(envName, zoneName)?.getRawValue()
-          );
-
-          this.selectedZone.markAsTouched();
-
-          return formService.getAnimalByName(envName, zoneName, animalName);
-        }),
-        filter((fg): fg is FormGroup<AnimalForm> => !!fg)
+        takeUntil(this.destroy$),
+        map((data) => ({
+          zone: data['zone'],
+          env: data['environment'],
+          animal: data['animal'],
+        }))
       )
-      .subscribe((fg) => (this.animalForm = fg));
+      .subscribe(({ zone, env, animal }) => {
+        this.animalForm = animal;
+        this.isNew = false;
+        this.selectedEnvironment.setValue(env);
+        this.selectedZone.setValue(zone);
+      });
   }
 
-  ngOnDestroy(): void {}
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
 
   ngOnInit(): void {}
 
   submit(): void {
-    this.formService.addAnimalToZoneInEnv(
-      this.selectedEnvironment.value,
-      this.selectedZone.value?.name,
-      this.animalForm
-    );
-    this.router.navigate(['']);
-  }
+    if (this.isNew && this.selectedZone.value) {
+      this.formService.addAnimalToZone(
+        this.selectedZone.value,
+        this.animalForm
+      );
+    }
 
-  getZoneName(index: number, zoneControl: FormGroup<ZoneForm>): string {
-    return zoneControl.controls.name.value;
+    this.router.navigate(['']);
   }
 }

@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
+import { Animal, Environment, Zone } from 'src/app/services/form.service';
 import { availableSpecies } from '../../constants';
-import { Animal, Environment, Zone } from '../../types/types';
 
 @Component({
   selector: 'app-animal-display',
@@ -19,18 +19,13 @@ export class AnimalDisplayComponent {
 
   editAnimal(animal: Animal) {
     this.router.navigate([
-      {
-        outlets: {
-          edit: [
-            'environment',
-            this.environment?.name,
-            'zone',
-            this.zone?.name,
-            'animal',
-            animal.name,
-          ],
-        },
-      },
+      'zoo',
+      'environment',
+      this.environment?.value.name,
+      'zone',
+      this.zone?.value.name,
+      'animal',
+      animal.value.name,
     ]);
   }
 }

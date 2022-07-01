@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
-import { Environment, Zone } from '../../types/types';
+import { Environment, Zone } from 'src/app/services/form.service';
 
 @Component({
   selector: 'app-zone-display',
@@ -15,11 +15,11 @@ export class ZoneDisplayComponent {
 
   editZone(zone: Zone) {
     this.router.navigate([
-      {
-        outlets: {
-          edit: ['environment', this.environment?.name, 'zone', zone.name],
-        },
-      },
+      'zoo',
+      'environment',
+      this.environment?.value.name,
+      'zone',
+      zone.value.name,
     ]);
   }
 }

@@ -1,8 +1,7 @@
-import { Component } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { Component, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { filter, map } from 'rxjs';
-import { EnvironmentForm, FormService } from 'src/app/services/form.service';
+import { map, Subject, takeUntil } from 'rxjs';
+import { Environment, FormService } from 'src/app/services/form.service';
 
 const availableEnvironments = ['Forest', 'Jungle', 'Desert'];
 
@@ -11,9 +10,12 @@ const availableEnvironments = ['Forest', 'Jungle', 'Desert'];
   templateUrl: './environment-form.component.html',
   styleUrls: ['./environment-form.component.scss'],
 })
-export class EnvironmentFormComponent {
+export class EnvironmentFormComponent implements OnDestroy {
   environmentTypes = availableEnvironments;
-  environmentForm: FormGroup<EnvironmentForm>;
+  environmentForm: Environment;
+
+  isNew: boolean = true;
+  destroy$ = new Subject<void>();
 
   constructor(
     private formService: FormService,
@@ -21,18 +23,27 @@ export class EnvironmentFormComponent {
     route: ActivatedRoute
   ) {
     this.environmentForm = this.formService.getEnvironmentFormGroup();
-    route.paramMap
+
+    route.data
       .pipe(
-        map((params) => params.get('name')),
-        filter((name): name is string => !!name),
-        map((name) => formService.getEnvironmentByName(name)),
-        filter((fg): fg is FormGroup<EnvironmentForm> => !!fg)
+        takeUntil(this.destroy$),
+        map((data) => data['environment'])
       )
-      .subscribe((fg) => (this.environmentForm = fg));
+      .subscribe((env) => {
+        this.environmentForm = env;
+        this.isNew = false;
+      });
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   submit(): void {
-    this.formService.addEnvironment(this.environmentForm);
+    if (this.isNew) {
+      this.formService.addEnvironment(this.environmentForm);
+    }
     this.router.navigate(['']);
   }
 }

@@ -1,14 +1,5 @@
-.spacer {
-  flex: 1 1 auto;
-}
-
 .nav-buttons {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   column-gap: 5px;
-}
-
-.zoo-container {
-  display: grid;
-  grid-template-columns: 50% 50%;
 }

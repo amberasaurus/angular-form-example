@@ -3,37 +3,37 @@ import { Species } from './types/types';
 export const availableLifeStages = ['Juvenile', 'Adult'];
 
 export const availableSpecies: Record<string, Species> = {
-   'tiger': {
+  tiger: {
     id: 'tiger',
     name: 'Tiger',
     emoji: '🐅',
     type: 'Carnivore',
   },
-  'monkey': {
+  monkey: {
     id: 'monkey',
     name: 'Monkey',
     emoji: '🐒',
     type: 'Herbivore',
   },
-  'zebra': {
+  zebra: {
     id: 'zebra',
     name: 'Zebra',
     emoji: '🦓',
     type: 'Herbivore',
   },
-  'deer': {
+  deer: {
     id: 'deer',
     name: 'Deer',
     emoji: '🦌',
     type: 'Herbivore',
   },
-  'flamingo': {
+  flamingo: {
     id: 'flamingo',
     name: 'Flamingo',
     emoji: '🦩',
     type: 'Carnivore',
   },
-  'alligator': {
+  alligator: {
     id: 'alligator',
     name: 'Alligator',
     emoji: '🐊',

@@ -1,5 +1,5 @@
 <form class="standard-form" [formGroup]="environmentForm" (ngSubmit)="submit()">
-  <h1>Edit Environment</h1>
+  <h1>{{ isNew ? "Add" : "Edit" }} Environment</h1>
   <p>
     <mat-form-field appearance="fill">
       <mat-label>Name</mat-label>
@@ -37,6 +37,6 @@
     color="primary"
     [disabled]="!environmentForm.valid"
   >
-    Save
+    {{ isNew ? "Save" : "Update" }}
   </button>
 </form>

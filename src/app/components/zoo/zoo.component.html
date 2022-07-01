@@ -1,60 +1,34 @@
-<!-- <p>
-  This project was created with the intention of demonstrating a complex Angular
-  reactive form.
-</p>
+<h2 class="text-2xl mt-2 mb-4">Current Environments:</h2>
 
-<p>
-  A zoo is made up of Environments. Each Environment can contain 0-n Zones. Each
-  Zone can contain 0-n Animals. Animals are of a certain Species and are either
-  herbivores or carnivores.
-</p>
-
-<p>
-  If you house an adult herbivore with an adult carnivore, the carnivore will
-  eat the herbivore.
-</p>
-<p>Juvenile carnivores will not eat other animals.</p>
-<p>Adult carnivores will still eat juvenile herbivores. 😵</p>
-<p>A T-Rex will eat everything except juvenile T-rexs.</p>
-
-<p>Can you create a safe zoo?</p> -->
-
-<!-- <h2 class="text-2xl mt-2 mb-4">Current Environments:</h2>
-
-<mat-tab-group
-  [selectedIndex]="selectedEnv.value"
-  (selectedIndexChange)="selectedEnv.setValue($event)"
->
-  <mat-tab
-    *ngFor="let env of environments.controls; let index = index"
-    [label]="env.value.name ?? ''"
-  >
-    <ng-template mat-tab-label>
-      {{ env.value.name }} - {{ env.value.type }}&nbsp;<button
-        (click)="editEnvironment(env)"
+<div class="zoo-container">
+  <div>
+    <mat-tab-group
+      [selectedIndex]="selectedEnv.value"
+      (selectedIndexChange)="selectedEnv.setValue($event)"
+    >
+      <mat-tab
+        *ngFor="let env of environments.controls; let index = index"
+        [label]="env.value.name ?? ''"
       >
-        Edit
-      </button>
-    </ng-template>
-    <app-environment-display
-      [environment]="env.getRawValue()"
-    ></app-environment-display>
-  </mat-tab>
-</mat-tab-group>
+        <ng-template mat-tab-label>
+          {{ env.value.name }} - {{ env.value.type }}&nbsp;<button
+            (click)="editEnvironment(env)"
+          >
+            Edit
+          </button>
+        </ng-template>
+        <app-environment-display [environment]="env"></app-environment-display>
+      </mat-tab>
+    </mat-tab-group>
+  </div>
+  <div>
+    <router-outlet></router-outlet>
+  </div>
+</div>
 
 <button mat-raised-button color="warn" (click)="checkSafeZoo()">
   Is my zoo safe?
 </button>
-<button mat-raised-button color="primary" (click)="loadSafeZoo()">
+<!-- <button mat-raised-button color="primary" (click)="loadSafeZoo()">
   Load Safe Zoo Example
 </button> -->
-
-hello
-
-<button (click)="addZone()">Add Zone</button>
-
-<div *ngFor="let zone of zones.controls">
-  {{ zone.value.name }}
-</div>
-
-<router-outlet name="edit"></router-outlet>

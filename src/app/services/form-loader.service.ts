@@ -9,7 +9,6 @@ export class FormLoaderService {
   loadSafeZoo() {
     this.formService.form.reset();
     this.loadEnvironments(safeZooData.data.environments);
-    console.log(this.formService.form);
   }
 
   // TODO: change from any, need better interfaces all over

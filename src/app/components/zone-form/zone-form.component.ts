@@ -1,55 +1,58 @@
-import { Component } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Component, OnDestroy } from '@angular/core';
+import { FormArray, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ZoneForm } from 'src/app/services/form.service';
-import { NoTypeFormService } from 'src/app/services/no-types-form.service';
+import { Subject } from 'rxjs';
+import { map, takeUntil } from 'rxjs/operators';
+import { Environment, FormService, Zone } from 'src/app/services/form.service';
 
 @Component({
   selector: 'app-zone-form',
   templateUrl: './zone-form.component.html',
   styleUrls: ['./zone-form.component.scss'],
 })
-export class ZoneFormComponent {
-  zoneForm: FormGroup<ZoneForm>;
-  // currentEnvironments: FormArray<FormGroup<EnvironmentForm>>;
-  selectedEnvironment = new FormControl<number>(-1, {
+export class ZoneFormComponent implements OnDestroy {
+  zoneForm: Zone;
+  currentEnvironments: FormArray<Environment>;
+  selectedEnvironment = new FormControl<Environment | undefined>(undefined, {
     nonNullable: true,
-    validators: [Validators.required, Validators.min(0)],
+    validators: [Validators.required],
   });
+  isNew = true;
+  destroy$ = new Subject<void>();
 
   constructor(
-    private formService: NoTypeFormService,
+    private formService: FormService,
     private router: Router,
     route: ActivatedRoute
   ) {
     this.zoneForm = this.formService.getZoneFormGroup();
-    // this.currentEnvironments = this.formService.getCurrentEnvironments();
+    this.currentEnvironments = this.formService.getCurrentEnvironments();
 
-    // route.paramMap
-    //   .pipe(
-    //     map((params) => ({
-    //       envName: params.get('envName'),
-    //       zoneName: params.get('zoneName'),
-    //     })),
-    //     filter(
-    //       (params): params is { envName: string; zoneName: string } =>
-    //         !!params.envName && !!params.zoneName
-    //     ),
-    //     map(({ envName, zoneName }) => {
-    //       this.selectedEnvironment.setValue(
-    //         this.currentEnvironments.controls.findIndex(
-    //           (env) => env.value.name === envName
-    //         )
-    //       );
-    //       return formService.getZoneByName(envName, zoneName);
-    //     }),
-    //     filter((fg): fg is FormGroup<ZoneForm> => !!fg)
-    //   )
-    //   .subscribe((fg) => (this.zoneForm = fg));
+    route.data
+      .pipe(
+        takeUntil(this.destroy$),
+        map((data) => ({ zone: data['zone'], env: data['environment'] }))
+      )
+      .subscribe(({ zone, env }) => {
+        this.zoneForm = zone;
+        this.isNew = false;
+        this.selectedEnvironment.setValue(env);
+      });
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   submit(): void {
-    this.formService.addZone(this.zoneForm);
+    if (this.isNew && this.selectedEnvironment.value) {
+      this.formService.addZoneToEnvironment(
+        this.selectedEnvironment.value,
+        this.zoneForm
+      );
+    }
+
     this.router.navigate(['']);
   }
 }

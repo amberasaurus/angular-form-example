@@ -1,13 +1,16 @@
 <mat-card *ngIf="zone" class="zone-card">
   <strong
-    >{{ zone.name }} <button (click)="editZone(zone)">Edit</button>
+    >{{ zone.value.name }} <button (click)="editZone(zone)">Edit</button>
   </strong>
   <div class="zone-animal-container">
     <app-animal-display
-      [animal]="zone.animals?.[i]"
+      [animal]="zone.controls.animals.controls[i]"
       [zone]="zone"
       [environment]="environment"
-      *ngFor="let item of [].constructor(zone?.maxCapacity ?? 0); index as i"
+      *ngFor="
+        let item of [].constructor(zone?.value?.maxCapacity ?? 0);
+        index as i
+      "
     ></app-animal-display>
   </div>
 </mat-card>
