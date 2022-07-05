@@ -2,7 +2,7 @@ import { Component, OnDestroy } from '@angular/core';
 import { FormArray, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subject } from 'rxjs';
-import { map, takeUntil } from 'rxjs/operators';
+import { filter, map, takeUntil } from 'rxjs/operators';
 import { Environment, FormService, Zone } from 'src/app/services/form.service';
 
 @Component({
@@ -31,10 +31,11 @@ export class ZoneFormComponent implements OnDestroy {
     route.data
       .pipe(
         takeUntil(this.destroy$),
-        map((data) => ({ zone: data['zone'], env: data['environment'] }))
+        map((data) => ({ zone: data['zone'], env: data['environment'] })),
+        filter((data) => !!data.zone)
       )
       .subscribe(({ zone, env }) => {
-        this.zoneForm = zone;
+        this.zoneForm.patchValue(zone.value);
         this.isNew = false;
         this.selectedEnvironment.setValue(env);
       });
@@ -49,6 +50,13 @@ export class ZoneFormComponent implements OnDestroy {
     if (this.isNew && this.selectedEnvironment.value) {
       this.formService.addZoneToEnvironment(
         this.selectedEnvironment.value,
+        this.zoneForm
+      );
+    } else {
+      // TODO: handle undefined better
+      this.formService.patchZone(
+        this.selectedEnvironment.value?.value.id || '',
+        this.zoneForm.value.id || '',
         this.zoneForm
       );
     }

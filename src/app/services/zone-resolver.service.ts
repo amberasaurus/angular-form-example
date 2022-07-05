@@ -10,9 +10,9 @@ import { FormService, Zone } from './form.service';
 export class ZoneResolver implements Resolve<Zone | undefined> {
   constructor(private formService: FormService) {}
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
-    const envName = route.paramMap.get('envName') as string;
-    const zoneName = route.paramMap.get('zoneName') as string;
+    const envId = route.paramMap.get('envId') as string;
+    const zoneId = route.paramMap.get('zoneId') as string;
 
-    return of(this.formService.getZoneByName(envName, zoneName));
+    return of(this.formService.getZoneById(envId, zoneId));
   }
 }

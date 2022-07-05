@@ -14,8 +14,6 @@ import { Zone } from './form.service';
 // }
 
 export function zoneCapacityValidator(control: Zone): ValidationErrors | null {
-  console.log(control);
-
   if (!control.value) {
     return null;
   }

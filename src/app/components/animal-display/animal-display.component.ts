@@ -21,11 +21,11 @@ export class AnimalDisplayComponent {
     this.router.navigate([
       'zoo',
       'environment',
-      this.environment?.value.name,
+      this.environment?.value.id,
       'zone',
-      this.zone?.value.name,
+      this.zone?.value.id,
       'animal',
-      animal.value.name,
+      animal.value.id,
     ]);
   }
 }

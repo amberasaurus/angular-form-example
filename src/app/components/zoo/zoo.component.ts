@@ -47,6 +47,6 @@ export class ZooComponent implements OnInit {
   }
 
   editEnvironment(env: Environment) {
-    this.router.navigate(['zoo', 'environment', env.value.name]);
+    this.router.navigate(['zoo', 'environment', env.value.id]);
   }
 }

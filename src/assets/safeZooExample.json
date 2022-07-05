@@ -2,24 +2,29 @@
   "data": {
     "environments": [
       {
+        "id": "1",
         "name": "Environment 1",
         "type": "Jungle",
         "zones": [
           {
+            "id": "1",
             "name": "Zone 1",
             "maxCapacity": 5,
             "animals": [
               {
+                "id": "1",
                 "name": "Joe",
                 "lifeStage": "Adult",
                 "species": "tiger"
               },
               {
+                "id": "2",
                 "name": "Bob",
                 "lifeStage": "Adult",
                 "species": "alligator"
               },
               {
+                "id": "3",
                 "name": "John",
                 "lifeStage": "Adult",
                 "species": "deer"
@@ -27,20 +32,24 @@
             ]
           },
           {
+            "id": "2",
             "name": "Zone 2",
             "maxCapacity": 3,
             "animals": [
               {
+                "id": "1",
                 "name": "Jane",
                 "lifeStage": "Juvenile",
                 "species": "deer"
               },
               {
+                "id": "2",
                 "name": "Jill",
                 "lifeStage": "Adult",
                 "species": "zebra"
               },
               {
+                "id": "3",
                 "name": "Robert",
                 "lifeStage": "Adult",
                 "species": "monkey"
@@ -50,19 +59,23 @@
         ]
       },
       {
+        "id": "2",
         "name": "Environment 2",
         "type": "Desert",
         "zones": [
           {
+            "id": "3",
             "name": "Zone 1",
             "maxCapacity": 2,
             "animals": [
               {
+                "id": "1",
                 "name": "Teddy",
                 "lifeStage": "Adult",
                 "species": "t-rex"
               },
               {
+                "id": "2",
                 "name": "Sally",
                 "lifeStage": "Juvenile",
                 "species": "t-rex"
@@ -70,15 +83,18 @@
             ]
           },
           {
+            "id": "4",
             "name": "Zone 2",
             "maxCapacity": 2,
             "animals": [
               {
+                "id": "1",
                 "name": "Felicia",
                 "lifeStage": "Juvenile",
                 "species": "flamingo"
               },
               {
+                "id": "2",
                 "name": "Candy",
                 "lifeStage": "Adult",
                 "species": "zebra"

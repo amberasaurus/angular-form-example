@@ -7,19 +7,24 @@ import {
   Validators,
 } from '@angular/forms';
 
+import { v4 as uuidv4 } from 'uuid';
+
 export type Environment = FormGroup<{
+  id: FormControl<string>;
   name: FormControl<string>;
   type: FormControl<string>;
   zones: FormArray<Zone>;
 }>;
 
 export type Zone = FormGroup<{
+  id: FormControl<string>;
   name: FormControl<string>;
   maxCapacity: FormControl<number>;
   animals: FormArray<Animal>;
 }>;
 
 export type Animal = FormGroup<{
+  id: FormControl<string>;
   name: FormControl<string>;
   species: FormControl<string>;
   lifeStage: FormControl<string>;
@@ -36,6 +41,7 @@ export class FormService {
   public getEnvironmentFormGroup(): Environment {
     return this.fb.group(
       {
+        id: this.fb.control(uuidv4()),
         name: this.fb.control('', [
           Validators.required,
           // environmentNameFactory(this.form.controls.environments),
@@ -57,30 +63,27 @@ export class FormService {
     return this.form.controls.environments;
   }
 
-  public getEnvironmentByName(name: string) {
+  public getEnvironmentById(id: string) {
     const envs = this.getCurrentEnvironments().controls;
-    return envs.find((env) => env.value.name === name);
+    return envs.find((env) => env.value.id === id);
   }
 
-  public getZoneByName(envName: string, zoneName: string) {
-    const env = this.getEnvironmentByName(envName);
+  public getZoneById(envId: string, zoneId: string) {
+    const env = this.getEnvironmentById(envId);
     const zones = env?.controls.zones.controls;
-    return zones?.find((zone) => zone.value.name === zoneName);
+    return zones?.find((zone) => zone.value.id === zoneId);
   }
 
-  public getAnimalByName(
-    envName: string,
-    zoneName: string,
-    animalName: string
-  ) {
-    const zone = this.getZoneByName(envName, zoneName);
+  public getAnimalById(envId: string, zoneId: string, animalId: string) {
+    const zone = this.getZoneById(envId, zoneId);
     const animals = zone?.controls.animals.controls;
-    return animals?.find((animal) => animal.value.name === animalName);
+    return animals?.find((animal) => animal.value.id === animalId);
   }
 
   public getZoneFormGroup() {
     return this.fb.group(
       {
+        id: this.fb.control(uuidv4()),
         name: this.fb.control('', [Validators.required]),
         maxCapacity: this.fb.control(0, [Validators.required]),
         animals: this.fb.array<Animal>([]),
@@ -99,6 +102,7 @@ export class FormService {
 
   public getAnimalFormGroup() {
     return this.fb.group({
+      id: this.fb.control(uuidv4()),
       name: this.fb.control('', Validators.required),
       species: this.fb.control('', Validators.required),
       lifeStage: this.fb.control('', Validators.required),
@@ -107,5 +111,25 @@ export class FormService {
 
   public addAnimalToZone(zone: Zone, animal: Animal) {
     zone.controls.animals.push(animal);
+  }
+
+  public patchAnimal(
+    envId: string,
+    zoneId: string,
+    animalId: string,
+    newAnimal: Animal
+  ) {
+    const animal = this.getAnimalById(envId, zoneId, animalId);
+    animal?.patchValue(newAnimal.value);
+  }
+
+  public patchZone(envId: string, zoneId: string, newZone: Zone) {
+    const zone = this.getZoneById(envId, zoneId);
+    zone?.patchValue(newZone.value);
+  }
+
+  public patchEnvironment(envId: string, newEnv: Environment) {
+    const env = this.getEnvironmentById(envId);
+    env?.patchValue(newEnv.value);
   }
 }

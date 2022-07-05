@@ -35,14 +35,14 @@ const routes: Routes = [
     component: ZooComponent,
     children: [
       {
-        path: 'environment/:envName',
+        path: 'environment/:envId',
         component: EnvironmentFormComponent,
         resolve: {
           environment: EnvironmentResolver,
         },
       },
       {
-        path: 'environment/:envName/zone/:zoneName',
+        path: 'environment/:envId/zone/:zoneId',
         component: ZoneFormComponent,
         resolve: {
           environment: EnvironmentResolver,
@@ -50,7 +50,15 @@ const routes: Routes = [
         },
       },
       {
-        path: 'environment/:envName/zone/:zoneName/animal/:animalName',
+        path: 'environment/:envId/zone/:zoneId/animal/add',
+        component: AnimalFormComponent,
+        resolve: {
+          environment: EnvironmentResolver,
+          zone: ZoneResolver,
+        },
+      },
+      {
+        path: 'environment/:envId/zone/:zoneId/animal/:animalId',
         component: AnimalFormComponent,
         resolve: {
           environment: EnvironmentResolver,

@@ -7,6 +7,7 @@ import {
 import { FormArray, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import {
+  filter,
   map,
   Observable,
   of,
@@ -58,11 +59,6 @@ export class AnimalFormComponent implements OnInit, OnDestroy {
     this.animalForm = this.formService.getAnimalFormGroup();
     this.currentEnvironments = this.formService.getCurrentEnvironments();
 
-    this.availableZones = this.selectedEnvironment.valueChanges.pipe(
-      startWith(this.selectedEnvironment.value),
-      switchMap((e) => of(e?.controls.zones))
-    );
-
     // TODO: need to handle moving animal between env/zones
 
     route.data
@@ -72,14 +68,20 @@ export class AnimalFormComponent implements OnInit, OnDestroy {
           zone: data['zone'],
           env: data['environment'],
           animal: data['animal'],
-        }))
+        })),
+        filter((data) => !!data.animal)
       )
       .subscribe(({ zone, env, animal }) => {
-        this.animalForm = animal;
+        this.animalForm.patchValue(animal.value);
         this.isNew = false;
         this.selectedEnvironment.setValue(env);
         this.selectedZone.setValue(zone);
       });
+
+    this.availableZones = this.selectedEnvironment.valueChanges.pipe(
+      startWith(this.selectedEnvironment.value),
+      switchMap((e) => of(e?.controls.zones))
+    );
   }
 
   ngOnDestroy(): void {
@@ -93,6 +95,14 @@ export class AnimalFormComponent implements OnInit, OnDestroy {
     if (this.isNew && this.selectedZone.value) {
       this.formService.addAnimalToZone(
         this.selectedZone.value,
+        this.animalForm
+      );
+    } else {
+      // TODO: handle undefined better
+      this.formService.patchAnimal(
+        this.selectedEnvironment.value?.value.id || '',
+        this.selectedZone.value?.value.id || '',
+        this.animalForm.value.id || '',
         this.animalForm
       );
     }

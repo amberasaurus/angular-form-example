@@ -1,6 +1,6 @@
 import { Component, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { map, Subject, takeUntil } from 'rxjs';
+import { filter, map, Subject, takeUntil } from 'rxjs';
 import { Environment, FormService } from 'src/app/services/form.service';
 
 const availableEnvironments = ['Forest', 'Jungle', 'Desert'];
@@ -27,10 +27,11 @@ export class EnvironmentFormComponent implements OnDestroy {
     route.data
       .pipe(
         takeUntil(this.destroy$),
-        map((data) => data['environment'])
+        map((data) => data['environment']),
+        filter((data) => !!data)
       )
       .subscribe((env) => {
-        this.environmentForm = env;
+        this.environmentForm.patchValue(env.value);
         this.isNew = false;
       });
   }
@@ -43,6 +44,12 @@ export class EnvironmentFormComponent implements OnDestroy {
   submit(): void {
     if (this.isNew) {
       this.formService.addEnvironment(this.environmentForm);
+    } else {
+      // TODO: handle undefined better
+      this.formService.patchEnvironment(
+        this.environmentForm.value.id || '',
+        this.environmentForm
+      );
     }
     this.router.navigate(['']);
   }

@@ -1,5 +1,5 @@
 <form class="standard-form" [formGroup]="animalForm" (ngSubmit)="submit()">
-  <h1>Edit Animal</h1>
+  <h1>{{ isNew ? "Add" : "Edit" }} Animal</h1>
   <p>
     <mat-form-field appearance="fill">
       <mat-label>Environment</mat-label>

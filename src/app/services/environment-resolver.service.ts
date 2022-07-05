@@ -10,8 +10,8 @@ import { Environment, FormService } from './form.service';
 export class EnvironmentResolver implements Resolve<Environment | undefined> {
   constructor(private formService: FormService) {}
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
-    const name = route.paramMap.get('envName') as string;
+    const id = route.paramMap.get('envId') as string;
 
-    return of(this.formService.getEnvironmentByName(name));
+    return of(this.formService.getEnvironmentById(id));
   }
 }
