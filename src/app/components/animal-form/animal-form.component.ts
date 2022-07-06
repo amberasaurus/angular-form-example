@@ -16,7 +16,7 @@ import {
   switchMap,
   takeUntil,
 } from 'rxjs';
-import { zoneCapacityValidator } from 'src/app/services/form-validator.service';
+import { zoneCapacityFactory } from 'src/app/services/form-validator.service';
 import {
   Animal,
   Environment,
@@ -38,15 +38,18 @@ export class AnimalFormComponent implements OnInit, OnDestroy {
   availableZones: Observable<FormArray<Zone> | undefined>;
   currentEnvironments: FormArray<Environment>;
 
-  selectedEnvironment = new FormControl<Environment | undefined>(undefined, {
+  selectedEnvironment = new FormControl<string>('', {
     nonNullable: true,
     validators: [Validators.required],
   });
 
-  selectedZone = new FormControl<Zone | undefined>(undefined, {
-    nonNullable: true,
-    validators: [Validators.required, zoneCapacityValidator],
-  });
+  selectedZone = new FormControl<{ envId: string; zoneId: string }>(
+    { envId: '', zoneId: '' },
+    {
+      nonNullable: true,
+      validators: [Validators.required, zoneCapacityFactory(this.formService)],
+    }
+  );
 
   isNew = true;
   destroy$ = new Subject<void>();
@@ -63,6 +66,10 @@ export class AnimalFormComponent implements OnInit, OnDestroy {
 
     route.data
       .pipe(
+        // DELETE ME comment
+        // angular docs say route data subscriptions gets garbage collected so
+        // no unsubscribe is needed :)
+        // https://angular.io/guide/router-tutorial-toh#observable-parammap-and-component-reuse
         takeUntil(this.destroy$),
         map((data) => ({
           zone: data['zone'],
@@ -80,7 +87,9 @@ export class AnimalFormComponent implements OnInit, OnDestroy {
 
     this.availableZones = this.selectedEnvironment.valueChanges.pipe(
       startWith(this.selectedEnvironment.value),
-      switchMap((e) => of(e?.controls.zones))
+      switchMap((e) =>
+        of(this.formService.getEnvironmentById(e)?.controls.zones)
+      )
     );
   }
 
@@ -94,14 +103,15 @@ export class AnimalFormComponent implements OnInit, OnDestroy {
   submit(): void {
     if (this.isNew && this.selectedZone.value) {
       this.formService.addAnimalToZone(
-        this.selectedZone.value,
+        this.selectedEnvironment.value,
+        this.selectedZone.value.zoneId,
         this.animalForm
       );
     } else {
       // TODO: handle undefined better
       this.formService.patchAnimal(
-        this.selectedEnvironment.value?.value.id || '',
-        this.selectedZone.value?.value.id || '',
+        this.selectedEnvironment.value || '',
+        this.selectedZone.value.zoneId || '',
         this.animalForm.value.id || '',
         this.animalForm
       );

@@ -1,6 +1,5 @@
-import { ValidationErrors } from '@angular/forms';
-
-import { Zone } from './form.service';
+import { AbstractControl, ValidationErrors } from '@angular/forms';
+import { FormService } from './form.service';
 
 // export function environmentNameFactory(environments: FormArray) {
 //   return (control: AbstractControl): ValidationErrors | null => {
@@ -13,21 +12,27 @@ import { Zone } from './form.service';
 //   };
 // }
 
-export function zoneCapacityValidator(control: Zone): ValidationErrors | null {
-  if (!control.value) {
+export function zoneCapacityFactory(formService: FormService) {
+  return (control: AbstractControl): ValidationErrors | null => {
+    const zone = formService.getZoneById(
+      control.value.envId,
+      control.value.zoneId
+    );
+
+    if (!zone) {
+      return null;
+    }
+
+    const animals = zone.value.animals;
+    const maxCapacity = zone.value.maxCapacity;
+
+    if (animals && maxCapacity && animals.length >= maxCapacity) {
+      return {
+        maxCapacity: true,
+      };
+    }
     return null;
-  }
-
-  const animals = control.value.animals;
-  const maxCapacity = control.value.maxCapacity;
-
-  if (animals && maxCapacity && animals.length >= maxCapacity) {
-    return {
-      maxCapacity: true,
-    };
-  }
-
-  return null;
+  };
 }
 
 // export function zoneSafetyValidator(

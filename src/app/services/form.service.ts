@@ -9,6 +9,7 @@ import {
 
 import { v4 as uuidv4 } from 'uuid';
 
+// Habitat
 export type Environment = FormGroup<{
   id: FormControl<string>;
   name: FormControl<string>;
@@ -16,6 +17,7 @@ export type Environment = FormGroup<{
   zones: FormArray<Zone>;
 }>;
 
+// Enclosure
 export type Zone = FormGroup<{
   id: FormControl<string>;
   name: FormControl<string>;
@@ -80,7 +82,8 @@ export class FormService {
     return animals?.find((animal) => animal.value.id === animalId);
   }
 
-  public getZoneFormGroup() {
+  // TODO: rename get to create for all
+  public getZoneFormGroup(): Zone {
     return this.fb.group(
       {
         id: this.fb.control(uuidv4()),
@@ -100,7 +103,7 @@ export class FormService {
     return this.form.controls.environments.controls[envIndex]?.controls.zones;
   }
 
-  public getAnimalFormGroup() {
+  public getAnimalFormGroup(): Animal {
     return this.fb.group({
       id: this.fb.control(uuidv4()),
       name: this.fb.control('', Validators.required),
@@ -109,8 +112,9 @@ export class FormService {
     });
   }
 
-  public addAnimalToZone(zone: Zone, animal: Animal) {
-    zone.controls.animals.push(animal);
+  public addAnimalToZone(envId: string, zoneId: string, animal: Animal) {
+    const zone = this.getZoneById(envId, zoneId);
+    zone?.controls.animals.push(animal);
   }
 
   public patchAnimal(
