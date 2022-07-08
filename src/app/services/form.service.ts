@@ -95,8 +95,9 @@ export class FormService {
     );
   }
 
-  public addZoneToEnvironment(env: Environment, zone: Zone) {
-    env.controls.zones.push(zone);
+  public addZoneToEnvironment(envId: string, zone: Zone) {
+    const env = this.getEnvironmentById(envId);
+    env?.controls.zones.push(zone);
   }
 
   public getZonesForEnvironment(envIndex: number) {

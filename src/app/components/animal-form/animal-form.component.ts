@@ -1,21 +1,7 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  OnDestroy,
-  OnInit,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { FormArray, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import {
-  filter,
-  map,
-  Observable,
-  of,
-  startWith,
-  Subject,
-  switchMap,
-  takeUntil,
-} from 'rxjs';
+import { filter, map, Observable, of, startWith, switchMap } from 'rxjs';
 import { zoneCapacityFactory } from 'src/app/services/form-validator.service';
 import {
   Animal,
@@ -31,7 +17,7 @@ import { availableLifeStages, availableSpecies } from '../../constants';
   styleUrls: ['./animal-form.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AnimalFormComponent implements OnInit, OnDestroy {
+export class AnimalFormComponent implements OnInit {
   animalForm: Animal;
   availableSpecies = Object.values(availableSpecies);
   availableLifeStages = availableLifeStages;
@@ -43,16 +29,12 @@ export class AnimalFormComponent implements OnInit, OnDestroy {
     validators: [Validators.required],
   });
 
-  selectedZone = new FormControl<{ envId: string; zoneId: string }>(
-    { envId: '', zoneId: '' },
-    {
-      nonNullable: true,
-      validators: [Validators.required, zoneCapacityFactory(this.formService)],
-    }
-  );
+  selectedZone = new FormControl<string>('', {
+    nonNullable: true,
+    validators: [Validators.required, zoneCapacityFactory(this.formService)],
+  });
 
   isNew = true;
-  destroy$ = new Subject<void>();
 
   constructor(
     private formService: FormService,
@@ -66,11 +48,6 @@ export class AnimalFormComponent implements OnInit, OnDestroy {
 
     route.data
       .pipe(
-        // DELETE ME comment
-        // angular docs say route data subscriptions gets garbage collected so
-        // no unsubscribe is needed :)
-        // https://angular.io/guide/router-tutorial-toh#observable-parammap-and-component-reuse
-        takeUntil(this.destroy$),
         map((data) => ({
           zone: data['zone'],
           env: data['environment'],
@@ -81,8 +58,9 @@ export class AnimalFormComponent implements OnInit, OnDestroy {
       .subscribe(({ zone, env, animal }) => {
         this.animalForm.patchValue(animal.value);
         this.isNew = false;
-        this.selectedEnvironment.setValue(env);
-        this.selectedZone.setValue(zone);
+
+        this.selectedEnvironment.setValue(env.value.id);
+        this.selectedZone.setValue(zone.value.id);
       });
 
     this.availableZones = this.selectedEnvironment.valueChanges.pipe(
@@ -93,25 +71,20 @@ export class AnimalFormComponent implements OnInit, OnDestroy {
     );
   }
 
-  ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
-  }
-
   ngOnInit(): void {}
 
   submit(): void {
     if (this.isNew && this.selectedZone.value) {
       this.formService.addAnimalToZone(
         this.selectedEnvironment.value,
-        this.selectedZone.value.zoneId,
+        this.selectedZone.value,
         this.animalForm
       );
     } else {
       // TODO: handle undefined better
       this.formService.patchAnimal(
         this.selectedEnvironment.value || '',
-        this.selectedZone.value.zoneId || '',
+        this.selectedZone.value || '',
         this.animalForm.value.id || '',
         this.animalForm
       );

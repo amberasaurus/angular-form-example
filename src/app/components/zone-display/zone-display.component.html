@@ -1,7 +1,7 @@
 <mat-card *ngIf="zone" class="zone-card">
   <strong>{{ zone.value.name }} </strong>
   <button (click)="editZone(zone)">Edit</button>
-  <button (click)="addAnimal(zone)">Add Animal</button>
+
   <div class="zone-animal-container">
     <app-animal-display
       [animal]="zone.controls.animals.controls[i]"

@@ -22,16 +22,4 @@ export class ZoneDisplayComponent {
       zone.value.id,
     ]);
   }
-
-  addAnimal(zone: Zone) {
-    this.router.navigate([
-      'zoo',
-      'environment',
-      this.environment?.value.id,
-      'zone',
-      zone.value.id,
-      'animal',
-      'add',
-    ]);
-  }
 }

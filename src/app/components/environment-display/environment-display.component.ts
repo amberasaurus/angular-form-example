@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { Router } from '@angular/router';
 import { Environment } from 'src/app/services/form.service';
 
 @Component({
@@ -9,5 +10,15 @@ import { Environment } from 'src/app/services/form.service';
 export class EnvironmentDisplayComponent {
   @Input() environment?: Environment;
 
-  constructor() {}
+  constructor(private router: Router) {}
+
+  addZone(environment: Environment) {
+    this.router.navigate([
+      'zoo',
+      'environment',
+      environment?.value.id,
+      'zone',
+      'add',
+    ]);
+  }
 }

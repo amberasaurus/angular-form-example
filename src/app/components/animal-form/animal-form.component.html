@@ -20,11 +20,8 @@
         <mat-label>Zone</mat-label>
         <mat-select [formControl]="selectedZone">
           <mat-option
-            *ngFor="let zone of zones.controls; index as index"
-            [value]="{
-              zoneId: zone.value.id,
-              envId: selectedEnvironment.value
-            }"
+            *ngFor="let zone of zones.controls"
+            [value]="zone.value.id"
           >
             {{ zone.value.name }}
           </mat-option>
@@ -38,9 +35,7 @@
 
   <ng-container
     *ngIf="
-      selectedEnvironment.value &&
-      selectedZone.value.zoneId &&
-      selectedZone.valid
+      selectedEnvironment.value && selectedZone.value && selectedZone.valid
     "
   >
     <p>

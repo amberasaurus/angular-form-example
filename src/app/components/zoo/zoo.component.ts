@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { FormLoaderService } from 'src/app/services/form-loader.service';
 import { Environment, FormService } from 'src/app/services/form.service';
@@ -24,20 +24,6 @@ export class ZooComponent implements OnInit {
     return this.formService.form.controls.environments;
   }
 
-  public addZone() {
-    this.router.navigate([
-      {
-        outlets: {
-          edit: ['zone', 'add'],
-        },
-      },
-    ]);
-  }
-
-  onAddEnvironment(formGroup: FormGroup) {
-    this.formService.addEnvironment(formGroup);
-  }
-
   loadSafeZoo() {
     this.formLoaderService.loadSafeZoo();
   }
@@ -48,5 +34,16 @@ export class ZooComponent implements OnInit {
 
   editEnvironment(env: Environment) {
     this.router.navigate(['zoo', 'environment', env.value.id]);
+  }
+
+  addEnvironment() {
+    this.router.navigate(['zoo', 'environment', 'add']);
+  }
+
+  addZone() {
+    this.router.navigate(['zoo', 'zone', 'add']);
+  }
+  addAnimal() {
+    this.router.navigate(['zoo', 'animal', 'add']);
   }
 }
