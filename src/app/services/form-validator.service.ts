@@ -16,13 +16,15 @@ import { FormService } from './form.service';
 export function zoneCapacityFactory(formService: FormService) {
   return (control: AbstractControl): ValidationErrors | null => {
     const zone = formService.getZoneById(
-      control.value.envId,
-      control.value.zoneId
+      control.value.selectedEnvironment,
+      control.value.selectedZone
     );
 
     if (!zone) {
       return null;
     }
+
+    console.log(zone.value);
 
     const animals = zone.value.animals;
     const maxCapacity = zone.value.maxCapacity;

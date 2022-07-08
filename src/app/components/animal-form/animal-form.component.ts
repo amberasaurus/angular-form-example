@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { FormArray, FormControl, Validators } from '@angular/forms';
+import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { filter, map, Observable, of, startWith, switchMap } from 'rxjs';
 import { zoneCapacityFactory } from 'src/app/services/form-validator.service';
@@ -24,15 +24,19 @@ export class AnimalFormComponent implements OnInit {
   availableZones: Observable<FormArray<Zone> | undefined>;
   currentEnvironments: FormArray<Environment>;
 
-  selectedEnvironment = new FormControl<string>('', {
-    nonNullable: true,
-    validators: [Validators.required],
-  });
-
-  selectedZone = new FormControl<string>('', {
-    nonNullable: true,
-    validators: [Validators.required, zoneCapacityFactory(this.formService)],
-  });
+  animalFormSelections = new FormGroup(
+    {
+      selectedEnvironment: new FormControl<string>('', {
+        nonNullable: true,
+        validators: [Validators.required],
+      }),
+      selectedZone: new FormControl<string>('', {
+        nonNullable: true,
+        validators: [Validators.required],
+      }),
+    },
+    { validators: [zoneCapacityFactory(this.formService)] }
+  );
 
   isNew = true;
 
@@ -59,32 +63,35 @@ export class AnimalFormComponent implements OnInit {
         this.animalForm.patchValue(animal.value);
         this.isNew = false;
 
-        this.selectedEnvironment.setValue(env.value.id);
-        this.selectedZone.setValue(zone.value.id);
+        this.animalFormSelections.controls.selectedEnvironment.setValue(
+          env.value.id
+        );
+        this.animalFormSelections.controls.selectedZone.setValue(zone.value.id);
       });
 
-    this.availableZones = this.selectedEnvironment.valueChanges.pipe(
-      startWith(this.selectedEnvironment.value),
-      switchMap((e) =>
-        of(this.formService.getEnvironmentById(e)?.controls.zones)
-      )
-    );
+    this.availableZones =
+      this.animalFormSelections.controls.selectedEnvironment.valueChanges.pipe(
+        startWith(this.animalFormSelections.controls.selectedEnvironment.value),
+        switchMap((e) =>
+          of(this.formService.getEnvironmentById(e)?.controls.zones)
+        )
+      );
   }
 
   ngOnInit(): void {}
 
   submit(): void {
-    if (this.isNew && this.selectedZone.value) {
+    if (this.isNew) {
       this.formService.addAnimalToZone(
-        this.selectedEnvironment.value,
-        this.selectedZone.value,
+        this.animalFormSelections.controls.selectedEnvironment.value,
+        this.animalFormSelections.controls.selectedZone.value,
         this.animalForm
       );
     } else {
       // TODO: handle undefined better
       this.formService.patchAnimal(
-        this.selectedEnvironment.value || '',
-        this.selectedZone.value || '',
+        this.animalFormSelections.controls.selectedEnvironment.value || '',
+        this.animalFormSelections.controls.selectedZone.value || '',
         this.animalForm.value.id || '',
         this.animalForm
       );

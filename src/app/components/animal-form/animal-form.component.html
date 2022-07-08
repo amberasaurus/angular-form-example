@@ -3,7 +3,9 @@
   <p>
     <mat-form-field appearance="fill">
       <mat-label>Environment</mat-label>
-      <mat-select [formControl]="selectedEnvironment">
+      <mat-select
+        [formControl]="animalFormSelections.controls.selectedEnvironment"
+      >
         <mat-option
           *ngFor="let env of currentEnvironments.controls; index as index"
           [value]="env.value.id"
@@ -18,7 +20,7 @@
     <p>
       <mat-form-field appearance="fill">
         <mat-label>Zone</mat-label>
-        <mat-select [formControl]="selectedZone">
+        <mat-select [formControl]="animalFormSelections.controls.selectedZone">
           <mat-option
             *ngFor="let zone of zones.controls"
             [value]="zone.value.id"
@@ -26,16 +28,20 @@
             {{ zone.value.name }}
           </mat-option>
         </mat-select>
-        <mat-error *ngIf="selectedZone.hasError('maxCapacity')">
+        <mat-error *ngIf="animalFormSelections.hasError('maxCapacity')">
           This zone is full.
         </mat-error>
       </mat-form-field>
     </p>
   </ng-container>
 
+  {{ animalFormSelections.errors | json }}
+
   <ng-container
     *ngIf="
-      selectedEnvironment.value && selectedZone.value && selectedZone.valid
+      animalFormSelections.controls.selectedEnvironment.value &&
+      animalFormSelections.controls.selectedZone.value &&
+      animalFormSelections.valid
     "
   >
     <p>
@@ -81,9 +87,7 @@
     type="submit"
     mat-raised-button
     color="primary"
-    [disabled]="
-      !animalForm.valid || !selectedEnvironment.valid || !selectedZone.valid
-    "
+    [disabled]="!animalForm.valid || !animalFormSelections.valid"
   >
     Save
   </button>
