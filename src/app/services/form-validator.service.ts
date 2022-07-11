@@ -52,11 +52,48 @@ export function zoneCapacityFactory(formService: FormService) {
   };
 }
 
+// TODO: Can we clean this up?
 export function zoneSafetyValidator(
   group: AbstractControl
 ): ValidationErrors | null {
   if (!group.value) {
     return null;
+  }
+  // Clear "dead" errors
+  (group as unknown as Zone).controls.animals.controls.forEach(animal => {
+    if (animal.errors) {
+      delete animal.errors['dead'];
+    }
+  })
+
+  const adultOmnivores = (
+    group as unknown as Zone
+  ).controls.animals.controls.filter((a) => {
+    let animalRawValue = a.getRawValue();
+
+    return (
+      availableSpecies[animalRawValue.species].type === 'Omnivore' &&
+      animalRawValue.lifeStage === 'Adult'
+    );
+  });
+
+  const otherAnimals = (
+    group as unknown as Zone
+  ).controls.animals.controls.filter((a) => {
+    let animalRawValue = a.getRawValue();
+    return availableSpecies[animalRawValue.species].type !== 'Omnivore';
+  });
+
+  if (adultOmnivores.length >= 1 && otherAnimals.length >= 1) {
+    otherAnimals
+      .forEach((deadAnimal) => {
+        deadAnimal.setErrors({ dead: true });
+        console.log({ dead: deadAnimal });
+      });
+
+    return {
+      safeZone: false,
+    };
   }
 
   const adultCarnivores = (
@@ -79,13 +116,9 @@ export function zoneSafetyValidator(
 
   if (adultCarnivores.length >= 1 && herbivores.length >= 1) {
     herbivores
-      .filter((h) => {
-        let animalRawValue = h.getRawValue();
-        return animalRawValue.lifeStage === 'Adult';
-      })
       .forEach((deadHerbivore) => {
-        deadHerbivore.setErrors({ deadHerbivore: true });
-        console.log({ deadHerbivore });
+        deadHerbivore.setErrors({ dead: true });
+        console.log({ dead: deadHerbivore });
       });
 
     return {
