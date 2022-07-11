@@ -37,19 +37,19 @@
             "maxCapacity": 3,
             "animals": [
               {
-                "id": "1",
+                "id": "4",
                 "name": "Jane",
                 "lifeStage": "Juvenile",
                 "species": "deer"
               },
               {
-                "id": "2",
+                "id": "5",
                 "name": "Jill",
                 "lifeStage": "Adult",
                 "species": "zebra"
               },
               {
-                "id": "3",
+                "id": "6",
                 "name": "Robert",
                 "lifeStage": "Adult",
                 "species": "monkey"
@@ -69,13 +69,13 @@
             "maxCapacity": 2,
             "animals": [
               {
-                "id": "1",
+                "id": "7",
                 "name": "Teddy",
                 "lifeStage": "Adult",
                 "species": "t-rex"
               },
               {
-                "id": "2",
+                "id": "8",
                 "name": "Sally",
                 "lifeStage": "Juvenile",
                 "species": "t-rex"
@@ -88,13 +88,13 @@
             "maxCapacity": 2,
             "animals": [
               {
-                "id": "1",
+                "id": "9",
                 "name": "Felicia",
                 "lifeStage": "Juvenile",
                 "species": "flamingo"
               },
               {
-                "id": "2",
+                "id": "10",
                 "name": "Candy",
                 "lifeStage": "Adult",
                 "species": "zebra"

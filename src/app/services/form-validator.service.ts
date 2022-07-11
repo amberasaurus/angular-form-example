@@ -24,16 +24,29 @@ export function zoneCapacityFactory(formService: FormService) {
       return null;
     }
 
-    console.log(zone.value);
+    let newAnimal = true;
+
+    // animal already in zone?
+    if (
+      control.value.selectedAnimal &&
+      zone.controls.animals.controls.find(
+        (animal) => animal.value.id === control.value.selectedAnimal
+      )
+    ) {
+      newAnimal = false;
+    }
 
     const animals = zone.value.animals;
     const maxCapacity = zone.value.maxCapacity;
 
-    if (animals && maxCapacity && animals.length >= maxCapacity) {
-      return {
+    if (animals && maxCapacity && newAnimal && animals.length === maxCapacity) {
+      control.get('selectedZone')?.setErrors({
         maxCapacity: true,
-      };
+      });
+    } else {
+      control.get('selectedZone')?.setErrors(null);
     }
+
     return null;
   };
 }

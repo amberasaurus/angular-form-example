@@ -28,14 +28,16 @@
             {{ zone.value.name }}
           </mat-option>
         </mat-select>
-        <mat-error *ngIf="animalFormSelections.hasError('maxCapacity')">
+        <mat-error
+          *ngIf="
+            animalFormSelections.controls.selectedZone.hasError('maxCapacity')
+          "
+        >
           This zone is full.
         </mat-error>
       </mat-form-field>
     </p>
   </ng-container>
-
-  {{ animalFormSelections.errors | json }}
 
   <ng-container
     *ngIf="

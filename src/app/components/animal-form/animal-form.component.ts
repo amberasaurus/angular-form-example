@@ -34,6 +34,9 @@ export class AnimalFormComponent implements OnInit {
         nonNullable: true,
         validators: [Validators.required],
       }),
+      selectedAnimal: new FormControl<string>('', {
+        nonNullable: true,
+      }),
     },
     { validators: [zoneCapacityFactory(this.formService)] }
   );
@@ -63,10 +66,11 @@ export class AnimalFormComponent implements OnInit {
         this.animalForm.patchValue(animal.value);
         this.isNew = false;
 
-        this.animalFormSelections.controls.selectedEnvironment.setValue(
-          env.value.id
-        );
-        this.animalFormSelections.controls.selectedZone.setValue(zone.value.id);
+        this.animalFormSelections.patchValue({
+          selectedAnimal: animal.value.id,
+          selectedEnvironment: env.value.id,
+          selectedZone: zone.value.id,
+        });
       });
 
     this.availableZones =
