@@ -6,7 +6,7 @@
         🚼
       </div>
     </div>
-    <div class="animal-name">({{ animal.value.name }})</div>
+    <div class="animal-name" [class.eaten]="animal.hasError('deadHerbivore')">({{ animal.value.name }})</div>
 
     <div class="edit-hover">
       <div class="edit-emoji">📝</div>

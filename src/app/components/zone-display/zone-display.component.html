@@ -1,4 +1,5 @@
 <mat-card *ngIf="zone" class="zone-card">
+  <span class="warning" *ngIf="zone.invalid">⚠ </span>
   <strong>{{ zone.value.name }} </strong>
   <button (click)="editZone(zone)">Edit</button>
 

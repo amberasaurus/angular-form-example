@@ -1,5 +1,6 @@
-import { AbstractControl, ValidationErrors } from '@angular/forms';
-import { FormService } from './form.service';
+import { AbstractControl, FormGroup, ValidationErrors } from '@angular/forms';
+import { availableSpecies } from '../constants';
+import { FormService, Zone } from './form.service';
 
 // export function environmentNameFactory(environments: FormArray) {
 //   return (control: AbstractControl): ValidationErrors | null => {
@@ -51,49 +52,49 @@ export function zoneCapacityFactory(formService: FormService) {
   };
 }
 
-// export function zoneSafetyValidator(
-//   group: AbstractControl
-// ): ValidationErrors | null {
-//   if (!group.value) {
-//     return null;
-//   }
+export function zoneSafetyValidator(
+  group: AbstractControl
+): ValidationErrors | null {
+  if (!group.value) {
+    return null;
+  }
 
-//   const adultCarnivores = (
-//     group as unknown as FormGroup
-//   ).controls.animals.controls.filter((a) => {
-//     let animalRawValue = a.getRawValue();
+  const adultCarnivores = (
+    group as unknown as Zone
+  ).controls.animals.controls.filter((a) => {
+    let animalRawValue = a.getRawValue();
 
-//     return (
-//       availableSpecies[animalRawValue.species].type === 'Carnivore' &&
-//       animalRawValue.lifeStage === 'Adult'
-//     );
-//   });
+    return (
+      availableSpecies[animalRawValue.species].type === 'Carnivore' &&
+      animalRawValue.lifeStage === 'Adult'
+    );
+  });
 
-//   const herbivores = (
-//     group as unknown as FormGroup<ZoneForm>
-//   ).controls.animals.controls.filter((a) => {
-//     let animalRawValue = a.getRawValue();
-//     return availableSpecies[animalRawValue.species].type === 'Herbivore';
-//   });
+  const herbivores = (
+    group as unknown as Zone
+  ).controls.animals.controls.filter((a) => {
+    let animalRawValue = a.getRawValue();
+    return availableSpecies[animalRawValue.species].type === 'Herbivore';
+  });
 
-//   if (adultCarnivores.length >= 1 && herbivores.length >= 1) {
-//     herbivores
-//       .filter((h) => {
-//         let animalRawValue = h.getRawValue();
-//         return animalRawValue.lifeStage === 'Adult';
-//       })
-//       .forEach((deadHerbivore) => {
-//         deadHerbivore.setErrors({ deadHerbivore: true });
-//         console.log({ deadHerbivore });
-//       });
+  if (adultCarnivores.length >= 1 && herbivores.length >= 1) {
+    herbivores
+      .filter((h) => {
+        let animalRawValue = h.getRawValue();
+        return animalRawValue.lifeStage === 'Adult';
+      })
+      .forEach((deadHerbivore) => {
+        deadHerbivore.setErrors({ deadHerbivore: true });
+        console.log({ deadHerbivore });
+      });
 
-//     return {
-//       safeZone: false,
-//     };
-//   }
+    return {
+      safeZone: false,
+    };
+  }
 
-//   return null;
-// }
+  return null;
+}
 
 // adult carnivores eat adult herbivores
 // adult carnivores eat unaccompanied babies

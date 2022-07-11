@@ -8,6 +8,7 @@ import {
 } from '@angular/forms';
 
 import { v4 as uuidv4 } from 'uuid';
+import { zoneSafetyValidator } from './form-validator.service';
 
 // Habitat
 export type Environment = FormGroup<{
@@ -91,7 +92,7 @@ export class FormService {
         maxCapacity: this.fb.control(0, [Validators.required]),
         animals: this.fb.array<Animal>([]),
       },
-      { validators: [] }
+      { validators: [zoneSafetyValidator] }
     );
   }
 

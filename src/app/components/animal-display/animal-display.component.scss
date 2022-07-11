@@ -17,6 +17,11 @@
   }
 }
 
+.eaten {
+  color: red;
+  font-weight: bold;
+}
+
 .animal-display-container:hover .edit-hover {
   opacity: 1;
 }
