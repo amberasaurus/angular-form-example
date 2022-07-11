@@ -66,13 +66,13 @@ export function zoneSafetyValidator(
     }
   })
 
-  const adultOmnivores = (
+  const adultHypercarnivores = (
     group as unknown as Zone
   ).controls.animals.controls.filter((a) => {
     let animalRawValue = a.getRawValue();
 
     return (
-      availableSpecies[animalRawValue.species].type === 'Omnivore' &&
+      availableSpecies[animalRawValue.species].type === 'Hypercarnivore' &&
       animalRawValue.lifeStage === 'Adult'
     );
   });
@@ -81,10 +81,10 @@ export function zoneSafetyValidator(
     group as unknown as Zone
   ).controls.animals.controls.filter((a) => {
     let animalRawValue = a.getRawValue();
-    return availableSpecies[animalRawValue.species].type !== 'Omnivore';
+    return availableSpecies[animalRawValue.species].type !== 'Hypercarnivore';
   });
 
-  if (adultOmnivores.length >= 1 && otherAnimals.length >= 1) {
+  if (adultHypercarnivores.length >= 1 && otherAnimals.length >= 1) {
     otherAnimals
       .forEach((deadAnimal) => {
         deadAnimal.setErrors({ dead: true });

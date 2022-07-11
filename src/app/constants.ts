@@ -43,6 +43,6 @@ export const availableSpecies: Record<string, Species> = {
     id: 't-rex',
     name: 'T-Rex',
     emoji: '🦖',
-    type: 'Omnivore',
+    type: 'Hypercarnivore',
   },
 };
