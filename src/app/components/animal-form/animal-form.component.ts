@@ -24,6 +24,9 @@ export class AnimalFormComponent implements OnInit {
   availableZones: Observable<FormArray<Zone> | undefined>;
   currentEnvironments: FormArray<Environment>;
 
+  originalEnvId: string = '';
+  originalZoneId: string = '';
+
   animalFormSelections = new FormGroup(
     {
       selectedEnvironment: new FormControl<string>('', {
@@ -71,6 +74,9 @@ export class AnimalFormComponent implements OnInit {
           selectedEnvironment: env.value.id,
           selectedZone: zone.value.id,
         });
+
+        this.originalEnvId = env.value.id;
+        this.originalZoneId = zone.value.id;
       });
 
     this.availableZones =
@@ -98,12 +104,31 @@ export class AnimalFormComponent implements OnInit {
       );
     } else {
       // TODO: handle undefined better
-      this.formService.patchAnimal(
-        this.animalFormSelections.controls.selectedEnvironment.value || '',
-        this.animalFormSelections.controls.selectedZone.value || '',
-        this.animalForm.value.id || '',
-        this.animalForm
-      );
+
+      if (
+        this.originalEnvId !==
+          this.animalFormSelections.controls.selectedEnvironment.value ||
+        this.originalZoneId !==
+          this.animalFormSelections.controls.selectedZone.value
+      ) {
+        this.formService.removeAnimalFromZone(
+          this.originalEnvId,
+          this.originalZoneId,
+          this.animalForm.value.id || ''
+        );
+        this.formService.addAnimalToZone(
+          this.animalFormSelections.controls.selectedEnvironment.value,
+          this.animalFormSelections.controls.selectedZone.value,
+          this.animalForm
+        );
+      } else {
+        this.formService.patchAnimal(
+          this.animalFormSelections.controls.selectedEnvironment.value || '',
+          this.animalFormSelections.controls.selectedZone.value || '',
+          this.animalForm.value.id || '',
+          this.animalForm
+        );
+      }
     }
 
     this.router.navigate(['']);

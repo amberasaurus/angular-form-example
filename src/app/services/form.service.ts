@@ -138,4 +138,14 @@ export class FormService {
     const env = this.getEnvironmentById(envId);
     env?.patchValue(newEnv.value);
   }
+
+  public removeAnimalFromZone(envId: string, zoneId: string, animalId: string) {
+    const zone = this.getZoneById(envId, zoneId);
+    const animalIdx = zone?.controls.animals.controls.findIndex(
+      (animal) => animal.value.id === animalId
+    );
+    if (animalIdx !== undefined && animalIdx >= 0) {
+      zone?.controls.animals.removeAt(animalIdx);
+    }
+  }
 }
