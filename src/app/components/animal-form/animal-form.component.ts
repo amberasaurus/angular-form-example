@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { filter, map, Observable, of, startWith, switchMap } from 'rxjs';
+import { filter, map, Observable, of, startWith, switchMap, tap } from 'rxjs';
 import { zoneCapacityFactory } from 'src/app/services/form-validator.service';
 import {
   Animal,
@@ -76,6 +76,11 @@ export class AnimalFormComponent implements OnInit {
     this.availableZones =
       this.animalFormSelections.controls.selectedEnvironment.valueChanges.pipe(
         startWith(this.animalFormSelections.controls.selectedEnvironment.value),
+        tap((envId) => {
+          if (this.animalFormSelections.value.selectedEnvironment !== envId) {
+            this.animalFormSelections.patchValue({ selectedZone: '' });
+          }
+        }),
         switchMap((e) =>
           of(this.formService.getEnvironmentById(e)?.controls.zones)
         )

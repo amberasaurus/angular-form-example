@@ -1,4 +1,8 @@
-<div *ngIf="animal; else empty" class="animal-display-container">
+<div
+  *ngIf="animal; else empty"
+  class="animal-display-container"
+  [class.dead]="animal.hasError('dead')"
+>
   <div style="display: contents" (click)="editAnimal(animal)">
     <div class="animal-emoji">
       {{ availableSpecies[animal.value.species || ""]?.emoji }}
@@ -6,10 +10,16 @@
         🚼
       </div>
     </div>
-    <div class="animal-name" [class.eaten]="animal.hasError('dead')">({{ animal.value.name }})</div>
+    <div class="animal-name" [class.dead]="animal.hasError('dead')">
+      ({{ animal.value.name }})
+    </div>
 
     <div class="edit-hover">
       <div class="edit-emoji">📝</div>
+    </div>
+
+    <div class="dead-overlay" *ngIf="animal.hasError('dead')">
+      <div class="dead-emoji">💀</div>
     </div>
   </div>
 </div>

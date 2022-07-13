@@ -35,6 +35,13 @@
         >
           This zone is full.
         </mat-error>
+        <mat-error
+          *ngIf="
+            animalFormSelections.controls.selectedZone.hasError('required')
+          "
+        >
+          Zone is required.
+        </mat-error>
       </mat-form-field>
     </p>
   </ng-container>

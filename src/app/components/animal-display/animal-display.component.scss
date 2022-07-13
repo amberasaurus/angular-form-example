@@ -15,15 +15,25 @@
   &:hover .animal-emoji {
     opacity: 0.2;
   }
-}
 
-.eaten {
-  color: red;
-  font-weight: bold;
+  &.dead {
+    .animal-emoji {
+      opacity: 0.2;
+    }
+
+    .animal-name {
+      color: red;
+      font-weight: bold;
+    }
+  }
 }
 
 .animal-display-container:hover .edit-hover {
   opacity: 1;
+}
+
+.animal-display-container:hover .dead-emoji {
+  opacity: 0;
 }
 
 .edit-hover {
@@ -36,6 +46,14 @@
 
 .edit-emoji {
   font-size: 1.5rem;
+}
+
+.dead-emoji {
+  font-size: 1.5rem;
+  top: 0.4rem;
+  left: 0.4rem;
+  margin-top: -65px;
+  text-align: center;
 }
 
 .animal-emoji {
