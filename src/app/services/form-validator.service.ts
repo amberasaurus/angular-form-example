@@ -2,18 +2,6 @@ import { AbstractControl, FormGroup, ValidationErrors } from '@angular/forms';
 import { availableSpecies } from '../constants';
 import { FormService, Zone } from './form.service';
 
-// export function environmentNameFactory(environments: FormArray) {
-//   return (control: AbstractControl): ValidationErrors | null => {
-//     if (environments.value.find((env: any) => env.name === control.value)) {
-//       return {
-//         duplicateEnvironmentName: true,
-//       };
-//     }
-//     return null;
-//   };
-// }
-
-// TODO: fix
 export function zoneCapacityFactory(formService: FormService) {
   return (control: AbstractControl): ValidationErrors | null => {
     const zone = formService.getZoneById(
@@ -52,7 +40,7 @@ export function zoneCapacityFactory(formService: FormService) {
   };
 }
 
-// TODO: Can we clean this up?
+// TODO: Can we clean this up? rename to unsafe zone
 export function zoneSafetyValidator(
   group: AbstractControl
 ): ValidationErrors | null {
@@ -60,11 +48,11 @@ export function zoneSafetyValidator(
     return null;
   }
   // Clear "dead" errors
-  (group as unknown as Zone).controls.animals.controls.forEach(animal => {
+  (group as unknown as Zone).controls.animals.controls.forEach((animal) => {
     if (animal.errors) {
       delete animal.errors['dead'];
     }
-  })
+  });
 
   const adultHypercarnivores = (
     group as unknown as Zone
@@ -85,14 +73,12 @@ export function zoneSafetyValidator(
   });
 
   if (adultHypercarnivores.length >= 1 && otherAnimals.length >= 1) {
-    otherAnimals
-      .forEach((deadAnimal) => {
-        deadAnimal.setErrors({ dead: true });
-        console.log({ dead: deadAnimal });
-      });
+    otherAnimals.forEach((deadAnimal) => {
+      deadAnimal.setErrors({ dead: true });
+    });
 
     return {
-      safeZone: false,
+      unsafeZone: true,
     };
   }
 
@@ -115,21 +101,29 @@ export function zoneSafetyValidator(
   });
 
   if (adultCarnivores.length >= 1 && herbivores.length >= 1) {
-    herbivores
-      .forEach((deadHerbivore) => {
-        deadHerbivore.setErrors({ dead: true });
-        console.log({ dead: deadHerbivore });
-      });
+    herbivores.forEach((deadHerbivore) => {
+      deadHerbivore.setErrors({ dead: true });
+      console.log({ dead: deadHerbivore });
+    });
 
     return {
-      safeZone: false,
+      unsafeZone: true,
     };
   }
 
   return null;
 }
 
-// adult carnivores eat adult herbivores
-// adult carnivores eat unaccompanied babies
-// unaccompanied = no adults of same species in the same zone
-// t-rexes eat anything except other t-rexes (even accompanied babies)
+
+
+export function minCapacityValidator(
+  control: AbstractControl
+): ValidationErrors | null {
+  const numAnimals = control.parent?.get('animals')?.value.length;
+  if (control.value < numAnimals) {
+    return {
+      minCapacity: true
+    }
+  }
+  return null;
+}

@@ -31,11 +31,19 @@ export class ZoneFormComponent {
         map((data) => ({ zone: data['zone'], env: data['environment'] })),
         filter((data) => !!data.zone)
       )
-      .subscribe(({ zone, env }) => {
+      .subscribe(({ zone, env }: { zone: Zone; env: Environment }) => {
         this.zoneForm.patchValue(zone.value);
+
+        zone.controls.animals.controls.forEach((animal) => {
+          const animalFormGroup = this.formService.getAnimalFormGroup();
+          animalFormGroup.patchValue(animal.value);
+          this.zoneForm.controls.animals.push(animalFormGroup);
+        });
+
         this.isNew = false;
 
-        this.selectedEnvironment.setValue(env.value.id);
+        // TODO handle undefined
+        this.selectedEnvironment.setValue(env.value.id || '');
       });
   }
 
@@ -55,5 +63,18 @@ export class ZoneFormComponent {
     }
 
     this.router.navigate(['']);
+  }
+
+  // TODO: need to continue working on this - doesn't work yet
+
+  formHasUnacceptableErrors() {
+    console.log(this.zoneForm.errors,
+      Object.keys(this.zoneForm.errors!).length,
+      this.zoneForm.hasError('unsafeZone'))
+    return (
+      this.zoneForm.errors &&
+      !(Object.keys(this.zoneForm.errors).length === 1 &&
+        this.zoneForm.hasError('unsafeZone'))
+    );
   }
 }
