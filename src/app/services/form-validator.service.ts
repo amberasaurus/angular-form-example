@@ -103,7 +103,6 @@ export function zoneSafetyValidator(
   if (adultCarnivores.length >= 1 && herbivores.length >= 1) {
     herbivores.forEach((deadHerbivore) => {
       deadHerbivore.setErrors({ dead: true });
-      console.log({ dead: deadHerbivore });
     });
 
     return {

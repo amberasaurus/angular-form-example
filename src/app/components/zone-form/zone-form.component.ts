@@ -65,16 +65,7 @@ export class ZoneFormComponent {
     this.router.navigate(['']);
   }
 
-  // TODO: need to continue working on this - doesn't work yet
-
   formHasUnacceptableErrors() {
-    console.log(this.zoneForm.errors,
-      Object.keys(this.zoneForm.errors!).length,
-      this.zoneForm.hasError('unsafeZone'))
-    return (
-      this.zoneForm.errors &&
-      !(Object.keys(this.zoneForm.errors).length === 1 &&
-        this.zoneForm.hasError('unsafeZone'))
-    );
+    return this.formService.formHasUnacceptableErrors(this.zoneForm.controls, ['unsafeZone'])
   }
 }
