@@ -43,7 +43,7 @@
     mat-raised-button
     color="primary"
     [disabled]="
-    (!zoneForm.valid && formHasUnacceptableErrors()) ||
+    (!zoneForm.valid && zoneHasUnacceptableErrors()) ||
       !selectedEnvironment.valid
     "
   >

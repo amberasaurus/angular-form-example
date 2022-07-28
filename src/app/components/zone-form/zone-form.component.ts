@@ -3,6 +3,7 @@ import { FormArray, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { filter, map } from 'rxjs/operators';
 import { Environment, FormService, Zone } from 'src/app/services/form.service';
+import { formHasUnacceptableErrors } from '../../utils/forms';
 
 @Component({
   selector: 'app-zone-form',
@@ -65,7 +66,7 @@ export class ZoneFormComponent {
     this.router.navigate(['']);
   }
 
-  formHasUnacceptableErrors() {
-    return this.formService.formHasUnacceptableErrors(this.zoneForm.controls, ['unsafeZone'])
+  zoneHasUnacceptableErrors() {
+    return formHasUnacceptableErrors(this.zoneForm.controls, ['unsafeZone'])
   }
 }
