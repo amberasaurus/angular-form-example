@@ -1,4 +1,4 @@
-import { AbstractControl, FormGroup, ValidationErrors } from '@angular/forms';
+import { AbstractControl, ValidationErrors } from '@angular/forms';
 import { availableSpecies } from '../constants';
 import { FormService, Zone } from './form.service';
 
@@ -113,16 +113,14 @@ export function zoneSafetyValidator(
   return null;
 }
 
-
-
 export function minCapacityValidator(
   control: AbstractControl
 ): ValidationErrors | null {
   const numAnimals = control.parent?.get('animals')?.value.length;
   if (control.value < numAnimals) {
     return {
-      minCapacity: true
-    }
+      minCapacity: true,
+    };
   }
   return null;
 }
