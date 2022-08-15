@@ -1,20 +1,18 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
 
 import { AnimalDisplayComponent } from './animal-display.component';
 
 describe('AnimalDisplayComponent', () => {
   let component: AnimalDisplayComponent;
-  let fixture: ComponentFixture<AnimalDisplayComponent>;
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      declarations: [ AnimalDisplayComponent ]
-    })
-    .compileComponents();
+  beforeEach( () => {
+    TestBed.configureTestingModule({
+      imports: [RouterTestingModule],
+      providers: [ AnimalDisplayComponent ]
+    });
 
-    fixture = TestBed.createComponent(AnimalDisplayComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
+    component = TestBed.inject(AnimalDisplayComponent);
   });
 
   it('should create', () => {

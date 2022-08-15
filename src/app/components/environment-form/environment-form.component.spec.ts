@@ -1,22 +1,25 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
 
 import { EnvironmentFormComponent } from './environment-form.component';
+import { FormService } from '../../services/form.service';
 
 describe('EnvironmentFormComponent', () => {
   let component: EnvironmentFormComponent;
-  let fixture: ComponentFixture<EnvironmentFormComponent>;
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      declarations: [ EnvironmentFormComponent ]
-    })
-    .compileComponents();
-  });
+  beforeEach( () => {
+    TestBed.configureTestingModule({
+      imports: [ RouterTestingModule ],
+      providers: [
+        EnvironmentFormComponent,
+        {
+          provide: FormService,
+          useValue: jasmine.createSpyObj<FormService>(['getEnvironmentFormGroup'])
+        },
+      ]
+    });
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(EnvironmentFormComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
+    component = TestBed.inject(EnvironmentFormComponent);
   });
 
   it('should create', () => {

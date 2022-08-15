@@ -1,22 +1,16 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 
 import { EnclosureListComponent } from './enclosure-list.component';
 
 describe('EnclosureListComponent', () => {
   let component: EnclosureListComponent;
-  let fixture: ComponentFixture<EnclosureListComponent>;
-
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      declarations: [ EnclosureListComponent ]
-    })
-    .compileComponents();
-  });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(EnclosureListComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
+    TestBed.configureTestingModule({
+      providers: [ EnclosureListComponent ]
+    });
+
+    component = TestBed.inject(EnclosureListComponent);
   });
 
   it('should create', () => {

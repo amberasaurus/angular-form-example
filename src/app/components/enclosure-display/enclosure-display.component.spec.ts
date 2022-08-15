@@ -1,20 +1,18 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
 
 import { EnclosureDisplayComponent } from './enclosure-display.component';
 
 describe('EnclosureDisplayComponent', () => {
   let component: EnclosureDisplayComponent;
-  let fixture: ComponentFixture<EnclosureDisplayComponent>;
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      declarations: [ EnclosureDisplayComponent ]
-    })
-    .compileComponents();
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      imports: [ RouterTestingModule ],
+      providers: [ EnclosureDisplayComponent ]
+    });
 
-    fixture = TestBed.createComponent(EnclosureDisplayComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
+    component = TestBed.inject(EnclosureDisplayComponent);
   });
 
   it('should create', () => {

@@ -1,22 +1,18 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
 
 import { EnvironmentDisplayComponent } from './environment-display.component';
 
 describe('EnvironmentDisplayComponent', () => {
   let component: EnvironmentDisplayComponent;
-  let fixture: ComponentFixture<EnvironmentDisplayComponent>;
-
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      declarations: [ EnvironmentDisplayComponent ]
-    })
-    .compileComponents();
-  });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(EnvironmentDisplayComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
+    TestBed.configureTestingModule({
+      imports: [ RouterTestingModule ],
+      providers: [ EnvironmentDisplayComponent ]
+    });
+
+    component = TestBed.inject(EnvironmentDisplayComponent);
   });
 
   it('should create', () => {
