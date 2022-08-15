@@ -8,7 +8,10 @@ import {
 } from '@angular/forms';
 
 import { v4 as uuidv4 } from 'uuid';
-import { minCapacityValidator, enclosureSafetyValidator } from './form-validator.service';
+import {
+  minCapacityValidator,
+  enclosureSafetyValidator,
+} from './form-validator.service';
 
 // Habitat
 export type Environment = FormGroup<{
@@ -53,7 +56,7 @@ export class FormService {
       },
       {
         validators: [],
-      }
+      },
     );
   }
 
@@ -88,10 +91,13 @@ export class FormService {
       {
         id: this.fb.control(uuidv4()),
         name: this.fb.control('', [Validators.required]),
-        maxCapacity: this.fb.control(0, [Validators.required, minCapacityValidator]),
+        maxCapacity: this.fb.control(0, [
+          Validators.required,
+          minCapacityValidator,
+        ]),
         animals: this.fb.array<Animal>([]),
       },
-      { validators: [enclosureSafetyValidator] }
+      { validators: [enclosureSafetyValidator] },
     );
   }
 
@@ -101,7 +107,8 @@ export class FormService {
   }
 
   public getEnclosuresForEnvironment(envIndex: number) {
-    return this.form.controls.environments.controls[envIndex]?.controls.enclosures;
+    return this.form.controls.environments.controls[envIndex]?.controls
+      .enclosures;
   }
 
   public getAnimalFormGroup(): Animal {
@@ -113,7 +120,11 @@ export class FormService {
     });
   }
 
-  public addAnimalToEnclosure(envId: string, enclosureId: string, animal: Animal) {
+  public addAnimalToEnclosure(
+    envId: string,
+    enclosureId: string,
+    animal: Animal,
+  ) {
     const enclosure = this.getEnclosureById(envId, enclosureId);
     enclosure?.controls.animals.push(animal);
   }
@@ -122,13 +133,17 @@ export class FormService {
     envId: string,
     enclosureId: string,
     animalId: string,
-    newAnimal: Animal
+    newAnimal: Animal,
   ) {
     const animal = this.getAnimalById(envId, enclosureId, animalId);
     animal?.patchValue(newAnimal.value);
   }
 
-  public patchEnclosure(envId: string, enclosureId: string, newEnclosure: Enclosure) {
+  public patchEnclosure(
+    envId: string,
+    enclosureId: string,
+    newEnclosure: Enclosure,
+  ) {
     const enclosure = this.getEnclosureById(envId, enclosureId);
     enclosure?.patchValue(newEnclosure.value);
   }
@@ -138,10 +153,14 @@ export class FormService {
     env?.patchValue(newEnv.value);
   }
 
-  public removeAnimalFromEnclosure(envId: string, enclosureId: string, animalId: string) {
+  public removeAnimalFromEnclosure(
+    envId: string,
+    enclosureId: string,
+    animalId: string,
+  ) {
     const enclosure = this.getEnclosureById(envId, enclosureId);
     const animalIdx = enclosure?.controls.animals.controls.findIndex(
-      (animal) => animal.value.id === animalId
+      (animal) => animal.value.id === animalId,
     );
     if (animalIdx !== undefined && animalIdx >= 0) {
       enclosure?.controls.animals.removeAt(animalIdx);

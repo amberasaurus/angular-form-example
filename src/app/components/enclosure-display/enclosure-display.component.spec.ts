@@ -8,8 +8,8 @@ describe('EnclosureDisplayComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [ RouterTestingModule ],
-      providers: [ EnclosureDisplayComponent ]
+      imports: [RouterTestingModule],
+      providers: [EnclosureDisplayComponent],
     });
 
     component = TestBed.inject(EnclosureDisplayComponent);

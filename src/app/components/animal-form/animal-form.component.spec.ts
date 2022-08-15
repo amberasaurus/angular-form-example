@@ -1,28 +1,26 @@
 import { TestBed } from '@angular/core/testing';
 
 import { AnimalFormComponent } from './animal-form.component';
-import {RouterTestingModule} from '@angular/router/testing';
-import {FormService} from '../../services/form.service';
+import { RouterTestingModule } from '@angular/router/testing';
+import { FormService } from '../../services/form.service';
 
 describe('AnimalFormComponent', () => {
   let component: AnimalFormComponent;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [ RouterTestingModule ],
+      imports: [RouterTestingModule],
       providers: [
         AnimalFormComponent,
         {
           provide: FormService,
-          useValue: jasmine.createSpyObj<FormService>(
-            [
-              'getAnimalFormGroup',
-              'getCurrentEnvironments',
-              'getEnclosureById'
-            ]
-          )
+          useValue: jasmine.createSpyObj<FormService>([
+            'getAnimalFormGroup',
+            'getCurrentEnvironments',
+            'getEnclosureById',
+          ]),
         },
-      ]
+      ],
     });
 
     component = TestBed.inject(AnimalFormComponent);

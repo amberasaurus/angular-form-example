@@ -7,7 +7,7 @@ describe('EnclosureListComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [ EnclosureListComponent ]
+      providers: [EnclosureListComponent],
     });
 
     component = TestBed.inject(EnclosureListComponent);

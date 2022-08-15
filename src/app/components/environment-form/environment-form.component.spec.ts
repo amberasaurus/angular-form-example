@@ -7,16 +7,18 @@ import { FormService } from '../../services/form.service';
 describe('EnvironmentFormComponent', () => {
   let component: EnvironmentFormComponent;
 
-  beforeEach( () => {
+  beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [ RouterTestingModule ],
+      imports: [RouterTestingModule],
       providers: [
         EnvironmentFormComponent,
         {
           provide: FormService,
-          useValue: jasmine.createSpyObj<FormService>(['getEnvironmentFormGroup'])
+          useValue: jasmine.createSpyObj<FormService>([
+            'getEnvironmentFormGroup',
+          ]),
         },
-      ]
+      ],
     });
 
     component = TestBed.inject(EnvironmentFormComponent);

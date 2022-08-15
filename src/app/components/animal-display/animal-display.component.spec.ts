@@ -6,10 +6,10 @@ import { AnimalDisplayComponent } from './animal-display.component';
 describe('AnimalDisplayComponent', () => {
   let component: AnimalDisplayComponent;
 
-  beforeEach( () => {
+  beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [RouterTestingModule],
-      providers: [ AnimalDisplayComponent ]
+      providers: [AnimalDisplayComponent],
     });
 
     component = TestBed.inject(AnimalDisplayComponent);

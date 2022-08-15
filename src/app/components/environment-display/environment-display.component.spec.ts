@@ -8,8 +8,8 @@ describe('EnvironmentDisplayComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [ RouterTestingModule ],
-      providers: [ EnvironmentDisplayComponent ]
+      imports: [RouterTestingModule],
+      providers: [EnvironmentDisplayComponent],
     });
 
     component = TestBed.inject(EnvironmentDisplayComponent);

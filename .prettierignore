@@ -1,0 +1,13 @@
+/.angular
+/.idea
+/.vscode
+
+/.browserslistrc
+/.editorconfig
+/.gitignore
+/.prettierignore
+.gitkeep
+favicon.ico
+
+/build
+/node_modules

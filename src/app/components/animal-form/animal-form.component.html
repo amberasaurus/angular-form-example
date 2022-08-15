@@ -1,5 +1,5 @@
 <form class="standard-form" [formGroup]="animalForm" (ngSubmit)="submit()">
-  <h1>{{ isNew ? "Add" : "Edit" }} Animal</h1>
+  <h1>{{ isNew ? 'Add' : 'Edit' }} Animal</h1>
   <p>
     <mat-form-field appearance="fill">
       <mat-label>Environment</mat-label>
@@ -20,7 +20,9 @@
     <p>
       <mat-form-field appearance="fill">
         <mat-label>Enclosure</mat-label>
-        <mat-select [formControl]="animalFormSelections.controls.selectedEnclosure">
+        <mat-select
+          [formControl]="animalFormSelections.controls.selectedEnclosure"
+        >
           <mat-option
             *ngFor="let enclosure of enclosures.controls"
             [value]="enclosure.value.id"
@@ -30,7 +32,9 @@
         </mat-select>
         <mat-error
           *ngIf="
-            animalFormSelections.controls.selectedEnclosure.hasError('maxCapacity')
+            animalFormSelections.controls.selectedEnclosure.hasError(
+              'maxCapacity'
+            )
           "
         >
           This enclosure is full.

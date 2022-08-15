@@ -6,7 +6,7 @@ export function enclosureCapacityFactory(formService: FormService) {
   return (control: AbstractControl): ValidationErrors | null => {
     const enclosure = formService.getEnclosureById(
       control.value.selectedEnvironment,
-      control.value.selectedEnclosure
+      control.value.selectedEnclosure,
     );
 
     if (!enclosure) {
@@ -19,7 +19,7 @@ export function enclosureCapacityFactory(formService: FormService) {
     if (
       control.value.selectedAnimal &&
       enclosure.controls.animals.controls.find(
-        (animal) => animal.value.id === control.value.selectedAnimal
+        (animal) => animal.value.id === control.value.selectedAnimal,
       )
     ) {
       newAnimal = false;
@@ -42,17 +42,19 @@ export function enclosureCapacityFactory(formService: FormService) {
 
 // TODO: Can we clean this up? rename to unsafe enclosure
 export function enclosureSafetyValidator(
-  group: AbstractControl
+  group: AbstractControl,
 ): ValidationErrors | null {
   if (!group.value) {
     return null;
   }
   // Clear "dead" errors
-  (group as unknown as Enclosure).controls.animals.controls.forEach((animal) => {
-    if (animal.errors) {
-      delete animal.errors['dead'];
-    }
-  });
+  (group as unknown as Enclosure).controls.animals.controls.forEach(
+    (animal) => {
+      if (animal.errors) {
+        delete animal.errors['dead'];
+      }
+    },
+  );
 
   const adultHypercarnivores = (
     group as unknown as Enclosure
@@ -114,7 +116,7 @@ export function enclosureSafetyValidator(
 }
 
 export function minCapacityValidator(
-  control: AbstractControl
+  control: AbstractControl,
 ): ValidationErrors | null {
   const numAnimals = control.parent?.get('animals')?.value.length;
   if (control.value < numAnimals) {

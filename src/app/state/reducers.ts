@@ -60,7 +60,7 @@ export const userReducer = createReducer(
       ...state,
       role,
     };
-  })
+  }),
 );
 
 export const selectUser = createFeatureSelector<User>('user');

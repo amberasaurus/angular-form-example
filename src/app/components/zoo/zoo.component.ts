@@ -15,7 +15,7 @@ export class ZooComponent implements OnInit {
   constructor(
     private formService: FormService,
     private formLoaderService: FormLoaderService,
-    private router: Router
+    private router: Router,
   ) {}
 
   ngOnInit(): void {}

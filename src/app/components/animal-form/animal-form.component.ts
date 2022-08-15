@@ -41,7 +41,7 @@ export class AnimalFormComponent implements OnInit {
         nonNullable: true,
       }),
     },
-    { validators: [enclosureCapacityFactory(this.formService)] }
+    { validators: [enclosureCapacityFactory(this.formService)] },
   );
 
   isNew = true;
@@ -49,7 +49,7 @@ export class AnimalFormComponent implements OnInit {
   constructor(
     private formService: FormService,
     private router: Router,
-    route: ActivatedRoute
+    route: ActivatedRoute,
   ) {
     this.animalForm = this.formService.getAnimalFormGroup();
     this.currentEnvironments = this.formService.getCurrentEnvironments();
@@ -63,7 +63,7 @@ export class AnimalFormComponent implements OnInit {
           env: data['environment'],
           animal: data['animal'],
         })),
-        filter((data) => !!data.animal)
+        filter((data) => !!data.animal),
       )
       .subscribe(({ enclosure, env, animal }) => {
         this.animalForm.patchValue(animal.value);
@@ -88,8 +88,8 @@ export class AnimalFormComponent implements OnInit {
           }
         }),
         switchMap((e) =>
-          of(this.formService.getEnvironmentById(e)?.controls.enclosures)
-        )
+          of(this.formService.getEnvironmentById(e)?.controls.enclosures),
+        ),
       );
   }
 
@@ -100,7 +100,7 @@ export class AnimalFormComponent implements OnInit {
       this.formService.addAnimalToEnclosure(
         this.animalFormSelections.controls.selectedEnvironment.value,
         this.animalFormSelections.controls.selectedEnclosure.value,
-        this.animalForm
+        this.animalForm,
       );
     } else {
       // TODO: handle undefined better
@@ -114,19 +114,19 @@ export class AnimalFormComponent implements OnInit {
         this.formService.removeAnimalFromEnclosure(
           this.originalEnvId,
           this.originalEnclosureId,
-          this.animalForm.value.id || ''
+          this.animalForm.value.id || '',
         );
         this.formService.addAnimalToEnclosure(
           this.animalFormSelections.controls.selectedEnvironment.value,
           this.animalFormSelections.controls.selectedEnclosure.value,
-          this.animalForm
+          this.animalForm,
         );
       } else {
         this.formService.patchAnimal(
           this.animalFormSelections.controls.selectedEnvironment.value || '',
           this.animalFormSelections.controls.selectedEnclosure.value || '',
           this.animalForm.value.id || '',
-          this.animalForm
+          this.animalForm,
         );
       }
     }

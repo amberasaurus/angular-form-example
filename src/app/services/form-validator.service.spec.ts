@@ -68,26 +68,34 @@ describe('FormValidatorService', () => {
   // TODO: convert to jest and/or parameterized
   describe('enclosureSafetyValidator', () => {
     let enclosureForm: Enclosure;
-    const carnivore = Object.values(availableSpecies).find(s => s.type === 'Carnivore');
-    const herbivore = Object.values(availableSpecies).find(s => s.type === 'Herbivore');
-    const hypercarnivore = Object.values(availableSpecies).find(s => s.type === 'Hypercarnivore');
+    const carnivore = Object.values(availableSpecies).find(
+      (s) => s.type === 'Carnivore',
+    );
+    const herbivore = Object.values(availableSpecies).find(
+      (s) => s.type === 'Herbivore',
+    );
+    const hypercarnivore = Object.values(availableSpecies).find(
+      (s) => s.type === 'Hypercarnivore',
+    );
 
     if (!carnivore || !herbivore || !hypercarnivore) {
       throw 'availableSpecies is missing types';
     }
 
     function addAnimalToEnclosure(species: string, lifeStage: string) {
-      enclosureForm.controls.animals.push(new FormGroup({
-        species: new FormControl(species),
-        lifeStage: new FormControl(lifeStage)
-      }) as unknown as Animal)
+      enclosureForm.controls.animals.push(
+        new FormGroup({
+          species: new FormControl(species),
+          lifeStage: new FormControl(lifeStage),
+        }) as unknown as Animal,
+      );
     }
 
     beforeEach(() => {
-      enclosureForm = new FormGroup(
-        { animals: new FormArray<Animal>([]) }
-      ) as unknown as Enclosure;
-    })
+      enclosureForm = new FormGroup({
+        animals: new FormArray<Animal>([]),
+      }) as unknown as Enclosure;
+    });
     it('should error if enclosure has herbivore and adult carnivore', () => {
       addAnimalToEnclosure(carnivore.id, 'Adult');
       addAnimalToEnclosure(herbivore.id, 'Adult');

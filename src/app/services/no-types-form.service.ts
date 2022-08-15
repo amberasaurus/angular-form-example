@@ -26,7 +26,7 @@ export class NoTypeFormService {
         maxCapacity: this.fb.control(0, [Validators.required]),
         animals: this.fb.array([]),
       },
-      { validators: [] }
+      { validators: [] },
     );
   }
 
