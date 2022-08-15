@@ -1,0 +1,17 @@
+<mat-card *ngIf="enclosure" class="enclosure-card">
+  <span class="warning" *ngIf="enclosure.invalid">⚠ </span>
+  <strong>{{ enclosure.value.name }} </strong>
+  <button (click)="editEnclosure(enclosure)">Edit</button>
+
+  <div class="enclosure-animal-container">
+    <app-animal-display
+      [animal]="enclosure.controls.animals.controls[i]"
+      [enclosure]="enclosure"
+      [environment]="environment"
+      *ngFor="
+        let item of [].constructor(enclosure?.value?.maxCapacity ?? 0);
+        index as i
+      "
+    ></app-animal-display>
+  </div>
+</mat-card>

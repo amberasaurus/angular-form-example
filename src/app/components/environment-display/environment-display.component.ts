@@ -12,12 +12,12 @@ export class EnvironmentDisplayComponent {
 
   constructor(private router: Router) {}
 
-  addZone(environment: Environment) {
+  addEnclosure(environment: Environment) {
     this.router.navigate([
       'zoo',
       'environment',
       environment?.value.id,
-      'zone',
+      'enclosure',
       'add',
     ]);
   }

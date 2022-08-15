@@ -2,16 +2,16 @@ import { Component } from '@angular/core';
 import { FormArray, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { filter, map } from 'rxjs/operators';
-import { Environment, FormService, Zone } from 'src/app/services/form.service';
+import { Environment, FormService, Enclosure } from 'src/app/services/form.service';
 import { formHasUnacceptableErrors } from '../../utils/forms';
 
 @Component({
-  selector: 'app-zone-form',
-  templateUrl: './zone-form.component.html',
-  styleUrls: ['./zone-form.component.scss'],
+  selector: 'app-enclosure-form',
+  templateUrl: './enclosure-form.component.html',
+  styleUrls: ['./enclosure-form.component.scss'],
 })
-export class ZoneFormComponent {
-  zoneForm: Zone;
+export class EnclosureFormComponent {
+  enclosureForm: Enclosure;
   currentEnvironments: FormArray<Environment>;
   selectedEnvironment = new FormControl<string>('', {
     nonNullable: true,
@@ -24,21 +24,21 @@ export class ZoneFormComponent {
     private router: Router,
     route: ActivatedRoute
   ) {
-    this.zoneForm = this.formService.getZoneFormGroup();
+    this.enclosureForm = this.formService.getEnclosureFormGroup();
     this.currentEnvironments = this.formService.getCurrentEnvironments();
 
     route.data
       .pipe(
-        map((data) => ({ zone: data['zone'], env: data['environment'] })),
-        filter((data) => !!data.zone)
+        map((data) => ({ enclosure: data['enclosure'], env: data['environment'] })),
+        filter((data) => !!data.enclosure)
       )
-      .subscribe(({ zone, env }: { zone: Zone; env: Environment }) => {
-        this.zoneForm.patchValue(zone.value);
+      .subscribe(({ enclosure, env }: { enclosure: Enclosure; env: Environment }) => {
+        this.enclosureForm.patchValue(enclosure.value);
 
-        zone.controls.animals.controls.forEach((animal) => {
+        enclosure.controls.animals.controls.forEach((animal) => {
           const animalFormGroup = this.formService.getAnimalFormGroup();
           animalFormGroup.patchValue(animal.value);
-          this.zoneForm.controls.animals.push(animalFormGroup);
+          this.enclosureForm.controls.animals.push(animalFormGroup);
         });
 
         this.isNew = false;
@@ -50,23 +50,23 @@ export class ZoneFormComponent {
 
   submit(): void {
     if (this.isNew && this.selectedEnvironment.value) {
-      this.formService.addZoneToEnvironment(
+      this.formService.addEnclosureToEnvironment(
         this.selectedEnvironment.value,
-        this.zoneForm
+        this.enclosureForm
       );
     } else {
       // TODO: handle undefined better
-      this.formService.patchZone(
+      this.formService.patchEnclosure(
         this.selectedEnvironment.value || '',
-        this.zoneForm.value.id || '',
-        this.zoneForm
+        this.enclosureForm.value.id || '',
+        this.enclosureForm
       );
     }
 
     this.router.navigate(['']);
   }
 
-  zoneHasUnacceptableErrors() {
-    return formHasUnacceptableErrors(this.zoneForm.controls, ['unsafeZone'])
+  enclosureHasUnacceptableErrors() {
+    return formHasUnacceptableErrors(this.enclosureForm.controls, ['unsafeEnclosure'])
   }
 }

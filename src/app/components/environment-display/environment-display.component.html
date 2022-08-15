@@ -1,9 +1,9 @@
 <div *ngIf="environment">
-  <div class="zones">
-    <app-zone-display
-      *ngFor="let zone of environment.controls.zones.controls"
-      [zone]="zone"
+  <div class="enclosures">
+    <app-enclosure-display
+      *ngFor="let enclosure of environment.controls.enclosures.controls"
+      [enclosure]="enclosure"
       [environment]="environment"
-    ></app-zone-display>
+    ></app-enclosure-display>
   </div>
 </div>

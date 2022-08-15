@@ -1,61 +1,61 @@
 import { AbstractControl, ValidationErrors } from '@angular/forms';
 import { availableSpecies } from '../constants';
-import { FormService, Zone } from './form.service';
+import { FormService, Enclosure } from './form.service';
 
-export function zoneCapacityFactory(formService: FormService) {
+export function enclosureCapacityFactory(formService: FormService) {
   return (control: AbstractControl): ValidationErrors | null => {
-    const zone = formService.getZoneById(
+    const enclosure = formService.getEnclosureById(
       control.value.selectedEnvironment,
-      control.value.selectedZone
+      control.value.selectedEnclosure
     );
 
-    if (!zone) {
+    if (!enclosure) {
       return null;
     }
 
     let newAnimal = true;
 
-    // animal already in zone?
+    // animal already in enclosure?
     if (
       control.value.selectedAnimal &&
-      zone.controls.animals.controls.find(
+      enclosure.controls.animals.controls.find(
         (animal) => animal.value.id === control.value.selectedAnimal
       )
     ) {
       newAnimal = false;
     }
 
-    const animals = zone.value.animals;
-    const maxCapacity = zone.value.maxCapacity;
+    const animals = enclosure.value.animals;
+    const maxCapacity = enclosure.value.maxCapacity;
 
     if (animals && maxCapacity && newAnimal && animals.length === maxCapacity) {
-      control.get('selectedZone')?.setErrors({
+      control.get('selectedEnclosure')?.setErrors({
         maxCapacity: true,
       });
     } else {
-      control.get('selectedZone')?.setErrors(null);
+      control.get('selectedEnclosure')?.setErrors(null);
     }
 
     return null;
   };
 }
 
-// TODO: Can we clean this up? rename to unsafe zone
-export function zoneSafetyValidator(
+// TODO: Can we clean this up? rename to unsafe enclosure
+export function enclosureSafetyValidator(
   group: AbstractControl
 ): ValidationErrors | null {
   if (!group.value) {
     return null;
   }
   // Clear "dead" errors
-  (group as unknown as Zone).controls.animals.controls.forEach((animal) => {
+  (group as unknown as Enclosure).controls.animals.controls.forEach((animal) => {
     if (animal.errors) {
       delete animal.errors['dead'];
     }
   });
 
   const adultHypercarnivores = (
-    group as unknown as Zone
+    group as unknown as Enclosure
   ).controls.animals.controls.filter((a) => {
     let animalRawValue = a.getRawValue();
 
@@ -66,7 +66,7 @@ export function zoneSafetyValidator(
   });
 
   const otherAnimals = (
-    group as unknown as Zone
+    group as unknown as Enclosure
   ).controls.animals.controls.filter((a) => {
     let animalRawValue = a.getRawValue();
     return availableSpecies[animalRawValue.species].type !== 'Hypercarnivore';
@@ -78,12 +78,12 @@ export function zoneSafetyValidator(
     });
 
     return {
-      unsafeZone: true,
+      unsafeEnclosure: true,
     };
   }
 
   const adultCarnivores = (
-    group as unknown as Zone
+    group as unknown as Enclosure
   ).controls.animals.controls.filter((a) => {
     let animalRawValue = a.getRawValue();
 
@@ -94,7 +94,7 @@ export function zoneSafetyValidator(
   });
 
   const herbivores = (
-    group as unknown as Zone
+    group as unknown as Enclosure
   ).controls.animals.controls.filter((a) => {
     let animalRawValue = a.getRawValue();
     return availableSpecies[animalRawValue.species].type === 'Herbivore';
@@ -106,7 +106,7 @@ export function zoneSafetyValidator(
     });
 
     return {
-      unsafeZone: true,
+      unsafeEnclosure: true,
     };
   }
 

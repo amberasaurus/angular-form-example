@@ -40,8 +40,8 @@ export class ZooComponent implements OnInit {
     this.router.navigate(['zoo', 'environment', 'add']);
   }
 
-  addZone() {
-    this.router.navigate(['zoo', 'zone', 'add']);
+  addEnclosure() {
+    this.router.navigate(['zoo', 'enclosure', 'add']);
   }
   addAnimal() {
     this.router.navigate(['zoo', 'animal', 'add']);

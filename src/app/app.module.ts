@@ -1,28 +1,28 @@
-import { NgModule } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
+import {NgModule} from '@angular/core';
+import {ReactiveFormsModule} from '@angular/forms';
 
-import { MatButtonModule } from '@angular/material/button';
-import { MatCardModule } from '@angular/material/card';
-import { MatInputModule } from '@angular/material/input';
-import { MatSelectModule } from '@angular/material/select';
-import { MatTabsModule } from '@angular/material/tabs';
+import {MatButtonModule} from '@angular/material/button';
+import {MatCardModule} from '@angular/material/card';
+import {MatInputModule} from '@angular/material/input';
+import {MatSelectModule} from '@angular/material/select';
+import {MatTabsModule} from '@angular/material/tabs';
 
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { BrowserModule } from '@angular/platform-browser';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { RouterModule, Routes } from '@angular/router';
-import { AppComponent } from './app.component';
-import { AnimalDisplayComponent } from './components/animal-display/animal-display.component';
-import { AnimalFormComponent } from './components/animal-form/animal-form.component';
-import { EnvironmentDisplayComponent } from './components/environment-display/environment-display.component';
-import { EnvironmentFormComponent } from './components/environment-form/environment-form.component';
-import { ZoneDisplayComponent } from './components/zone-display/zone-display.component';
-import { ZoneFormComponent } from './components/zone-form/zone-form.component';
-import { ZoneListComponent } from './components/zone-list/zone-list.component';
-import { ZooComponent } from './components/zoo/zoo.component';
-import { AnimalResolver } from './services/animal-resolver.service';
-import { EnvironmentResolver } from './services/environment-resolver.service';
-import { ZoneResolver } from './services/zone-resolver.service';
+import {MatToolbarModule} from '@angular/material/toolbar';
+import {BrowserModule} from '@angular/platform-browser';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {RouterModule, Routes} from '@angular/router';
+import {AppComponent} from './app.component';
+import {AnimalDisplayComponent} from './components/animal-display/animal-display.component';
+import {AnimalFormComponent} from './components/animal-form/animal-form.component';
+import {EnvironmentDisplayComponent} from './components/environment-display/environment-display.component';
+import {EnvironmentFormComponent} from './components/environment-form/environment-form.component';
+import {EnclosureDisplayComponent} from './components/enclosure-display/enclosure-display.component';
+import {EnclosureFormComponent} from './components/enclosure-form/enclosure-form.component';
+import {EnclosureListComponent} from './components/enclosure-list/enclosure-list.component';
+import {ZooComponent} from './components/zoo/zoo.component';
+import {AnimalResolver} from './services/animal-resolver.service';
+import {EnvironmentResolver} from './services/environment-resolver.service';
+import {EnclosureResolver} from './services/enclosure-resolver.service';
 
 const routes: Routes = [
   {
@@ -39,8 +39,8 @@ const routes: Routes = [
         component: EnvironmentFormComponent,
       },
       {
-        path: 'zone/add',
-        component: ZoneFormComponent,
+        path: 'enclosure/add',
+        component: EnclosureFormComponent,
         resolve: {
           environment: EnvironmentResolver,
         },
@@ -50,7 +50,7 @@ const routes: Routes = [
         component: AnimalFormComponent,
         resolve: {
           environment: EnvironmentResolver,
-          zone: ZoneResolver,
+          enclosure: EnclosureResolver,
         },
       },
       {
@@ -61,19 +61,19 @@ const routes: Routes = [
         },
       },
       {
-        path: 'environment/:envId/zone/:zoneId',
-        component: ZoneFormComponent,
+        path: 'environment/:envId/enclosure/:enclosureId',
+        component: EnclosureFormComponent,
         resolve: {
           environment: EnvironmentResolver,
-          zone: ZoneResolver,
+          enclosure: EnclosureResolver,
         },
       },
       {
-        path: 'environment/:envId/zone/:zoneId/animal/:animalId',
+        path: 'environment/:envId/enclosure/:enclosureId/animal/:animalId',
         component: AnimalFormComponent,
         resolve: {
           environment: EnvironmentResolver,
-          zone: ZoneResolver,
+          enclosure: EnclosureResolver,
           animal: AnimalResolver,
         },
       },
@@ -84,14 +84,14 @@ const routes: Routes = [
 @NgModule({
   declarations: [
     AppComponent,
-    ZooComponent,
-    EnvironmentFormComponent,
-    ZoneFormComponent,
-    AnimalFormComponent,
-    EnvironmentDisplayComponent,
-    ZoneListComponent,
-    ZoneDisplayComponent,
     AnimalDisplayComponent,
+    AnimalFormComponent,
+    EnclosureDisplayComponent,
+    EnclosureFormComponent,
+    EnclosureListComponent,
+    EnvironmentDisplayComponent,
+    EnvironmentFormComponent,
+    ZooComponent,
   ],
   imports: [
     BrowserModule,

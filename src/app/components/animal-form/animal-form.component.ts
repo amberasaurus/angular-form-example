@@ -2,12 +2,12 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { filter, map, Observable, of, startWith, switchMap, tap } from 'rxjs';
-import { zoneCapacityFactory } from 'src/app/services/form-validator.service';
+import { enclosureCapacityFactory } from 'src/app/services/form-validator.service';
 import {
   Animal,
   Environment,
   FormService,
-  Zone,
+  Enclosure,
 } from 'src/app/services/form.service';
 import { availableLifeStages, availableSpecies } from '../../constants';
 
@@ -21,11 +21,11 @@ export class AnimalFormComponent implements OnInit {
   animalForm: Animal;
   availableSpecies = Object.values(availableSpecies);
   availableLifeStages = availableLifeStages;
-  availableZones: Observable<FormArray<Zone> | undefined>;
+  availableEnclosures: Observable<FormArray<Enclosure> | undefined>;
   currentEnvironments: FormArray<Environment>;
 
   originalEnvId: string = '';
-  originalZoneId: string = '';
+  originalEnclosureId: string = '';
 
   animalFormSelections = new FormGroup(
     {
@@ -33,7 +33,7 @@ export class AnimalFormComponent implements OnInit {
         nonNullable: true,
         validators: [Validators.required],
       }),
-      selectedZone: new FormControl<string>('', {
+      selectedEnclosure: new FormControl<string>('', {
         nonNullable: true,
         validators: [Validators.required],
       }),
@@ -41,7 +41,7 @@ export class AnimalFormComponent implements OnInit {
         nonNullable: true,
       }),
     },
-    { validators: [zoneCapacityFactory(this.formService)] }
+    { validators: [enclosureCapacityFactory(this.formService)] }
   );
 
   isNew = true;
@@ -54,41 +54,41 @@ export class AnimalFormComponent implements OnInit {
     this.animalForm = this.formService.getAnimalFormGroup();
     this.currentEnvironments = this.formService.getCurrentEnvironments();
 
-    // TODO: need to handle moving animal between env/zones
+    // TODO: need to handle moving animal between env/enclosures
 
     route.data
       .pipe(
         map((data) => ({
-          zone: data['zone'],
+          enclosure: data['enclosure'],
           env: data['environment'],
           animal: data['animal'],
         })),
         filter((data) => !!data.animal)
       )
-      .subscribe(({ zone, env, animal }) => {
+      .subscribe(({ enclosure, env, animal }) => {
         this.animalForm.patchValue(animal.value);
         this.isNew = false;
 
         this.animalFormSelections.patchValue({
           selectedAnimal: animal.value.id,
           selectedEnvironment: env.value.id,
-          selectedZone: zone.value.id,
+          selectedEnclosure: enclosure.value.id,
         });
 
         this.originalEnvId = env.value.id;
-        this.originalZoneId = zone.value.id;
+        this.originalEnclosureId = enclosure.value.id;
       });
 
-    this.availableZones =
+    this.availableEnclosures =
       this.animalFormSelections.controls.selectedEnvironment.valueChanges.pipe(
         startWith(this.animalFormSelections.controls.selectedEnvironment.value),
         tap((envId) => {
           if (this.animalFormSelections.value.selectedEnvironment !== envId) {
-            this.animalFormSelections.patchValue({ selectedZone: '' });
+            this.animalFormSelections.patchValue({ selectedEnclosure: '' });
           }
         }),
         switchMap((e) =>
-          of(this.formService.getEnvironmentById(e)?.controls.zones)
+          of(this.formService.getEnvironmentById(e)?.controls.enclosures)
         )
       );
   }
@@ -97,9 +97,9 @@ export class AnimalFormComponent implements OnInit {
 
   submit(): void {
     if (this.isNew) {
-      this.formService.addAnimalToZone(
+      this.formService.addAnimalToEnclosure(
         this.animalFormSelections.controls.selectedEnvironment.value,
-        this.animalFormSelections.controls.selectedZone.value,
+        this.animalFormSelections.controls.selectedEnclosure.value,
         this.animalForm
       );
     } else {
@@ -108,23 +108,23 @@ export class AnimalFormComponent implements OnInit {
       if (
         this.originalEnvId !==
           this.animalFormSelections.controls.selectedEnvironment.value ||
-        this.originalZoneId !==
-          this.animalFormSelections.controls.selectedZone.value
+        this.originalEnclosureId !==
+          this.animalFormSelections.controls.selectedEnclosure.value
       ) {
-        this.formService.removeAnimalFromZone(
+        this.formService.removeAnimalFromEnclosure(
           this.originalEnvId,
-          this.originalZoneId,
+          this.originalEnclosureId,
           this.animalForm.value.id || ''
         );
-        this.formService.addAnimalToZone(
+        this.formService.addAnimalToEnclosure(
           this.animalFormSelections.controls.selectedEnvironment.value,
-          this.animalFormSelections.controls.selectedZone.value,
+          this.animalFormSelections.controls.selectedEnclosure.value,
           this.animalForm
         );
       } else {
         this.formService.patchAnimal(
           this.animalFormSelections.controls.selectedEnvironment.value || '',
-          this.animalFormSelections.controls.selectedZone.value || '',
+          this.animalFormSelections.controls.selectedEnclosure.value || '',
           this.animalForm.value.id || '',
           this.animalForm
         );

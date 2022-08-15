@@ -5,23 +5,23 @@ import {
   NonNullableFormBuilder,
   Validators,
 } from '@angular/forms';
-import { zoneNameValidatorFactory } from './no-types-form-validator.service';
+import { enclosureNameValidatorFactory } from './no-types-form-validator.service';
 
 @Injectable({ providedIn: 'root' })
 export class NoTypeFormService {
   form: FormGroup;
   constructor(private fb: NonNullableFormBuilder) {
     this.form = fb.group({
-      zones: fb.array([]),
+      enclosures: fb.array([]),
     });
   }
 
-  public getZoneFormGroup(): FormGroup {
+  public getEnclosureFormGroup(): FormGroup {
     return this.fb.group(
       {
         name: this.fb.control('', [
           Validators.required,
-          zoneNameValidatorFactory(this.form),
+          enclosureNameValidatorFactory(this.form),
         ]),
         maxCapacity: this.fb.control(0, [Validators.required]),
         animals: this.fb.array([]),
@@ -30,7 +30,7 @@ export class NoTypeFormService {
     );
   }
 
-  public addZone(zone: FormGroup) {
-    (this.form.get('zones') as FormArray).push(zone);
+  public addEnclosure(enclosure: FormGroup) {
+    (this.form.get('enclosures') as FormArray).push(enclosure);
   }
 }

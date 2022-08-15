@@ -19,20 +19,20 @@ export class FormLoaderService {
       const environmentFormGroup = this.formService.getEnvironmentFormGroup();
       environmentFormGroup.patchValue(environment);
 
-      if (environment.zones) {
-        environment.zones.forEach((zone: any) => {
-          const zoneFormGroup = this.formService.getZoneFormGroup();
-          zoneFormGroup.patchValue(zone);
+      if (environment.enclosures) {
+        environment.enclosures.forEach((enclosure: any) => {
+          const enclosureFormGroup = this.formService.getEnclosureFormGroup();
+          enclosureFormGroup.patchValue(enclosure);
 
-          if (zone.animals) {
-            zone.animals.forEach((animal: any) => {
+          if (enclosure.animals) {
+            enclosure.animals.forEach((animal: any) => {
               const animalFormGroup = this.formService.getAnimalFormGroup();
               animalFormGroup.patchValue(animal);
-              zoneFormGroup.controls.animals.push(animalFormGroup);
+              enclosureFormGroup.controls.animals.push(animalFormGroup);
             });
           }
 
-          environmentFormGroup.controls.zones.push(zoneFormGroup);
+          environmentFormGroup.controls.enclosures.push(enclosureFormGroup);
         });
       }
       this.formService.addEnvironment(environmentFormGroup);

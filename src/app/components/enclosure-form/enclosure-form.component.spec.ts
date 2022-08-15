@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ZoneListComponent } from './zone-list.component';
+import { EnclosureFormComponent } from './enclosure-form.component';
 
-describe('ZoneListComponent', () => {
-  let component: ZoneListComponent;
-  let fixture: ComponentFixture<ZoneListComponent>;
+describe('EnclosureFormComponent', () => {
+  let component: EnclosureFormComponent;
+  let fixture: ComponentFixture<EnclosureFormComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ZoneListComponent ]
+      declarations: [ EnclosureFormComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ZoneListComponent);
+    fixture = TestBed.createComponent(EnclosureFormComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
