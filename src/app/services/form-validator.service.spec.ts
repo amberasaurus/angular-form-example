@@ -2,10 +2,10 @@ import { FormArray, FormControl, FormGroup } from '@angular/forms';
 import { availableSpecies } from '../constants';
 import {
   minCapacityValidator,
-  zoneCapacityFactory,
-  zoneSafetyValidator,
+  enclosureCapacityFactory,
+  enclosureSafetyValidator,
 } from './form-validator.service';
-import { Animal, Zone } from './form.service';
+import { Animal, Enclosure } from './form.service';
 
 describe('FormValidatorService', () => {
   describe('minCapacityValidator', () => {
@@ -35,10 +35,10 @@ describe('FormValidatorService', () => {
     });
   });
 
-  describe('zoneCapacityValidator', () => {
-    it('should return max capacity error if trying to move an animal into a full zone', () => {
+  describe('enclosureCapacityValidator', () => {
+    it('should return max capacity error if trying to move an animal into a full enclosure', () => {
       const mockFormService = {
-        getZoneById: (envId: string, zoneId: string) => {
+        getEnclosureById: (envId: string, enclosureId: string) => {
           return new FormGroup({
             animals: new FormArray([
               new FormGroup({
@@ -52,101 +52,109 @@ describe('FormValidatorService', () => {
 
       const formGroup = new FormGroup({
         selectedEnvironment: new FormControl('1'),
-        selectedZone: new FormControl('1'),
+        selectedEnclosure: new FormControl('1'),
         selectedAnimal: new FormControl('1'),
       });
 
-      const validatorFn = zoneCapacityFactory(mockFormService as any);
+      const validatorFn = enclosureCapacityFactory(mockFormService as any);
       validatorFn(formGroup);
 
-      expect(formGroup.get('selectedZone')?.errors).toEqual({
+      expect(formGroup.get('selectedEnclosure')?.errors).toEqual({
         maxCapacity: true,
       });
     });
   });
 
   // TODO: convert to jest and/or parameterized
-  fdescribe('zoneSafetyValidator', () => {
-    let zoneForm: Zone;
-    const carnivore = Object.values(availableSpecies).find(s => s.type === 'Carnivore');
-    const herbivore = Object.values(availableSpecies).find(s => s.type === 'Herbivore');
-    const hypercarnivore = Object.values(availableSpecies).find(s => s.type === 'Hypercarnivore');
+  describe('enclosureSafetyValidator', () => {
+    let enclosureForm: Enclosure;
+    const carnivore = Object.values(availableSpecies).find(
+      (s) => s.type === 'Carnivore',
+    );
+    const herbivore = Object.values(availableSpecies).find(
+      (s) => s.type === 'Herbivore',
+    );
+    const hypercarnivore = Object.values(availableSpecies).find(
+      (s) => s.type === 'Hypercarnivore',
+    );
 
     if (!carnivore || !herbivore || !hypercarnivore) {
       throw 'availableSpecies is missing types';
     }
 
-    function addAnimalToZone(species: string, lifeStage: string) {
-      zoneForm.controls.animals.push(new FormGroup({
-        species: new FormControl(species),
-        lifeStage: new FormControl(lifeStage)
-      }) as unknown as Animal)
+    function addAnimalToEnclosure(species: string, lifeStage: string) {
+      enclosureForm.controls.animals.push(
+        new FormGroup({
+          species: new FormControl(species),
+          lifeStage: new FormControl(lifeStage),
+        }) as unknown as Animal,
+      );
     }
 
     beforeEach(() => {
-      zoneForm = new FormGroup(
-        { animals: new FormArray<Animal>([]) }
-      ) as unknown as Zone;
-    })
-    it('should error if zone has herbivore and adult carnivore', () => {
-      addAnimalToZone(carnivore.id, 'Adult');
-      addAnimalToZone(herbivore.id, 'Adult');
-      const result = zoneSafetyValidator(zoneForm);
-      expect(result?.['unsafeZone']).toBeTrue();
-      expect(zoneForm.controls.animals.at(1).errors?.['dead']).toBe(true);
+      enclosureForm = new FormGroup({
+        animals: new FormArray<Animal>([]),
+      }) as unknown as Enclosure;
     });
-    it('should error if zone has herbivore and adult hypercarnivore', () => {
-      addAnimalToZone(hypercarnivore.id, 'Adult');
-      addAnimalToZone(herbivore.id, 'Adult');
-      const result = zoneSafetyValidator(zoneForm);
-      expect(result?.['unsafeZone']).toBeTrue();
-      expect(zoneForm.controls.animals.at(1).errors?.['dead']).toBe(true);
+    it('should error if enclosure has herbivore and adult carnivore', () => {
+      addAnimalToEnclosure(carnivore.id, 'Adult');
+      addAnimalToEnclosure(herbivore.id, 'Adult');
+      const result = enclosureSafetyValidator(enclosureForm);
+      expect(result?.['unsafeEnclosure']).toBeTrue();
+      expect(enclosureForm.controls.animals.at(1).errors?.['dead']).toBe(true);
     });
-    it('should error if zone has carnivore and adult hypercarnivore', () => {
-      addAnimalToZone(hypercarnivore.id, 'Adult');
-      addAnimalToZone(carnivore.id, 'Adult');
-      const result = zoneSafetyValidator(zoneForm);
-      expect(result?.['unsafeZone']).toBeTrue();
-      expect(zoneForm.controls.animals.at(1).errors?.['dead']).toBe(true);
+    it('should error if enclosure has herbivore and adult hypercarnivore', () => {
+      addAnimalToEnclosure(hypercarnivore.id, 'Adult');
+      addAnimalToEnclosure(herbivore.id, 'Adult');
+      const result = enclosureSafetyValidator(enclosureForm);
+      expect(result?.['unsafeEnclosure']).toBeTrue();
+      expect(enclosureForm.controls.animals.at(1).errors?.['dead']).toBe(true);
     });
-    it('should not error if zone has juvenile hypercarnivore', () => {
-      addAnimalToZone(hypercarnivore.id, 'Juvenile');
-      addAnimalToZone(herbivore.id, 'Adult');
-      addAnimalToZone(herbivore.id, 'Juvenile');
-      const result = zoneSafetyValidator(zoneForm);
+    it('should error if enclosure has carnivore and adult hypercarnivore', () => {
+      addAnimalToEnclosure(hypercarnivore.id, 'Adult');
+      addAnimalToEnclosure(carnivore.id, 'Adult');
+      const result = enclosureSafetyValidator(enclosureForm);
+      expect(result?.['unsafeEnclosure']).toBeTrue();
+      expect(enclosureForm.controls.animals.at(1).errors?.['dead']).toBe(true);
+    });
+    it('should not error if enclosure has juvenile hypercarnivore', () => {
+      addAnimalToEnclosure(hypercarnivore.id, 'Juvenile');
+      addAnimalToEnclosure(herbivore.id, 'Adult');
+      addAnimalToEnclosure(herbivore.id, 'Juvenile');
+      const result = enclosureSafetyValidator(enclosureForm);
       expect(result).toBeNull();
-      expect(zoneForm.controls.animals.at(1).errors).toBeNull();
-      expect(zoneForm.controls.animals.at(2).errors).toBeNull();
+      expect(enclosureForm.controls.animals.at(1).errors).toBeNull();
+      expect(enclosureForm.controls.animals.at(2).errors).toBeNull();
     });
-    it('should not error if zone has juvenile carnivore', () => {
-      addAnimalToZone(carnivore.id, 'Juvenile');
-      addAnimalToZone(herbivore.id, 'Adult');
-      addAnimalToZone(herbivore.id, 'Juvenile');
-      const result = zoneSafetyValidator(zoneForm);
+    it('should not error if enclosure has juvenile carnivore', () => {
+      addAnimalToEnclosure(carnivore.id, 'Juvenile');
+      addAnimalToEnclosure(herbivore.id, 'Adult');
+      addAnimalToEnclosure(herbivore.id, 'Juvenile');
+      const result = enclosureSafetyValidator(enclosureForm);
       expect(result).toBeNull();
-      expect(zoneForm.controls.animals.at(1).errors).toBeNull();
-      expect(zoneForm.controls.animals.at(2).errors).toBeNull();
+      expect(enclosureForm.controls.animals.at(1).errors).toBeNull();
+      expect(enclosureForm.controls.animals.at(2).errors).toBeNull();
     });
-    it('should not error if zone has only herbivores', () => {
-      addAnimalToZone(herbivore.id, 'Adult');
-      addAnimalToZone(herbivore.id, 'Juvenile');
-      const result = zoneSafetyValidator(zoneForm);
+    it('should not error if enclosure has only herbivores', () => {
+      addAnimalToEnclosure(herbivore.id, 'Adult');
+      addAnimalToEnclosure(herbivore.id, 'Juvenile');
+      const result = enclosureSafetyValidator(enclosureForm);
       expect(result).toBeNull();
-      expect(zoneForm.controls.animals.at(1).errors).toBeNull();
+      expect(enclosureForm.controls.animals.at(1).errors).toBeNull();
     });
-    it('should not error if zone has only carnivores', () => {
-      addAnimalToZone(carnivore.id, 'Adult');
-      addAnimalToZone(carnivore.id, 'Juvenile');
-      const result = zoneSafetyValidator(zoneForm);
+    it('should not error if enclosure has only carnivores', () => {
+      addAnimalToEnclosure(carnivore.id, 'Adult');
+      addAnimalToEnclosure(carnivore.id, 'Juvenile');
+      const result = enclosureSafetyValidator(enclosureForm);
       expect(result).toBeNull();
-      expect(zoneForm.controls.animals.at(1).errors).toBeNull();
+      expect(enclosureForm.controls.animals.at(1).errors).toBeNull();
     });
-    it('should not error if zone has only hypercarnivores', () => {
-      addAnimalToZone(hypercarnivore.id, 'Adult');
-      addAnimalToZone(hypercarnivore.id, 'Juvenile');
-      const result = zoneSafetyValidator(zoneForm);
+    it('should not error if enclosure has only hypercarnivores', () => {
+      addAnimalToEnclosure(hypercarnivore.id, 'Adult');
+      addAnimalToEnclosure(hypercarnivore.id, 'Juvenile');
+      const result = enclosureSafetyValidator(enclosureForm);
       expect(result).toBeNull();
-      expect(zoneForm.controls.animals.at(1).errors).toBeNull();
+      expect(enclosureForm.controls.animals.at(1).errors).toBeNull();
     });
   });
 });

@@ -6,6 +6,8 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
+    "prettier": "prettier --check \"**/*.*\"",
+    "prettier:fix": "prettier --write \"**/*.*\"",
     "test": "ng test"
   },
   "private": true,
@@ -39,6 +41,7 @@
     "karma-coverage": "~2.1.0",
     "karma-jasmine": "~5.0.0",
     "karma-jasmine-html-reporter": "~1.7.0",
+    "prettier": "2.7.1",
     "typescript": "~4.6.2"
   }
 }

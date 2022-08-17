@@ -5,53 +5,26 @@
 
 new form:
 
-{
-zones: [
-{
-name: ''
-},
-{
-name:''
-}
-]
-}
+{ zones: [ { name: '' }, { name:'' } ] }
 
 New thing to add/edit:
 
-FormGroup: {
-name: '',
-validator: nameValidator
-}
+FormGroup: { name: '', validator: nameValidator }
 
 constructor(formService)
 
-nameValidator(
-{this.formService.getCurrentZones
+nameValidator( {this.formService.getCurrentZones
 
     see if name in current zone,
     return error
 
-}
-)
+} )
 
-Basic Form elements - done
-FormGroup with sub-form elements
-Dynamic FormArrays
-add - done
-remove
-change the order
-FormGroup display that depends on a different FormControl being selected, etc. - done
-Form split across tabs within the application
-Validation across tabs within the application
-Validations on control in one tab affect validation of control in a different tab
-Pre-populating form
-Custom validators
-Zones that have different validations based on some criteria
+Basic Form elements - done FormGroup with sub-form elements Dynamic FormArrays
+add - done remove change the order FormGroup display that depends on a different
+FormControl being selected, etc. - done Form split across tabs within the
+application Validation across tabs within the application Validations on control
+in one tab affect validation of control in a different tab Pre-populating form
+Custom validators Zones that have different validations based on some criteria
 
-zone: {
-id: '',
-name: ''
-animals: [{
-id: ''
-}]
-}
+zone: { id: '', name: '' animals: [{ id: '' }] }

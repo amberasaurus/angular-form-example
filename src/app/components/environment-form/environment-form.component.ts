@@ -20,7 +20,7 @@ export class EnvironmentFormComponent implements OnDestroy {
   constructor(
     private formService: FormService,
     private router: Router,
-    route: ActivatedRoute
+    route: ActivatedRoute,
   ) {
     this.environmentForm = this.formService.getEnvironmentFormGroup();
 
@@ -28,7 +28,7 @@ export class EnvironmentFormComponent implements OnDestroy {
       .pipe(
         takeUntil(this.destroy$),
         map((data) => data['environment']),
-        filter((data) => !!data)
+        filter((data) => !!data),
       )
       .subscribe((env) => {
         this.environmentForm.patchValue(env.value);
@@ -48,7 +48,7 @@ export class EnvironmentFormComponent implements OnDestroy {
       // TODO: handle undefined better
       this.formService.patchEnvironment(
         this.environmentForm.value.id || '',
-        this.environmentForm
+        this.environmentForm,
       );
     }
     this.router.navigate(['']);

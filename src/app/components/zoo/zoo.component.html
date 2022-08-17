@@ -1,7 +1,7 @@
 <h2 class="text-2xl mt-2 mb-4">Current Environments:</h2>
 
 <button (click)="addEnvironment()">Add Environment</button>
-<button (click)="addZone()">Add Zone</button>
+<button (click)="addEnclosure()">Add Enclosure</button>
 <button (click)="addAnimal()">Add Animal</button>
 <div class="zoo-container">
   <div>
@@ -16,11 +16,7 @@
         <ng-template mat-tab-label>
           <span class="warning" *ngIf="env.invalid">⚠ </span>
           {{ env.value.name }} - {{ env.value.type }}&nbsp;
-          <button
-            (click)="editEnvironment(env)"
-          >
-            Edit
-          </button>
+          <button (click)="editEnvironment(env)">Edit</button>
         </ng-template>
         <app-environment-display [environment]="env"></app-environment-display>
       </mat-tab>

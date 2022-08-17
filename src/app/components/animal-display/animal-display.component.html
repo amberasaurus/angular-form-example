@@ -5,7 +5,7 @@
 >
   <div style="display: contents" (click)="editAnimal(animal)">
     <div class="animal-emoji">
-      {{ availableSpecies[animal.value.species || ""]?.emoji }}
+      {{ availableSpecies[animal.value.species || '']?.emoji }}
       <div class="juvenile" *ngIf="animal.value.lifeStage === 'Juvenile'">
         🚼
       </div>

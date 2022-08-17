@@ -1,18 +1,18 @@
 import { TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 
-import { AnimalDisplayComponent } from './animal-display.component';
+import { EnclosureDisplayComponent } from './enclosure-display.component';
 
-describe('AnimalDisplayComponent', () => {
-  let component: AnimalDisplayComponent;
+describe('EnclosureDisplayComponent', () => {
+  let component: EnclosureDisplayComponent;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [RouterTestingModule],
-      providers: [AnimalDisplayComponent],
+      providers: [EnclosureDisplayComponent],
     });
 
-    component = TestBed.inject(AnimalDisplayComponent);
+    component = TestBed.inject(EnclosureDisplayComponent);
   });
 
   it('should create', () => {

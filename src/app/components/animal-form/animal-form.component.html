@@ -1,5 +1,5 @@
 <form class="standard-form" [formGroup]="animalForm" (ngSubmit)="submit()">
-  <h1>{{ isNew ? "Add" : "Edit" }} Animal</h1>
+  <h1>{{ isNew ? 'Add' : 'Edit' }} Animal</h1>
   <p>
     <mat-form-field appearance="fill">
       <mat-label>Environment</mat-label>
@@ -16,31 +16,35 @@
     </mat-form-field>
   </p>
 
-  <ng-container *ngIf="availableZones | async as zones">
+  <ng-container *ngIf="availableEnclosures | async as enclosures">
     <p>
       <mat-form-field appearance="fill">
-        <mat-label>Zone</mat-label>
-        <mat-select [formControl]="animalFormSelections.controls.selectedZone">
+        <mat-label>Enclosure</mat-label>
+        <mat-select
+          [formControl]="animalFormSelections.controls.selectedEnclosure"
+        >
           <mat-option
-            *ngFor="let zone of zones.controls"
-            [value]="zone.value.id"
+            *ngFor="let enclosure of enclosures.controls"
+            [value]="enclosure.value.id"
           >
-            {{ zone.value.name }}
+            {{ enclosure.value.name }}
           </mat-option>
         </mat-select>
         <mat-error
           *ngIf="
-            animalFormSelections.controls.selectedZone.hasError('maxCapacity')
+            animalFormSelections.controls.selectedEnclosure.hasError(
+              'maxCapacity'
+            )
           "
         >
-          This zone is full.
+          This enclosure is full.
         </mat-error>
         <mat-error
           *ngIf="
-            animalFormSelections.controls.selectedZone.hasError('required')
+            animalFormSelections.controls.selectedEnclosure.hasError('required')
           "
         >
-          Zone is required.
+          Enclosure is required.
         </mat-error>
       </mat-form-field>
     </p>
@@ -49,7 +53,7 @@
   <ng-container
     *ngIf="
       animalFormSelections.controls.selectedEnvironment.value &&
-      animalFormSelections.controls.selectedZone.value &&
+      animalFormSelections.controls.selectedEnclosure.value &&
       animalFormSelections.valid
     "
   >

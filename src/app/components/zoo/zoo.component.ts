@@ -15,7 +15,7 @@ export class ZooComponent implements OnInit {
   constructor(
     private formService: FormService,
     private formLoaderService: FormLoaderService,
-    private router: Router
+    private router: Router,
   ) {}
 
   ngOnInit(): void {}
@@ -40,8 +40,8 @@ export class ZooComponent implements OnInit {
     this.router.navigate(['zoo', 'environment', 'add']);
   }
 
-  addZone() {
-    this.router.navigate(['zoo', 'zone', 'add']);
+  addEnclosure() {
+    this.router.navigate(['zoo', 'enclosure', 'add']);
   }
   addAnimal() {
     this.router.navigate(['zoo', 'animal', 'add']);
