@@ -1,6 +1,10 @@
 import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
-import { Environment, Enclosure } from 'src/app/services/form.service';
+import {
+  Enclosure,
+  Environment,
+  FormService,
+} from 'src/app/services/form.service';
 
 @Component({
   selector: 'app-enclosure-display',
@@ -11,7 +15,7 @@ export class EnclosureDisplayComponent {
   @Input() enclosure?: Enclosure;
   @Input() environment?: Environment;
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private formService: FormService) {}
 
   editEnclosure(enclosure: Enclosure) {
     this.router.navigate([
@@ -21,5 +25,20 @@ export class EnclosureDisplayComponent {
       'enclosure',
       enclosure.value.id,
     ]);
+  }
+
+  deleteEnclosure() {
+    // TODO: switch to material dialog
+    const confirmed = confirm(
+      'Are you sure you want to delete this enclosure?',
+    );
+    if (confirmed) {
+      this.formService.removeEnclosureFromEnvironment(
+        this.environment?.value.id || '',
+        this.enclosure?.value.id || '',
+      );
+
+      this.router.navigate(['']);
+    }
   }
 }

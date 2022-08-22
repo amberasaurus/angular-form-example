@@ -1,7 +1,24 @@
 <mat-card *ngIf="enclosure" class="enclosure-card">
-  <span class="warning" *ngIf="enclosure.invalid">⚠ </span>
-  <strong>{{ enclosure.value.name }} </strong>
-  <button (click)="editEnclosure(enclosure)">Edit</button>
+  <div class="enclosure-header">
+    <div>
+      <span class="warning" *ngIf="enclosure.invalid">⚠ </span>
+      <strong>{{ enclosure.value.name }} </strong>
+    </div>
+
+    <div class="enclosure-actions">
+      <button (click)="editEnclosure(enclosure)" size="small" mat-icon-button>
+        📝
+      </button>
+      <button
+        type="button"
+        size="small"
+        mat-icon-button
+        (click)="deleteEnclosure()"
+      >
+        🗑
+      </button>
+    </div>
+  </div>
 
   <div class="enclosure-animal-container">
     <app-animal-display

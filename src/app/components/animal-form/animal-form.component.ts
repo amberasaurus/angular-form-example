@@ -5,9 +5,9 @@ import { filter, map, Observable, of, startWith, switchMap, tap } from 'rxjs';
 import { enclosureCapacityFactory } from 'src/app/services/form-validator.service';
 import {
   Animal,
+  Enclosure,
   Environment,
   FormService,
-  Enclosure,
 } from 'src/app/services/form.service';
 import { availableLifeStages, availableSpecies } from '../../constants';
 
@@ -132,5 +132,19 @@ export class AnimalFormComponent implements OnInit {
     }
 
     this.router.navigate(['']);
+  }
+
+  deleteAnimal() {
+    // TODO: switch to material dialog
+    const confirmed = confirm('Are you sure you want to delete this animal?');
+    if (confirmed) {
+      this.formService.removeAnimalFromEnclosure(
+        this.animalFormSelections.controls.selectedEnvironment.value,
+        this.animalFormSelections.controls.selectedEnclosure.value,
+        this.animalForm.value.id || '',
+      );
+
+      this.router.navigate(['']);
+    }
   }
 }

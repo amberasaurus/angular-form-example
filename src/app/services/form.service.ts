@@ -9,8 +9,8 @@ import {
 
 import { v4 as uuidv4 } from 'uuid';
 import {
-  minCapacityValidator,
   enclosureSafetyValidator,
+  minCapacityValidator,
 } from './form-validator.service';
 
 // Habitat
@@ -164,6 +164,25 @@ export class FormService {
     );
     if (animalIdx !== undefined && animalIdx >= 0) {
       enclosure?.controls.animals.removeAt(animalIdx);
+    }
+  }
+
+  public removeEnclosureFromEnvironment(envId: string, enclosureId: string) {
+    const environment = this.getEnvironmentById(envId);
+    const enclosureIdx = environment?.controls.enclosures.controls.findIndex(
+      (enclosure) => enclosure.value.id === enclosureId,
+    );
+    if (enclosureIdx !== undefined && enclosureIdx >= 0) {
+      environment?.controls.enclosures.removeAt(enclosureIdx);
+    }
+  }
+
+  public removeEnvironment(envId: string) {
+    const environmentIdx = this.form.controls.environments.controls.findIndex(
+      (env) => env.value.id === envId,
+    );
+    if (environmentIdx !== undefined && environmentIdx >= 0) {
+      this.form?.controls.environments.removeAt(environmentIdx);
     }
   }
 }

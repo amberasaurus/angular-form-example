@@ -3,9 +3,9 @@ import { FormArray, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { filter, map } from 'rxjs/operators';
 import {
+  Enclosure,
   Environment,
   FormService,
-  Enclosure,
 } from 'src/app/services/form.service';
 import { formHasUnacceptableErrors } from '../../utils/forms';
 

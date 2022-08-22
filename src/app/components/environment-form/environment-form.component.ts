@@ -53,4 +53,16 @@ export class EnvironmentFormComponent implements OnDestroy {
     }
     this.router.navigate(['']);
   }
+
+  deleteEnvironment() {
+    // TODO: switch to material dialog
+    const confirmed = confirm(
+      'Are you sure you want to delete this environment?',
+    );
+    if (confirmed) {
+      this.formService.removeEnvironment(this.environmentForm.value.id || '');
+
+      this.router.navigate(['']);
+    }
+  }
 }
