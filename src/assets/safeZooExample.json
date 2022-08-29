@@ -1,9 +1,9 @@
 {
   "data": {
-    "environments": [
+    "habitats": [
       {
         "id": "1",
-        "name": "Environment 1",
+        "name": "Habitat 1",
         "type": "Jungle",
         "enclosures": [
           {
@@ -60,7 +60,7 @@
       },
       {
         "id": "2",
-        "name": "Environment 2",
+        "name": "Habitat 2",
         "type": "Desert",
         "enclosures": [
           {

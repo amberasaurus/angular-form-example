@@ -8,19 +8,19 @@ export class FormLoaderService {
 
   loadSafeZoo() {
     this.formService.form.reset();
-    this.loadEnvironments(safeZooData.data.environments);
+    this.loadHabitats(safeZooData.data.habitats);
   }
 
   // TODO: change from any, need better interfaces all over
   // also need to separate this out a bit more
   // also github copilot wrote this and I'm scared
-  loadEnvironments(env: any[]) {
-    env.forEach((environment) => {
-      const environmentFormGroup = this.formService.getEnvironmentFormGroup();
-      environmentFormGroup.patchValue(environment);
+  loadHabitats(hab: any[]) {
+    hab.forEach((habitat) => {
+      const habitatFormGroup = this.formService.getHabitatFormGroup();
+      habitatFormGroup.patchValue(habitat);
 
-      if (environment.enclosures) {
-        environment.enclosures.forEach((enclosure: any) => {
+      if (habitat.enclosures) {
+        habitat.enclosures.forEach((enclosure: any) => {
           const enclosureFormGroup = this.formService.getEnclosureFormGroup();
           enclosureFormGroup.patchValue(enclosure);
 
@@ -32,10 +32,10 @@ export class FormLoaderService {
             });
           }
 
-          environmentFormGroup.controls.enclosures.push(enclosureFormGroup);
+          habitatFormGroup.controls.enclosures.push(enclosureFormGroup);
         });
       }
-      this.formService.addEnvironment(environmentFormGroup);
+      this.formService.addHabitat(habitatFormGroup);
     });
   }
 }

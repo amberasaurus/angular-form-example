@@ -10,10 +10,10 @@ import { Animal, FormService } from './form.service';
 export class AnimalResolver implements Resolve<Animal | undefined> {
   constructor(private formService: FormService) {}
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
-    const envId = route.paramMap.get('envId') as string;
+    const habId = route.paramMap.get('habId') as string;
     const enclosureId = route.paramMap.get('enclosureId') as string;
     const animalId = route.paramMap.get('animalId') as string;
 
-    return of(this.formService.getAnimalById(envId, enclosureId, animalId));
+    return of(this.formService.getAnimalById(habId, enclosureId, animalId));
   }
 }

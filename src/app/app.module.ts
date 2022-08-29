@@ -14,15 +14,15 @@ import { RouterModule, Routes } from '@angular/router';
 import { AppComponent } from './app.component';
 import { AnimalDisplayComponent } from './components/animal-display/animal-display.component';
 import { AnimalFormComponent } from './components/animal-form/animal-form.component';
-import { EnvironmentDisplayComponent } from './components/environment-display/environment-display.component';
-import { EnvironmentFormComponent } from './components/environment-form/environment-form.component';
 import { EnclosureDisplayComponent } from './components/enclosure-display/enclosure-display.component';
 import { EnclosureFormComponent } from './components/enclosure-form/enclosure-form.component';
 import { EnclosureListComponent } from './components/enclosure-list/enclosure-list.component';
+import { HabitatDisplayComponent } from './components/habitat-display/habitat-display.component';
+import { HabitatFormComponent } from './components/habitat-form/habitat-form.component';
 import { ZooComponent } from './components/zoo/zoo.component';
 import { AnimalResolver } from './services/animal-resolver.service';
-import { EnvironmentResolver } from './services/environment-resolver.service';
 import { EnclosureResolver } from './services/enclosure-resolver.service';
+import { HabitatResolver } from './services/habitat-resolver.service';
 
 const routes: Routes = [
   {
@@ -35,44 +35,44 @@ const routes: Routes = [
     component: ZooComponent,
     children: [
       {
-        path: 'environment/add',
-        component: EnvironmentFormComponent,
+        path: 'habitat/add',
+        component: HabitatFormComponent,
       },
       {
         path: 'enclosure/add',
         component: EnclosureFormComponent,
         resolve: {
-          environment: EnvironmentResolver,
+          habitat: HabitatResolver,
         },
       },
       {
         path: 'animal/add',
         component: AnimalFormComponent,
         resolve: {
-          environment: EnvironmentResolver,
+          habitat: HabitatResolver,
           enclosure: EnclosureResolver,
         },
       },
       {
-        path: 'environment/:envId',
-        component: EnvironmentFormComponent,
+        path: 'habitat/:habId',
+        component: HabitatFormComponent,
         resolve: {
-          environment: EnvironmentResolver,
+          habitat: HabitatResolver,
         },
       },
       {
-        path: 'environment/:envId/enclosure/:enclosureId',
+        path: 'habitat/:habId/enclosure/:enclosureId',
         component: EnclosureFormComponent,
         resolve: {
-          environment: EnvironmentResolver,
+          habitat: HabitatResolver,
           enclosure: EnclosureResolver,
         },
       },
       {
-        path: 'environment/:envId/enclosure/:enclosureId/animal/:animalId',
+        path: 'habitat/:habId/enclosure/:enclosureId/animal/:animalId',
         component: AnimalFormComponent,
         resolve: {
-          environment: EnvironmentResolver,
+          habitat: HabitatResolver,
           enclosure: EnclosureResolver,
           animal: AnimalResolver,
         },
@@ -89,8 +89,8 @@ const routes: Routes = [
     EnclosureDisplayComponent,
     EnclosureFormComponent,
     EnclosureListComponent,
-    EnvironmentDisplayComponent,
-    EnvironmentFormComponent,
+    HabitatDisplayComponent,
+    HabitatFormComponent,
     ZooComponent,
   ],
   imports: [

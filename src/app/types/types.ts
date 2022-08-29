@@ -1,5 +1,5 @@
 // import { FormControl, FormArray, FormGroup } from '@angular/forms';
-// import { AnimalForm, EnclosureForm, EnvironmentForm } from '../services/form.service';
+// import { AnimalForm, EnclosureForm, HabitatForm } from '../services/form.service';
 
 // export type GetFormValue<T> = {
 //   [Property in keyof T]: T[Property] extends FormControl<infer C>
@@ -13,7 +13,7 @@
 //     : never;
 // };
 
-// export type Environment = GetFormValue<EnvironmentForm>;
+// export type Habitat = GetFormValue<HabitatForm>;
 // export type Enclosure = GetFormValue<EnclosureForm>;
 // export type Animal = GetFormValue<AnimalForm>;
 

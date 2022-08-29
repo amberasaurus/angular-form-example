@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
-import { Animal, Environment, Enclosure } from 'src/app/services/form.service';
+import { Animal, Habitat, Enclosure } from 'src/app/services/form.service';
 import { availableSpecies } from '../../constants';
 
 @Component({
@@ -11,7 +11,7 @@ import { availableSpecies } from '../../constants';
 export class AnimalDisplayComponent {
   @Input() animal?: Animal;
   @Input() enclosure?: Enclosure;
-  @Input() environment?: Environment;
+  @Input() habitat?: Habitat;
 
   availableSpecies = availableSpecies;
 
@@ -20,8 +20,8 @@ export class AnimalDisplayComponent {
   editAnimal(animal: Animal) {
     this.router.navigate([
       'zoo',
-      'environment',
-      this.environment?.value.id,
+      'habitat',
+      this.habitat?.value.id,
       'enclosure',
       this.enclosure?.value.id,
       'animal',

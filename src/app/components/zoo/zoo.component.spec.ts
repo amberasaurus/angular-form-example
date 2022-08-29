@@ -14,9 +14,7 @@ describe('ZooComponent', () => {
         ZooComponent,
         {
           provide: FormService,
-          useValue: jasmine.createSpyObj<FormService>([
-            'getEnvironmentFormGroup',
-          ]),
+          useValue: jasmine.createSpyObj<FormService>(['getHabitatFormGroup']),
         },
       ],
     });
