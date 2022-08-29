@@ -1,6 +1,11 @@
 import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
-import { Animal, Habitat, Enclosure } from 'src/app/services/form.service';
+import {
+  Animal,
+  Enclosure,
+  FormService,
+  Habitat,
+} from 'src/app/services/form.service';
 import { availableSpecies } from '../../constants';
 
 @Component({
@@ -15,9 +20,9 @@ export class AnimalDisplayComponent {
 
   availableSpecies = availableSpecies;
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private formService: FormService) {}
 
-  editAnimal(animal: Animal) {
+  editAnimal() {
     this.router.navigate([
       'zoo',
       'habitat',
@@ -25,7 +30,21 @@ export class AnimalDisplayComponent {
       'enclosure',
       this.enclosure?.value.id,
       'animal',
-      animal.value.id,
+      this.animal?.value.id,
     ]);
+  }
+
+  deleteAnimal() {
+    // TODO: switch to material dialog
+    const confirmed = confirm('Are you sure you want to delete this animal?');
+    if (confirmed) {
+      this.formService.removeAnimalFromEnclosure(
+        this.habitat?.get('id')?.value || '',
+        this.enclosure?.get('id')?.value || '',
+        this.animal?.get('id')?.value || '',
+      );
+
+      this.router.navigate(['']);
+    }
   }
 }

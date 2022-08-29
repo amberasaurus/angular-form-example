@@ -15,8 +15,7 @@
       >
         <ng-template mat-tab-label>
           <span class="warning" *ngIf="hab.invalid">⚠ </span>
-          {{ hab.value.name }} - {{ hab.value.type }}&nbsp;
-          <button (click)="editHabitat(hab)">Edit</button>
+          {{ hab.value.name }}
         </ng-template>
         <app-habitat-display [habitat]="hab"></app-habitat-display>
       </mat-tab>

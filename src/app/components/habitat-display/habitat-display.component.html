@@ -1,4 +1,11 @@
-<div *ngIf="habitat">
+<div *ngIf="habitat" class="habitat-display">
+  Type {{ habitat.get('type')?.value }}
+  <button type="button" size="small" mat-icon-button (click)="editHabitat()">
+    📝
+  </button>
+  <button type="button" size="small" mat-icon-button (click)="deleteHabitat()">
+    🗑
+  </button>
   <div class="enclosures">
     <app-enclosure-display
       *ngFor="let enclosure of habitat.controls.enclosures.controls"

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { FormLoaderService } from 'src/app/services/form-loader.service';
-import { Habitat, FormService } from 'src/app/services/form.service';
+import { FormService } from 'src/app/services/form.service';
 
 @Component({
   selector: 'app-zoo',
@@ -30,10 +30,6 @@ export class ZooComponent implements OnInit {
 
   checkSafeZoo() {
     console.log(this.formService.form);
-  }
-
-  editHabitat(hab: Habitat) {
-    this.router.navigate(['zoo', 'habitat', hab.value.id]);
   }
 
   addHabitat() {

@@ -3,7 +3,7 @@
   class="animal-display-container"
   [class.dead]="animal.hasError('dead')"
 >
-  <div style="display: contents" (click)="editAnimal(animal)">
+  <div style="display: contents">
     <div class="animal-emoji">
       {{ availableSpecies[animal.value.species || '']?.emoji }}
       <div class="juvenile" *ngIf="animal.value.lifeStage === 'Juvenile'">
@@ -15,7 +15,17 @@
     </div>
 
     <div class="edit-hover">
-      <div class="edit-emoji">📝</div>
+      <button type="button" size="small" mat-icon-button (click)="editAnimal()">
+        📝
+      </button>
+      <button
+        type="button"
+        size="small"
+        mat-icon-button
+        (click)="deleteAnimal()"
+      >
+        🗑
+      </button>
     </div>
 
     <div class="dead-overlay" *ngIf="animal.hasError('dead')">

@@ -1,7 +1,7 @@
 import { Component, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { filter, map, Subject, takeUntil } from 'rxjs';
-import { Habitat, FormService } from 'src/app/services/form.service';
+import { FormService, Habitat } from 'src/app/services/form.service';
 
 const availableHabitats = ['Forest', 'Jungle', 'Desert'];
 
@@ -52,15 +52,5 @@ export class HabitatFormComponent implements OnDestroy {
       );
     }
     this.router.navigate(['']);
-  }
-
-  deleteHabitat() {
-    // TODO: switch to material dialog
-    const confirmed = confirm('Are you sure you want to delete this habitat?');
-    if (confirmed) {
-      this.formService.removeHabitat(this.habitatForm.value.id || '');
-
-      this.router.navigate(['']);
-    }
   }
 }

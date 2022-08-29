@@ -6,8 +6,8 @@ import { enclosureCapacityFactory } from 'src/app/services/form-validator.servic
 import {
   Animal,
   Enclosure,
-  Habitat,
   FormService,
+  Habitat,
 } from 'src/app/services/form.service';
 import { availableLifeStages, availableSpecies } from '../../constants';
 
@@ -132,19 +132,5 @@ export class AnimalFormComponent implements OnInit {
     }
 
     this.router.navigate(['']);
-  }
-
-  deleteAnimal() {
-    // TODO: switch to material dialog
-    const confirmed = confirm('Are you sure you want to delete this animal?');
-    if (confirmed) {
-      this.formService.removeAnimalFromEnclosure(
-        this.animalFormSelections.controls.selectedHabitat.value,
-        this.animalFormSelections.controls.selectedEnclosure.value,
-        this.animalForm.value.id || '',
-      );
-
-      this.router.navigate(['']);
-    }
   }
 }
