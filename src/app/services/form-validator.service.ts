@@ -5,7 +5,7 @@ import { FormService, Enclosure } from './form.service';
 export function enclosureCapacityFactory(formService: FormService) {
   return (control: AbstractControl): ValidationErrors | null => {
     const enclosure = formService.getEnclosureById(
-      control.value.selectedEnvironment,
+      control.value.selectedHabitat,
       control.value.selectedEnclosure,
     );
 

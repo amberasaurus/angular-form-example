@@ -16,7 +16,7 @@ describe('AnimalFormComponent', () => {
           provide: FormService,
           useValue: jasmine.createSpyObj<FormService>([
             'getAnimalFormGroup',
-            'getCurrentEnvironments',
+            'getCurrentHabitats',
             'getEnclosureById',
           ]),
         },

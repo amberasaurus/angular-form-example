@@ -1,10 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
-import {
-  Enclosure,
-  Environment,
-  FormService,
-} from 'src/app/services/form.service';
+import { Enclosure, Habitat, FormService } from 'src/app/services/form.service';
 
 @Component({
   selector: 'app-enclosure-display',
@@ -13,15 +9,15 @@ import {
 })
 export class EnclosureDisplayComponent {
   @Input() enclosure?: Enclosure;
-  @Input() environment?: Environment;
+  @Input() habitat?: Habitat;
 
   constructor(private router: Router, private formService: FormService) {}
 
   editEnclosure(enclosure: Enclosure) {
     this.router.navigate([
       'zoo',
-      'environment',
-      this.environment?.value.id,
+      'habitat',
+      this.habitat?.value.id,
       'enclosure',
       enclosure.value.id,
     ]);
@@ -33,8 +29,8 @@ export class EnclosureDisplayComponent {
       'Are you sure you want to delete this enclosure?',
     );
     if (confirmed) {
-      this.formService.removeEnclosureFromEnvironment(
-        this.environment?.value.id || '',
+      this.formService.removeEnclosureFromHabitat(
+        this.habitat?.value.id || '',
         this.enclosure?.value.id || '',
       );
 

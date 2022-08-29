@@ -10,7 +10,7 @@ describe('EnclosureFormComponent', () => {
   beforeEach(() => {
     const formServiceSpy = jasmine.createSpyObj<FormService>([
       'getEnclosureFormGroup',
-      'getCurrentEnvironments',
+      'getCurrentHabitats',
     ]);
 
     TestBed.configureTestingModule({

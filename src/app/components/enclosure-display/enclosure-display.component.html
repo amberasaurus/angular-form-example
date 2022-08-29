@@ -24,7 +24,7 @@
     <app-animal-display
       [animal]="enclosure.controls.animals.controls[i]"
       [enclosure]="enclosure"
-      [environment]="environment"
+      [habitat]="habitat"
       *ngFor="
         let item of [].constructor(enclosure?.value?.maxCapacity ?? 0);
         index as i

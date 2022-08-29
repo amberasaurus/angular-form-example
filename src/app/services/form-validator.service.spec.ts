@@ -38,7 +38,7 @@ describe('FormValidatorService', () => {
   describe('enclosureCapacityValidator', () => {
     it('should return max capacity error if trying to move an animal into a full enclosure', () => {
       const mockFormService = {
-        getEnclosureById: (envId: string, enclosureId: string) => {
+        getEnclosureById: (habId: string, enclosureId: string) => {
           return new FormGroup({
             animals: new FormArray([
               new FormGroup({
@@ -51,7 +51,7 @@ describe('FormValidatorService', () => {
       };
 
       const formGroup = new FormGroup({
-        selectedEnvironment: new FormControl('1'),
+        selectedHabitat: new FormControl('1'),
         selectedEnclosure: new FormControl('1'),
         selectedAnimal: new FormControl('1'),
       });

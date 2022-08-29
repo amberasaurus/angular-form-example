@@ -1,16 +1,14 @@
-<form class="standard-form" [formGroup]="environmentForm" (ngSubmit)="submit()">
-  <h1>{{ isNew ? 'Add' : 'Edit' }} Environment</h1>
+<form class="standard-form" [formGroup]="habitatForm" (ngSubmit)="submit()">
+  <h1>{{ isNew ? 'Add' : 'Edit' }} Habitat</h1>
   <p>
     <mat-form-field appearance="fill">
       <mat-label>Name</mat-label>
       <input matInput formControlName="name" />
-      <mat-error *ngIf="environmentForm.controls.name.hasError('required')">
+      <mat-error *ngIf="habitatForm.controls.name.hasError('required')">
         Name is <strong>required</strong>
       </mat-error>
       <mat-error
-        *ngIf="
-          environmentForm.controls.name.hasError('duplicateEnvironmentName')
-        "
+        *ngIf="habitatForm.controls.name.hasError('duplicateHabitatName')"
       >
         Name must be <strong>unique</strong>
       </mat-error>
@@ -21,11 +19,11 @@
     <mat-form-field appearance="fill">
       <mat-label>Type</mat-label>
       <mat-select formControlName="type">
-        <mat-option *ngFor="let type of environmentTypes" [value]="type">
+        <mat-option *ngFor="let type of habitatTypes" [value]="type">
           {{ type }}
         </mat-option>
       </mat-select>
-      <mat-error *ngIf="environmentForm.controls.type.hasError('required')">
+      <mat-error *ngIf="habitatForm.controls.type.hasError('required')">
         Type is <strong>required</strong>
       </mat-error>
     </mat-form-field>
@@ -35,7 +33,7 @@
     type="submit"
     mat-raised-button
     color="primary"
-    [disabled]="!environmentForm.valid"
+    [disabled]="!habitatForm.valid"
   >
     Save
   </button>
@@ -44,7 +42,7 @@
     type="button"
     mat-raised-button
     color="warn"
-    (click)="deleteEnvironment()"
+    (click)="deleteHabitat()"
   >
     Delete
   </button>

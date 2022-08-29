@@ -1,27 +1,25 @@
 import { TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 
-import { EnvironmentFormComponent } from './environment-form.component';
+import { HabitatFormComponent } from './habitat-form.component';
 import { FormService } from '../../services/form.service';
 
-describe('EnvironmentFormComponent', () => {
-  let component: EnvironmentFormComponent;
+describe('HabitatFormComponent', () => {
+  let component: HabitatFormComponent;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [RouterTestingModule],
       providers: [
-        EnvironmentFormComponent,
+        HabitatFormComponent,
         {
           provide: FormService,
-          useValue: jasmine.createSpyObj<FormService>([
-            'getEnvironmentFormGroup',
-          ]),
+          useValue: jasmine.createSpyObj<FormService>(['getHabitatFormGroup']),
         },
       ],
     });
 
-    component = TestBed.inject(EnvironmentFormComponent);
+    component = TestBed.inject(HabitatFormComponent);
   });
 
   it('should create', () => {

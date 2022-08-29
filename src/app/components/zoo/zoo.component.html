@@ -1,24 +1,24 @@
-<h2 class="text-2xl mt-2 mb-4">Current Environments:</h2>
+<h2 class="text-2xl mt-2 mb-4">Current Habitats:</h2>
 
-<button (click)="addEnvironment()">Add Environment</button>
+<button (click)="addHabitat()">Add Habitat</button>
 <button (click)="addEnclosure()">Add Enclosure</button>
 <button (click)="addAnimal()">Add Animal</button>
 <div class="zoo-container">
   <div>
     <mat-tab-group
-      [selectedIndex]="selectedEnv.value"
-      (selectedIndexChange)="selectedEnv.setValue($event)"
+      [selectedIndex]="selectedHab.value"
+      (selectedIndexChange)="selectedHab.setValue($event)"
     >
       <mat-tab
-        *ngFor="let env of environments.controls; let index = index"
-        [label]="env.value.name ?? ''"
+        *ngFor="let hab of habitats.controls; let index = index"
+        [label]="hab.value.name ?? ''"
       >
         <ng-template mat-tab-label>
-          <span class="warning" *ngIf="env.invalid">⚠ </span>
-          {{ env.value.name }} - {{ env.value.type }}&nbsp;
-          <button (click)="editEnvironment(env)">Edit</button>
+          <span class="warning" *ngIf="hab.invalid">⚠ </span>
+          {{ hab.value.name }} - {{ hab.value.type }}&nbsp;
+          <button (click)="editHabitat(hab)">Edit</button>
         </ng-template>
-        <app-environment-display [environment]="env"></app-environment-display>
+        <app-habitat-display [habitat]="hab"></app-habitat-display>
       </mat-tab>
     </mat-tab-group>
   </div>

@@ -2,11 +2,7 @@ import { Component } from '@angular/core';
 import { FormArray, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { filter, map } from 'rxjs/operators';
-import {
-  Enclosure,
-  Environment,
-  FormService,
-} from 'src/app/services/form.service';
+import { Enclosure, Habitat, FormService } from 'src/app/services/form.service';
 import { formHasUnacceptableErrors } from '../../utils/forms';
 
 @Component({
@@ -16,8 +12,8 @@ import { formHasUnacceptableErrors } from '../../utils/forms';
 })
 export class EnclosureFormComponent {
   enclosureForm: Enclosure;
-  currentEnvironments: FormArray<Environment>;
-  selectedEnvironment = new FormControl<string>('', {
+  currentHabitats: FormArray<Habitat>;
+  selectedHabitat = new FormControl<string>('', {
     nonNullable: true,
     validators: [Validators.required],
   });
@@ -29,18 +25,18 @@ export class EnclosureFormComponent {
     route: ActivatedRoute,
   ) {
     this.enclosureForm = this.formService.getEnclosureFormGroup();
-    this.currentEnvironments = this.formService.getCurrentEnvironments();
+    this.currentHabitats = this.formService.getCurrentHabitats();
 
     route.data
       .pipe(
         map((data) => ({
           enclosure: data['enclosure'],
-          env: data['environment'],
+          hab: data['habitat'],
         })),
         filter((data) => !!data.enclosure),
       )
       .subscribe(
-        ({ enclosure, env }: { enclosure: Enclosure; env: Environment }) => {
+        ({ enclosure, hab }: { enclosure: Enclosure; hab: Habitat }) => {
           this.enclosureForm.patchValue(enclosure.value);
 
           enclosure.controls.animals.controls.forEach((animal) => {
@@ -52,21 +48,21 @@ export class EnclosureFormComponent {
           this.isNew = false;
 
           // TODO handle undefined
-          this.selectedEnvironment.setValue(env.value.id || '');
+          this.selectedHabitat.setValue(hab.value.id || '');
         },
       );
   }
 
   submit(): void {
-    if (this.isNew && this.selectedEnvironment.value) {
-      this.formService.addEnclosureToEnvironment(
-        this.selectedEnvironment.value,
+    if (this.isNew && this.selectedHabitat.value) {
+      this.formService.addEnclosureToHabitat(
+        this.selectedHabitat.value,
         this.enclosureForm,
       );
     } else {
       // TODO: handle undefined better
       this.formService.patchEnclosure(
-        this.selectedEnvironment.value || '',
+        this.selectedHabitat.value || '',
         this.enclosureForm.value.id || '',
         this.enclosureForm,
       );

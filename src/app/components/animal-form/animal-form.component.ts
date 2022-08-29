@@ -6,7 +6,7 @@ import { enclosureCapacityFactory } from 'src/app/services/form-validator.servic
 import {
   Animal,
   Enclosure,
-  Environment,
+  Habitat,
   FormService,
 } from 'src/app/services/form.service';
 import { availableLifeStages, availableSpecies } from '../../constants';
@@ -22,14 +22,14 @@ export class AnimalFormComponent implements OnInit {
   availableSpecies = Object.values(availableSpecies);
   availableLifeStages = availableLifeStages;
   availableEnclosures: Observable<FormArray<Enclosure> | undefined>;
-  currentEnvironments: FormArray<Environment>;
+  currentHabitats: FormArray<Habitat>;
 
-  originalEnvId: string = '';
+  originalHabId: string = '';
   originalEnclosureId: string = '';
 
   animalFormSelections = new FormGroup(
     {
-      selectedEnvironment: new FormControl<string>('', {
+      selectedHabitat: new FormControl<string>('', {
         nonNullable: true,
         validators: [Validators.required],
       }),
@@ -52,43 +52,43 @@ export class AnimalFormComponent implements OnInit {
     route: ActivatedRoute,
   ) {
     this.animalForm = this.formService.getAnimalFormGroup();
-    this.currentEnvironments = this.formService.getCurrentEnvironments();
+    this.currentHabitats = this.formService.getCurrentHabitats();
 
-    // TODO: need to handle moving animal between env/enclosures
+    // TODO: need to handle moving animal between hab/enclosures
 
     route.data
       .pipe(
         map((data) => ({
           enclosure: data['enclosure'],
-          env: data['environment'],
+          hab: data['habitat'],
           animal: data['animal'],
         })),
         filter((data) => !!data.animal),
       )
-      .subscribe(({ enclosure, env, animal }) => {
+      .subscribe(({ enclosure, hab, animal }) => {
         this.animalForm.patchValue(animal.value);
         this.isNew = false;
 
         this.animalFormSelections.patchValue({
           selectedAnimal: animal.value.id,
-          selectedEnvironment: env.value.id,
+          selectedHabitat: hab.value.id,
           selectedEnclosure: enclosure.value.id,
         });
 
-        this.originalEnvId = env.value.id;
+        this.originalHabId = hab.value.id;
         this.originalEnclosureId = enclosure.value.id;
       });
 
     this.availableEnclosures =
-      this.animalFormSelections.controls.selectedEnvironment.valueChanges.pipe(
-        startWith(this.animalFormSelections.controls.selectedEnvironment.value),
-        tap((envId) => {
-          if (this.animalFormSelections.value.selectedEnvironment !== envId) {
+      this.animalFormSelections.controls.selectedHabitat.valueChanges.pipe(
+        startWith(this.animalFormSelections.controls.selectedHabitat.value),
+        tap((habId) => {
+          if (this.animalFormSelections.value.selectedHabitat !== habId) {
             this.animalFormSelections.patchValue({ selectedEnclosure: '' });
           }
         }),
         switchMap((e) =>
-          of(this.formService.getEnvironmentById(e)?.controls.enclosures),
+          of(this.formService.getHabitatById(e)?.controls.enclosures),
         ),
       );
   }
@@ -98,7 +98,7 @@ export class AnimalFormComponent implements OnInit {
   submit(): void {
     if (this.isNew) {
       this.formService.addAnimalToEnclosure(
-        this.animalFormSelections.controls.selectedEnvironment.value,
+        this.animalFormSelections.controls.selectedHabitat.value,
         this.animalFormSelections.controls.selectedEnclosure.value,
         this.animalForm,
       );
@@ -106,24 +106,24 @@ export class AnimalFormComponent implements OnInit {
       // TODO: handle undefined better
 
       if (
-        this.originalEnvId !==
-          this.animalFormSelections.controls.selectedEnvironment.value ||
+        this.originalHabId !==
+          this.animalFormSelections.controls.selectedHabitat.value ||
         this.originalEnclosureId !==
           this.animalFormSelections.controls.selectedEnclosure.value
       ) {
         this.formService.removeAnimalFromEnclosure(
-          this.originalEnvId,
+          this.originalHabId,
           this.originalEnclosureId,
           this.animalForm.value.id || '',
         );
         this.formService.addAnimalToEnclosure(
-          this.animalFormSelections.controls.selectedEnvironment.value,
+          this.animalFormSelections.controls.selectedHabitat.value,
           this.animalFormSelections.controls.selectedEnclosure.value,
           this.animalForm,
         );
       } else {
         this.formService.patchAnimal(
-          this.animalFormSelections.controls.selectedEnvironment.value || '',
+          this.animalFormSelections.controls.selectedHabitat.value || '',
           this.animalFormSelections.controls.selectedEnclosure.value || '',
           this.animalForm.value.id || '',
           this.animalForm,
@@ -139,7 +139,7 @@ export class AnimalFormComponent implements OnInit {
     const confirmed = confirm('Are you sure you want to delete this animal?');
     if (confirmed) {
       this.formService.removeAnimalFromEnclosure(
-        this.animalFormSelections.controls.selectedEnvironment.value,
+        this.animalFormSelections.controls.selectedHabitat.value,
         this.animalFormSelections.controls.selectedEnclosure.value,
         this.animalForm.value.id || '',
       );

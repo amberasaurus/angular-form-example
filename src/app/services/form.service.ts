@@ -13,8 +13,7 @@ import {
   minCapacityValidator,
 } from './form-validator.service';
 
-// Habitat
-export type Environment = FormGroup<{
+export type Habitat = FormGroup<{
   id: FormControl<string>;
   name: FormControl<string>;
   type: FormControl<string>;
@@ -38,18 +37,18 @@ export type Animal = FormGroup<{
 @Injectable({ providedIn: 'root' })
 export class FormService {
   form = this.fb.group({
-    environments: this.fb.array<Environment>([]),
+    habitats: this.fb.array<Habitat>([]),
   });
 
   constructor(private fb: NonNullableFormBuilder) {}
 
-  public getEnvironmentFormGroup(): Environment {
+  public getHabitatFormGroup(): Habitat {
     return this.fb.group(
       {
         id: this.fb.control(uuidv4()),
         name: this.fb.control('', [
           Validators.required,
-          // environmentNameFactory(this.form.controls.environments),
+          // habitatNameFactory(this.form.controls.habitats),
         ]),
         type: this.fb.control('', [Validators.required]),
         enclosures: this.fb.array<Enclosure>([]),
@@ -60,27 +59,27 @@ export class FormService {
     );
   }
 
-  public addEnvironment(env: Environment) {
-    this.form.controls.environments.push(env);
+  public addHabitat(hab: Habitat) {
+    this.form.controls.habitats.push(hab);
   }
 
-  public getCurrentEnvironments() {
-    return this.form.controls.environments;
+  public getCurrentHabitats() {
+    return this.form.controls.habitats;
   }
 
-  public getEnvironmentById(id: string) {
-    const envs = this.getCurrentEnvironments().controls;
-    return envs.find((env) => env.value.id === id);
+  public getHabitatById(id: string) {
+    const habs = this.getCurrentHabitats().controls;
+    return habs.find((hab) => hab.value.id === id);
   }
 
-  public getEnclosureById(envId: string, enclosureId: string) {
-    const env = this.getEnvironmentById(envId);
-    const enclosures = env?.controls.enclosures.controls;
+  public getEnclosureById(habId: string, enclosureId: string) {
+    const hab = this.getHabitatById(habId);
+    const enclosures = hab?.controls.enclosures.controls;
     return enclosures?.find((enclosure) => enclosure.value.id === enclosureId);
   }
 
-  public getAnimalById(envId: string, enclosureId: string, animalId: string) {
-    const enclosure = this.getEnclosureById(envId, enclosureId);
+  public getAnimalById(habId: string, enclosureId: string, animalId: string) {
+    const enclosure = this.getEnclosureById(habId, enclosureId);
     const animals = enclosure?.controls.animals.controls;
     return animals?.find((animal) => animal.value.id === animalId);
   }
@@ -101,14 +100,13 @@ export class FormService {
     );
   }
 
-  public addEnclosureToEnvironment(envId: string, enclosure: Enclosure) {
-    const env = this.getEnvironmentById(envId);
-    env?.controls.enclosures.push(enclosure);
+  public addEnclosureToHabitat(habId: string, enclosure: Enclosure) {
+    const hab = this.getHabitatById(habId);
+    hab?.controls.enclosures.push(enclosure);
   }
 
-  public getEnclosuresForEnvironment(envIndex: number) {
-    return this.form.controls.environments.controls[envIndex]?.controls
-      .enclosures;
+  public getEnclosuresForHabitat(habIndex: number) {
+    return this.form.controls.habitats.controls[habIndex]?.controls.enclosures;
   }
 
   public getAnimalFormGroup(): Animal {
@@ -121,44 +119,44 @@ export class FormService {
   }
 
   public addAnimalToEnclosure(
-    envId: string,
+    habId: string,
     enclosureId: string,
     animal: Animal,
   ) {
-    const enclosure = this.getEnclosureById(envId, enclosureId);
+    const enclosure = this.getEnclosureById(habId, enclosureId);
     enclosure?.controls.animals.push(animal);
   }
 
   public patchAnimal(
-    envId: string,
+    habId: string,
     enclosureId: string,
     animalId: string,
     newAnimal: Animal,
   ) {
-    const animal = this.getAnimalById(envId, enclosureId, animalId);
+    const animal = this.getAnimalById(habId, enclosureId, animalId);
     animal?.patchValue(newAnimal.value);
   }
 
   public patchEnclosure(
-    envId: string,
+    habId: string,
     enclosureId: string,
     newEnclosure: Enclosure,
   ) {
-    const enclosure = this.getEnclosureById(envId, enclosureId);
+    const enclosure = this.getEnclosureById(habId, enclosureId);
     enclosure?.patchValue(newEnclosure.value);
   }
 
-  public patchEnvironment(envId: string, newEnv: Environment) {
-    const env = this.getEnvironmentById(envId);
-    env?.patchValue(newEnv.value);
+  public patchHabitat(habId: string, newHab: Habitat) {
+    const hab = this.getHabitatById(habId);
+    hab?.patchValue(newHab.value);
   }
 
   public removeAnimalFromEnclosure(
-    envId: string,
+    habId: string,
     enclosureId: string,
     animalId: string,
   ) {
-    const enclosure = this.getEnclosureById(envId, enclosureId);
+    const enclosure = this.getEnclosureById(habId, enclosureId);
     const animalIdx = enclosure?.controls.animals.controls.findIndex(
       (animal) => animal.value.id === animalId,
     );
@@ -167,22 +165,22 @@ export class FormService {
     }
   }
 
-  public removeEnclosureFromEnvironment(envId: string, enclosureId: string) {
-    const environment = this.getEnvironmentById(envId);
-    const enclosureIdx = environment?.controls.enclosures.controls.findIndex(
+  public removeEnclosureFromHabitat(habId: string, enclosureId: string) {
+    const habitat = this.getHabitatById(habId);
+    const enclosureIdx = habitat?.controls.enclosures.controls.findIndex(
       (enclosure) => enclosure.value.id === enclosureId,
     );
     if (enclosureIdx !== undefined && enclosureIdx >= 0) {
-      environment?.controls.enclosures.removeAt(enclosureIdx);
+      habitat?.controls.enclosures.removeAt(enclosureIdx);
     }
   }
 
-  public removeEnvironment(envId: string) {
-    const environmentIdx = this.form.controls.environments.controls.findIndex(
-      (env) => env.value.id === envId,
+  public removeHabitat(habId: string) {
+    const habitatIdx = this.form.controls.habitats.controls.findIndex(
+      (hab) => hab.value.id === habId,
     );
-    if (environmentIdx !== undefined && environmentIdx >= 0) {
-      this.form?.controls.environments.removeAt(environmentIdx);
+    if (habitatIdx !== undefined && habitatIdx >= 0) {
+      this.form?.controls.habitats.removeAt(habitatIdx);
     }
   }
 }

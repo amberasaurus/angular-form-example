@@ -1,18 +1,18 @@
 import { TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 
-import { EnvironmentDisplayComponent } from './environment-display.component';
+import { HabitatDisplayComponent } from './habitat-display.component';
 
-describe('EnvironmentDisplayComponent', () => {
-  let component: EnvironmentDisplayComponent;
+describe('HabitatDisplayComponent', () => {
+  let component: HabitatDisplayComponent;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [RouterTestingModule],
-      providers: [EnvironmentDisplayComponent],
+      providers: [HabitatDisplayComponent],
     });
 
-    component = TestBed.inject(EnvironmentDisplayComponent);
+    component = TestBed.inject(HabitatDisplayComponent);
   });
 
   it('should create', () => {

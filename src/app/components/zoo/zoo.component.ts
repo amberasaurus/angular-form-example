@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { FormLoaderService } from 'src/app/services/form-loader.service';
-import { Environment, FormService } from 'src/app/services/form.service';
+import { Habitat, FormService } from 'src/app/services/form.service';
 
 @Component({
   selector: 'app-zoo',
@@ -10,7 +10,7 @@ import { Environment, FormService } from 'src/app/services/form.service';
   styleUrls: ['./zoo.component.scss'],
 })
 export class ZooComponent implements OnInit {
-  selectedEnv = new FormControl(0);
+  selectedHab = new FormControl(0);
 
   constructor(
     private formService: FormService,
@@ -20,8 +20,8 @@ export class ZooComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  public get environments() {
-    return this.formService.form.controls.environments;
+  public get habitats() {
+    return this.formService.form.controls.habitats;
   }
 
   loadSafeZoo() {
@@ -32,12 +32,12 @@ export class ZooComponent implements OnInit {
     console.log(this.formService.form);
   }
 
-  editEnvironment(env: Environment) {
-    this.router.navigate(['zoo', 'environment', env.value.id]);
+  editHabitat(hab: Habitat) {
+    this.router.navigate(['zoo', 'habitat', hab.value.id]);
   }
 
-  addEnvironment() {
-    this.router.navigate(['zoo', 'environment', 'add']);
+  addHabitat() {
+    this.router.navigate(['zoo', 'habitat', 'add']);
   }
 
   addEnclosure() {

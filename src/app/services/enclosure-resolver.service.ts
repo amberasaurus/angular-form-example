@@ -10,9 +10,9 @@ import { FormService, Enclosure } from './form.service';
 export class EnclosureResolver implements Resolve<Enclosure | undefined> {
   constructor(private formService: FormService) {}
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
-    const envId = route.paramMap.get('envId') as string;
+    const habId = route.paramMap.get('habId') as string;
     const enclosureId = route.paramMap.get('enclosureId') as string;
 
-    return of(this.formService.getEnclosureById(envId, enclosureId));
+    return of(this.formService.getEnclosureById(habId, enclosureId));
   }
 }

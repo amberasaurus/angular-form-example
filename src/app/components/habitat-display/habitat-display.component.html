@@ -1,0 +1,9 @@
+<div *ngIf="habitat">
+  <div class="enclosures">
+    <app-enclosure-display
+      *ngFor="let enclosure of habitat.controls.enclosures.controls"
+      [enclosure]="enclosure"
+      [habitat]="habitat"
+    ></app-enclosure-display>
+  </div>
+</div>

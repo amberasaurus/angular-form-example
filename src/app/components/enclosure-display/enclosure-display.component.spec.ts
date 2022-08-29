@@ -15,7 +15,7 @@ describe('EnclosureDisplayComponent', () => {
         {
           provide: FormService,
           useValue: jasmine.createSpyObj<FormService>([
-            'removeEnclosureFromEnvironment',
+            'removeEnclosureFromHabitat',
           ]),
         },
       ],
