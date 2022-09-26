@@ -52,10 +52,17 @@ body {
 }
 
 .warning {
-  color: red;
   font-size: large;
 }
 
 .mat-icon-button {
   font-size: 1.5rem !important;
+}
+
+.emoji {
+  font-family: 'Noto Color Emoji';
+}
+
+.mr-2 {
+  margin-right: 2em !important;
 }

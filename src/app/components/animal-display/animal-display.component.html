@@ -6,7 +6,7 @@
   <div style="display: contents">
     <div class="animal-emoji">
       {{ availableSpecies[animal.value.species || '']?.emoji }}
-      <div class="juvenile" *ngIf="animal.value.lifeStage === 'Juvenile'">
+      <div class="juvenile emoji" *ngIf="animal.value.lifeStage === 'Juvenile'">
         🚼
       </div>
     </div>
@@ -15,12 +15,19 @@
     </div>
 
     <div class="edit-hover">
-      <button type="button" size="small" mat-icon-button (click)="editAnimal()">
+      <button
+        class="emoji"
+        type="button"
+        size="small"
+        mat-icon-button
+        (click)="editAnimal()"
+      >
         📝
       </button>
       <button
         type="button"
         size="small"
+        class="emoji"
         mat-icon-button
         (click)="deleteAnimal()"
       >
@@ -29,7 +36,7 @@
     </div>
 
     <div class="dead-overlay" *ngIf="animal.hasError('dead')">
-      <div class="dead-emoji">💀</div>
+      <div class="dead-emoji emoji">💀</div>
     </div>
   </div>
 </div>

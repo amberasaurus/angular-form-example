@@ -1,9 +1,21 @@
 <div *ngIf="habitat" class="habitat-display">
-  Type {{ habitat.get('type')?.value }}
-  <button type="button" size="small" mat-icon-button (click)="editHabitat()">
+  <span>Type: {{ habitat.get('type')?.value }}</span>
+  <button
+    type="button"
+    class="emoji"
+    size="small"
+    mat-icon-button
+    (click)="editHabitat()"
+  >
     📝
   </button>
-  <button type="button" size="small" mat-icon-button (click)="deleteHabitat()">
+  <button
+    type="button"
+    class="emoji"
+    size="small"
+    mat-icon-button
+    (click)="deleteHabitat()"
+  >
     🗑
   </button>
   <div class="enclosures">

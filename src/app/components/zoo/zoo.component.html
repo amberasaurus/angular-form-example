@@ -1,8 +1,14 @@
-<h2 class="text-2xl mt-2 mb-4">Current Habitats:</h2>
+<h2 class="text-2xl">Current Habitats:</h2>
 
-<button (click)="addHabitat()">Add Habitat</button>
-<button (click)="addEnclosure()">Add Enclosure</button>
-<button (click)="addAnimal()">Add Animal</button>
+<button class="mr-2" mat-raised-button color="primary" (click)="addHabitat()">
+  Add Habitat
+</button>
+<button class="mr-2" mat-raised-button color="primary" (click)="addEnclosure()">
+  Add Enclosure
+</button>
+<button class="mr-2" mat-raised-button color="primary" (click)="addAnimal()">
+  Add Animal
+</button>
 <div class="zoo-container">
   <div>
     <mat-tab-group
@@ -14,7 +20,7 @@
         [label]="hab.value.name ?? ''"
       >
         <ng-template mat-tab-label>
-          <span class="warning" *ngIf="hab.invalid">⚠ </span>
+          <span class="warning emoji" *ngIf="hab.invalid">⚠ </span>
           {{ hab.value.name }}
         </ng-template>
         <app-habitat-display [habitat]="hab"></app-habitat-display>
@@ -25,10 +31,3 @@
     <router-outlet></router-outlet>
   </div>
 </div>
-
-<button mat-raised-button color="warn" (click)="checkSafeZoo()">
-  Is my zoo safe?
-</button>
-<!-- <button mat-raised-button color="primary" (click)="loadSafeZoo()">
-  Load Safe Zoo Example
-</button> -->

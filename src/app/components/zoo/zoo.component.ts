@@ -24,14 +24,6 @@ export class ZooComponent implements OnInit {
     return this.formService.form.controls.habitats;
   }
 
-  loadSafeZoo() {
-    this.formLoaderService.loadSafeZoo();
-  }
-
-  checkSafeZoo() {
-    console.log(this.formService.form);
-  }
-
   addHabitat() {
     this.router.navigate(['zoo', 'habitat', 'add']);
   }
