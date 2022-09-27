@@ -13,12 +13,12 @@ export class FormLoaderService {
 
   // TODO: change from any, need better interfaces all over
   // also need to separate this out a bit more
-  // also github copilot wrote this and I'm scared
   loadHabitats(hab: any[]) {
     hab.forEach((habitat) => {
       const habitatFormGroup = this.formService.getHabitatFormGroup();
       habitatFormGroup.patchValue(habitat);
 
+      // We have to drill into the forms because patchValue does not handle FormArrays of complex objects
       if (habitat.enclosures) {
         habitat.enclosures.forEach((enclosure: any) => {
           const enclosureFormGroup = this.formService.getEnclosureFormGroup();

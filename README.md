@@ -1,35 +1,20 @@
 # FormsExample
 
-This project was generated with
-[Angular CLI](https://github.com/angular/angular-cli) version 13.3.3.
+Show the running application before looking at code so students understand it.
 
-## Development server
+Start with form.service.ts
+Next, show data loading in form-loader.service.ts
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The
-application will automatically reload if you change any of the source files.
 
-## Code scaffolding
+Things to point out:
+- Routing
+- Failed validator bubbles up to the top
+- Add and Edit are handled by the same form
 
-Run `ng generate component component-name` to generate a new component. You can
-also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
 
-## Build
+Validations which prevent saving:
+- Enclosure max cap. cannot be lower than current number of animals
+- Can't add an animal to a full enclosure
 
-Run `ng build` to build the project. The build artifacts will be stored in the
-`dist/` directory.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via
-[Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To
-use this command, you need to first add a package that implements end-to-end
-testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the
-[Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+Validations which are temporarily allowed:
+- Some animals eat others. See form-validator-service.ts for rules
