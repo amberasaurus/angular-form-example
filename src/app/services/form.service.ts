@@ -48,13 +48,9 @@ export class FormService {
         id: this.fb.control(uuidv4()),
         name: this.fb.control('', [
           Validators.required,
-          // habitatNameFactory(this.form.controls.habitats),
         ]),
         type: this.fb.control('', [Validators.required]),
         enclosures: this.fb.array<Enclosure>([]),
-      },
-      {
-        validators: [],
       },
     );
   }

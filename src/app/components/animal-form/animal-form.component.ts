@@ -1,7 +1,7 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { filter, map, Observable, of, startWith, switchMap, tap } from 'rxjs';
+import { filter, map, Observable, of, startWith, Subject, switchMap, takeUntil, tap } from 'rxjs';
 import { enclosureCapacityFactory } from 'src/app/services/form-validator.service';
 import {
   Animal,
@@ -17,15 +17,15 @@ import { availableLifeStages, availableSpecies } from '../../constants';
   styleUrls: ['./animal-form.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AnimalFormComponent implements OnInit {
+export class AnimalFormComponent implements OnDestroy {
   animalForm: Animal;
   availableSpecies = Object.values(availableSpecies);
   availableLifeStages = availableLifeStages;
   availableEnclosures: Observable<FormArray<Enclosure> | undefined>;
   currentHabitats: FormArray<Habitat>;
-
   originalHabId: string = '';
   originalEnclosureId: string = '';
+  destroy = new Subject<void>();
 
   animalFormSelections = new FormGroup(
     {
@@ -54,8 +54,7 @@ export class AnimalFormComponent implements OnInit {
     this.animalForm = this.formService.getAnimalFormGroup();
     this.currentHabitats = this.formService.getCurrentHabitats();
 
-    // TODO: need to handle moving animal between hab/enclosures
-
+    // Current habitat/enclosure/animal are read from the route resolver.
     route.data
       .pipe(
         map((data) => ({
@@ -64,6 +63,7 @@ export class AnimalFormComponent implements OnInit {
           animal: data['animal'],
         })),
         filter((data) => !!data.animal),
+        takeUntil(this.destroy),
       )
       .subscribe(({ enclosure, hab, animal }) => {
         this.animalForm.patchValue(animal.value);
@@ -79,6 +79,7 @@ export class AnimalFormComponent implements OnInit {
         this.originalEnclosureId = enclosure.value.id;
       });
 
+    // Update the list of available enclosures when a new habitat is selected.
     this.availableEnclosures =
       this.animalFormSelections.controls.selectedHabitat.valueChanges.pipe(
         startWith(this.animalFormSelections.controls.selectedHabitat.value),
@@ -93,7 +94,10 @@ export class AnimalFormComponent implements OnInit {
       );
   }
 
-  ngOnInit(): void {}
+  ngOnDestroy(): void {
+    this.destroy.next();
+    this.destroy.complete();
+  }
 
   submit(): void {
     if (this.isNew) {
@@ -103,8 +107,9 @@ export class AnimalFormComponent implements OnInit {
         this.animalForm,
       );
     } else {
-      // TODO: handle undefined better
+      // TODO: handle undefined better - throw error?
 
+      // If an animal is moving between habitats/enclosures, we must remove from the old and add to the new.
       if (
         this.originalHabId !==
           this.animalFormSelections.controls.selectedHabitat.value ||
@@ -121,6 +126,7 @@ export class AnimalFormComponent implements OnInit {
           this.animalFormSelections.controls.selectedEnclosure.value,
           this.animalForm,
         );
+      // Otherwise, update the animal in its current habitat/enclosure.
       } else {
         this.formService.patchAnimal(
           this.animalFormSelections.controls.selectedHabitat.value || '',

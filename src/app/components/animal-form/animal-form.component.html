@@ -48,13 +48,7 @@
     </p>
   </ng-container>
 
-  <ng-container
-    *ngIf="
-      animalFormSelections.controls.selectedHabitat.value &&
-      animalFormSelections.controls.selectedEnclosure.value &&
-      animalFormSelections.valid
-    "
-  >
+  <ng-container *ngIf="animalFormSelections.valid">
     <p>
       <mat-form-field appearance="fill">
         <mat-label>Name</mat-label>

@@ -47,29 +47,26 @@ export function enclosureSafetyValidator(
   if (!group.value) {
     return null;
   }
+  const enclosure = group as Enclosure;
   // Clear "dead" errors
-  (group as unknown as Enclosure).controls.animals.controls.forEach(
-    (animal) => {
-      if (animal.errors) {
-        delete animal.errors['dead'];
-      }
+  enclosure.controls.animals.controls.forEach((animal) => {
+    if (animal.errors) {
+      delete animal.errors['dead'];
+    }
+  });
+
+  const adultHypercarnivores = enclosure.controls.animals.controls.filter(
+    (a) => {
+      let animalRawValue = a.getRawValue();
+
+      return (
+        availableSpecies[animalRawValue.species].type === 'Hypercarnivore' &&
+        animalRawValue.lifeStage === 'Adult'
+      );
     },
   );
 
-  const adultHypercarnivores = (
-    group as unknown as Enclosure
-  ).controls.animals.controls.filter((a) => {
-    let animalRawValue = a.getRawValue();
-
-    return (
-      availableSpecies[animalRawValue.species].type === 'Hypercarnivore' &&
-      animalRawValue.lifeStage === 'Adult'
-    );
-  });
-
-  const otherAnimals = (
-    group as unknown as Enclosure
-  ).controls.animals.controls.filter((a) => {
+  const otherAnimals = enclosure.controls.animals.controls.filter((a) => {
     let animalRawValue = a.getRawValue();
     return availableSpecies[animalRawValue.species].type !== 'Hypercarnivore';
   });
@@ -84,9 +81,7 @@ export function enclosureSafetyValidator(
     };
   }
 
-  const adultCarnivores = (
-    group as unknown as Enclosure
-  ).controls.animals.controls.filter((a) => {
+  const adultCarnivores = enclosure.controls.animals.controls.filter((a) => {
     let animalRawValue = a.getRawValue();
 
     return (
@@ -95,9 +90,7 @@ export function enclosureSafetyValidator(
     );
   });
 
-  const herbivores = (
-    group as unknown as Enclosure
-  ).controls.animals.controls.filter((a) => {
+  const herbivores = enclosure.controls.animals.controls.filter((a) => {
     let animalRawValue = a.getRawValue();
     return availableSpecies[animalRawValue.species].type === 'Herbivore';
   });
